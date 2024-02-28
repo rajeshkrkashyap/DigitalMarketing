@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var role = ViewBag.Role;
+    var isLogOut = ViewBag.IsLogOut;
+    var redirectURL = ViewBag.RedirectUrl;
+}
+
+<div class=" ">
+    
+</div>
+
+@section scripts {
+    <script>
+        var role = '@role';
+        var _redirectURL = '@redirectURL';
+        function changeColor(hovered) {
+            var h1Element = document.getElementById('h1GotoHome');
+            //h1Element.style.color = hovered ? 'white' : 'black';
+            h1Element.style.fontSize = hovered ? '2.6em' : '2.5em';
+            var childSpan = document.getElementById('childSpan');
+            childSpan.style.fontSize = hovered ? '0.51em' : '0.5em';
+        }
+
+        function changeSize(hovered) {
+            var h1Element = document.getElementById('connectToAi');
+            h1Element.style.fontSize = hovered ? '2.6em' : '2.5em';
+        }
+
+        if (role.length > 0) {
+            let baseUrl = window.location.origin;
+            console.log(_redirectURL);
+            window.location.href = _redirectURL
+        }
+        var isLogOut = '@isLogOut';
+
+        console.log(isLogOut);
+
+        if (isLogOut) {
+
+            console.log('localStorage.clear');
+            localStorage.clear();
+        }
+    </script>
+}

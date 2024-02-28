@@ -1,0 +1,110 @@
+﻿@using Core.Shared;
+@using Core.Shared.Entities;
+@using Newtonsoft.Json;
+ 
+<header class="navbar navbar-expand-lg navbar-light navbar-static-top">
+    <div class="navbar-header">
+        <a href="#" class="sidebar-mobile-toggler float-left d-lg-none btn btn-navbar sidebar-toggle" data-toggle-class="app-slide-off" data-toggle-target="#app" data-toggle-click-outside="#sidebar">
+            <i class="ti-align-justify"></i>
+        </a>
+        <a class="navbar-brand" href="index.html">
+            <img src="~/assets/images/ConnectoAi.svg" alt="ConnectToAi" style="width:260px">
+        </a>
+        <a href="#" class="sidebar-toggler float-right d-none d-lg-block d-xl-block" data-toggle-class="app-sidebar-closed" data-toggle-target="#app">
+            <i class="ti-align-justify"></i>
+        </a>
+    </div>
+    <div class="container-navbar-right">
+        <ul class="navbar-right">
+            @*<li class="dropdown">
+            <a href="javascript:void(0)" data-parent-tab="#offTab" data-tab="#off-users" class="dropdown-toggle" data-toggle-class="app-offsidebar-open" data-toggle-target="#app" data-toggle-click-outside="#off-sidebar">
+            <span class="dot-badge partition-red animated infinite pulse"></span>
+            <i class="ti-comment animated bounce"></i>
+            <span class="d-none d-md-block d-lg-block d-xl-block">MESSAGES</span>
+            </a>
+            </li>
+            <li class="dropdown">
+            <a href class="dropdown-toggle" data-parent-tab="#offTab" data-tab="#off-activities" class="dropdown-toggle" data-toggle-class="app-offsidebar-open" data-toggle-target="#app" data-toggle-click-outside="#off-sidebar">
+            <i class="ti-check-box"></i>
+            <span class="d-none d-md-block d-lg-block d-xl-block">ACTIVITIES</span>
+            </a>
+            </li>*@
+
+           
+            <li class="dropdown current-user d-none d-md-block d-lg-block d-xl-block">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="~/assets/images/avatar-1.png" alt="user">
+                    <span class="username" id="username">
+                        User <i class="ti-angle-down"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right dropdown-dark">
+                    <li>
+                        <a href="/Student/AppUserSettings/Profile">My Profile</a>
+                    </li>
+                    @*<li>
+                    <a href="pages_calendar.html">My Calendar</a>
+                    </li>
+                    <li>
+                    <a hef="pages_messages.html">My Activities</a>
+                    </li>*@
+                    <li>
+                        @using (Html.BeginForm("ScreenLock", "AppUserSettings"))
+                        {
+                            <button class="btn btn-link" style="color: #ffffff; text-decoration: none;margin-left: -6px;" type="submit">
+                                Lock Screen
+                            </button>
+                        }
+                    </li>
+                    <li>
+                        <a>Select Theme</a>
+                        <div class="colors-row setting-box navbar-right">
+
+                            <div class="color-theme theme-1">
+                                <div class="color-layout">
+                                    <label>
+                                        <input type="radio" name="setting-theme" value="theme-1">
+                                        <span class="ti-check"></span>
+                                        <span class="split header">
+                                            <span class="color th-header"></span>
+                                            <span class="color th-collapse"></span>
+                                        </span>
+                                        <span class="split">
+                                            <span class="color th-sidebar">
+                                                <i class="element"></i>
+                                            </span>
+                                            <span class="color th-body"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="color-theme theme-6">
+                                <div class="color-layout">
+                                    <label style="color:#fff">
+                                        <input type="radio" name="setting-theme" value="theme-6"><span class="ti-check">
+                                        </span><span class="split header">
+                                            <span class="color th-header" style="background: #85c2e8;">
+                                            </span>
+                                            <span class="color th-collapse"></span>
+                                        </span>
+                                        <span class="split">
+                                            <span class="color th-sidebar" style="background: #85c2e8;">
+                                                <i class="element"></i>
+                                            </span><span class="color th-body"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/Home/Logout">Log Out</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+
+    </div>
+    <a id="appSidebarTopics" class="dropdown-off-sidebar sidebar-mobile-toggler d-md-block d-lg-block" data-toggle-class="app-offsidebar-open" data-toggle-target="#app" data-toggle-click-outside="#off-sidebar"></a> &nbsp; <a class="dropdown-off-sidebar d-none d-sm-block" data-toggle-class="app-offsidebar-open" data-toggle-target="#app" data-toggle-click-outside="#off-sidebar">&nbsp;</a>
+</header>

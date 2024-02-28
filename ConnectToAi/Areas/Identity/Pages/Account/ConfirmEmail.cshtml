@@ -1,0 +1,28 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm email";
+}
+<div class="main-login col-10 offset-1 col-sm-8 offset-sm-2 col-md-4 offset-md-4">
+    <div class="logo margin-top-30">
+        <a class="nav-link text-white" href="~/">
+            <img src="~/assets/images/ConnectoAi.svg" alt="Connecto.Ai">
+        </a>
+    </div> 
+    
+    @if (Model.StatusMessage == "Thank you for confirming your email.")
+    {
+        <h2>Email has been confimred</h2>
+        <div class="alert alert-success alert-dismissible" role="alert">
+            Thank you for confirming your email.
+            <a class="link" href="~/identity/Account/login" >Click here to login!</a>  
+        </div>
+
+    }
+    else
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            Error confirming your email.
+        </div>
+    } 
+</div>

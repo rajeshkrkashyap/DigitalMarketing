@@ -1,0 +1,375 @@
+﻿@using Core.Shared;
+@using Newtonsoft.Json;
+@{
+    Context.Request.Cookies.TryGetValue("ConnectToAi_DigitalMarketing_AuthToken", out string cookieValue);
+    UserDetail userDetail = new UserDetail();
+
+    if (cookieValue != null)
+    {
+        userDetail = JsonConvert.DeserializeObject<UserDetail>(cookieValue);
+    }
+    var changeBg = string.Empty;
+    var scrollBar = string.Empty;
+    var title = ViewBag.Title;
+    var role = userDetail.Role;
+    if (title == "Question")
+    {
+        changeBg = "style=background:#2a2a2a!important;color:#fff";
+        scrollBar = "overflow-y: hidden";
+    }
+
+    Context.Request.Cookies.TryGetValue("cookie_AppUserSetting", out string? appSettingCookieValue);
+    AppSettingCookie appSettingCookie = null;
+    string? subjectId = string.Empty;
+    string? userId = string.Empty;
+    if (appSettingCookieValue != null)
+    {
+        appSettingCookie = JsonConvert.DeserializeObject<AppSettingCookie?>(appSettingCookieValue);
+
+        subjectId = appSettingCookie.SubjectId;
+        userId = appSettingCookie.AppUserId;
+    }
+
+    if (userDetail.Role.ToLower() == "student" && appSettingCookie == null)
+    {
+        var host = Context.Request.Scheme + "://" + Context.Request.Host.Value;
+        var redirectUrl = host + "/Identity/Account/Login";
+        Context.Response.Redirect(redirectUrl);
+        return;
+    }
+    var temp = "";
+}
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="ie8" lang="en">
+    <![endif]-->
+<!--[if IE 9]>
+    <html class="ie9" lang="en">
+        <![endif]-->
+<!--[if !IE]>
+        <!-->
+<html lang="en">
+<!--
+          <![endif]-->
+<head>
+    <title>ConnectTo.Ai-@ViewData["Title"]</title>
+    <!--[if IE]>
+     <meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" />
+     <![endif]-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" sizes="57x57" href="~/assets/images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/assets/images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/assets/images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/assets/images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/assets/images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/assets/images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/assets/images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/assets/images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/assets/images/android-icon-192x192.png">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/images/favicon.ico">
+
+    <link rel="manifest" href="~/assets/images/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="~/assets/images/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400italic,600,700|Raleway:100,300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/assets/css/vendors.bundle.min.css">
+    <link rel="stylesheet" href="~/assets/css/theme.bundle.min.css">
+    <link rel="stylesheet" href="~/assets/css/themes/theme-1.min.css" id="skin_color">
+    <link href="~/vendor/select2/dist/css/select2.min.css" rel="stylesheet" media="screen">
+ 
+</head>
+<body>
+    <div id="app" style="@scrollBar">
+        @{
+            if (userDetail.Role.ToLower() == "student")
+            {
+                await Html.RenderPartialAsync("~/Areas/Student/Views/Shared/_Sidebar.cshtml");
+            }
+            if (userDetail.Role.ToLower() == "avatar")
+            {
+                //await Html.RenderPartialAsync("~/Areas/Avatar/Views/Shared/_Sidebar.cshtml");
+            }
+            else if (userDetail.Role.ToLower() == "admin")
+            {
+                await Html.RenderPartialAsync("~/Areas/Admin/Views/Shared/_Sidebar.cshtml");
+            }
+        }
+
+        <div class="app-content" @*style="background:#343541"*@>
+            @{
+                if (userDetail.Role.ToLower() == "avatar")
+                {
+                    //await Html.RenderPartialAsync("~/Areas/Avatar/Views/Shared/_Header.cshtml");
+                }
+                else
+                {
+                    await Html.RenderPartialAsync("~/Views/Shared/_Header.cshtml");
+                }
+            }
+
+            @RenderBody()
+        </div>
+        @{
+            await Html.RenderPartialAsync("~/Views/Shared/_footer.cshtml");
+            //await Html.RenderPartialAsync("~/Views/Shared/_Off-Sidebar.cshtml");
+            //await Html.RenderPartialAsync("~/Views/Shared/_settings.cshtml");
+        }
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/3.0.7/marked.min.js"></script>
+    <script src="~/assets/js/vendors.bundle.min.js"></script>
+    <script src="~/vendor/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/vendor/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/vendor/autosize/dist/autosize.min.js"></script>
+    <script src="~/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/vendor/selectFx/classie.js"></script>
+    <script src="~/vendor/selectFx/selectFx.js"></script>
+    <script src="~/vendor/select2/dist/js/select2.min.js"></script>
+    <script src="~/vendor/wickedpicker/dist/wickedpicker.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="~/assets/js/main.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+        NProgress.configure({
+            showSpinner: !1
+        }), NProgress.start(), NProgress.set(.4);
+        var interval = setInterval(function () {
+            NProgress.inc()
+        }, 1e3);
+        jQuery(document).ready(function () {
+            NProgress.done(),
+                clearInterval(interval),
+                Main.init()
+        })
+    </script>
+    <script src="~/assets/js/index.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Index.init()
+        })
+    </script>
+    <script src="~/assets/js/form-elements.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            FormElements.init()
+        })
+    </script>
+    <script>
+        // Function to get the value of a specific cookie
+        function getCookie(cookieName) {
+            const cookieString = document.cookie;
+            const cookies = cookieString.split('; ');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].split('=');
+                if (cookie[0] === cookieName) {
+                    return decodeURIComponent(cookie[1]);
+                }
+            }
+            return null;
+        }
+
+        const myCookieValue = getCookie('AuthToken'); // Replace 'myCookie' with your cookie name
+        if (myCookieValue !== null) {
+            const parsedCookieValue = JSON.parse(myCookieValue);
+            const name = parsedCookieValue.Name;
+            //console.log("Name:", name);
+            $('span[class="username"][id="username"]').html(name + ' <i class="ti-angle-down"></i>');
+        } else {
+            console.log('Cookie not found');
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#subjectAnchor").click(function () {
+                //loadTopicMenu()
+            });
+        });
+
+        function loadTopicMenu() {
+            var _subjectId = '@subjectId';
+            var _userId = '@userId';
+            console.log("userTopics: " + userTopics);
+            if (userTopics == null || userTopics == 'undefined') {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetTopics", "gpt")', // we are calling json method
+                    dataType: 'json',
+                    data: {
+                        subjectId: _subjectId,
+                        userId: _userId
+                    },
+                    success: function (result) {
+                        var resultStr = JSON.stringify(result);
+                        localStorage.setItem("user-topics", resultStr);
+                    },
+                    error: function (ex) {
+                        console.log(ex);
+                        //alert('Failed to retrieve status.' + ex.responseText);
+                    }
+                });
+            }
+
+            const myUserTopics = localStorage.getItem("user-topics")
+            if (myUserTopics !== null) {
+                const userTopics = JSON.parse(myUserTopics);
+
+                $('#subjectItems').find('UL[class="sub-menu"]').empty();
+
+                $.each(userTopics, function (index, item) {
+
+                    if (item.title.length > 25) {
+                        $('#subjectItems')
+                            .find('UL[class="sub-menu"]')
+                            .append(`<li><a href="javascript:;" id='` + item.Id + `'><span title='` + item.title + `'>` + item.title.substring(0, 25) + `...</span> </a></li>`);
+                    } else {
+                        $('#subjectItems')
+                            .find('UL[class="sub-menu"]')
+                            .append(`<li><a href="javascript:;" id='` + item.Id + `'><span title='` + item.title + `'>` + item.title + `</span> </a></li>`);
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        if ('@role' == 'student') {
+            jQuery(document).ready(function () {
+                LoadLeftNavBar();
+            });
+        }
+        function LoadLeftNavBar() {
+
+            var userTopicStr = localStorage.getItem("user-topics");
+            var userTopics = JSON.parse(userTopicStr);
+
+            //console(userTopicStr);
+
+            var _subjectId = '@subjectId';
+            var _userId = '@userId';
+
+            if (userTopics == null || userTopics == 'undefined') {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetTopics", "gpt")', // we are calling json method
+                    dataType: 'json',
+                    data: {
+                        subjectId: _subjectId,
+                        userId: _userId
+                    },
+                    success: function (result) {
+                        console.log("result: " + result);
+                        var resultStr = JSON.stringify(result);
+                        localStorage.setItem("user-topics", resultStr);
+                        $.each(result, function (index, item) {
+
+                            if (item.title.length > 25) {
+                                $('#subjectItems')
+                                    .find('UL[class="sub-menu"]')
+                                    .append(`<li><a href="/student/subject/index/?id=` + item.id + `"  id='` + item.id + `'><span title='` + item.title + `'>` + item.title.substring(0, 25) + `...</span> </a></li>`);
+                            } else {
+                                $('#subjectItems')
+                                    .find('UL[class="sub-menu"]')
+                                    .append(`<li><a href="/student/subject/index/?id=` + item.id + `" id='` + item.id + `'><span title='` + item.title + `'>` + item.title + `</span> </a></li>`);
+                            }
+                        });
+                    },
+                    error: function (ex) {
+                        console.log(ex);
+                        //alert('Failed to retrieve status.' + ex.responseText);
+                    }
+                });
+            }
+            else {
+
+                $.each(userTopics, function (index, item) {
+
+                    if (item.title.length > 25) {
+                        $('#subjectItems')
+                            .find('UL[class="sub-menu"]')
+                            .append(`<li><a href="/student/subject/index/?id=` + item.id + `"  id='` + item.id + `'><span title='` + item.title + `'>` + item.title.substring(0, 25) + `...</span> </a></li>`);
+                    } else {
+                        $('#subjectItems')
+                            .find('UL[class="sub-menu"]')
+                            .append(`<li><a href="/student/subject/index/?id=` + item.id + `" id='` + item.id + `'><span title='` + item.title + `'>` + item.title + `</span> </a></li>`);
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        //Get all select elements
+        const selects = document.querySelectorAll('select');
+        //Add event listeners to each select element
+        selects.forEach(select => {
+            select.addEventListener('focus', function () {
+                this.style.backgroundColor = 'lightblue'; // Change background color when focused
+            });
+
+            select.addEventListener('blur', function () {
+                this.style.backgroundColor = 'white'; // Reset background color when focus is lost
+            });
+        });
+    </script>
+    <script>
+        //this fucntion is called from header
+        function chooseSubject(_id, _subjectId, _language, _subject) {
+
+            var _inputType = $('#settings').find("input[type='radio'][checked]").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ChangeAppUserSetting", "AppUserSettings")', // we are calling json method
+                dataType: 'json',
+                data: {
+                    id: _id,
+                    subjectId: _subjectId,
+                    language: _language,
+                    inputType: _inputType
+                },
+                success: function (result) {
+                    console.log("result: " + result);
+                    $('#selectedSubject').text(_subject);
+                    $('#selectedSubject').attr("subjectId", _subjectId);
+                    $('#selectedSubject').parent("a").attr("title", "Selected subject is " + _subject);
+                    localStorage.removeItem("user-topics");
+                    window.location.reload();
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    // alert('Failed to retrieve status.' + ex.responseText);
+                }
+            });
+        }
+    </script>
+    <script>
+
+        const subjectsCookie = getCookie('cookie_Subjects');
+
+        if ('@role' == 'student' && subjectsCookie == null) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetSubjects", "gpt")', // we are calling json method
+                dataType: 'json',
+                success: function (result) {
+                    var resultStr = JSON.stringify(result);
+                    Cookies.set("cookie_Subjects", resultStr);
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    //alert('Failed to retrieve status.' + ex.responseText);
+                }
+            });
+        }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

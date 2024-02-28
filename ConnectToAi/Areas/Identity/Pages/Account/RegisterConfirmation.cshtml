@@ -1,0 +1,28 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Registeration confirmation";
+}
+<div class="main-login col-10 offset-1 col-sm-8 offset-sm-2 col-md-4 offset-md-4">
+    <div class="logo margin-top-30">
+        <a class="nav-link text-white" href="~/">
+            <img src="~/assets/images/ConnectoAi.svg" alt="Connecto.Ai">
+        </a>
+    </div>
+    <h1>@ViewData["Title"]</h1>
+    @{
+        //if (@Model.DisplayConfirmAccountLink)
+        //{
+        //    <p>
+        //        This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
+        //        Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
+        //    </p>
+        //}
+        //else
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                Please check your email to confirm your account.
+            </div>
+        }
+    }
+</div>

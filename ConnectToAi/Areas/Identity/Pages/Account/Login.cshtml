@@ -1,0 +1,62 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="main-login col-10 offset-1 col-sm-8 offset-sm-2 col-md-4 offset-md-4">
+    <div class="logo margin-top-30">
+        <a class="nav-link text-white" href="~/">
+            <img src="~/assets/images/ConnectoAi.svg" alt="Connetc To Ai">
+        </a>
+    </div>
+    <div class="box-login">
+        <form id="account" method="post">
+            <fieldset>
+                <legend>Sign in to your account</legend>
+                <p>Please enter your name and password to log in.</p>
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-group">
+                    <span class="input-icon">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="username" />
+                        <i class="fa fa-user"></i>
+                    </span>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group form-actions">
+                    <span class="input-icon">
+                        <input asp-for="Input.Password" type="password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                        <i class="fa fa-lock"></i>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </span>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-actions">
+                    <div class="checkbox clip-check check-primary">
+                        <label asp-for="Input.RememberMe" class="form-label">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">
+                        Login <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+                </div>
+                <div class="new-account">
+                    Don't have an account yet? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create an account</a>
+                </div>
+                <p>
+                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                </p>
+
+            </fieldset>
+        </form>
+        <div class="copyright">
+            &copy; <span class="current-year"></span>
+            <span class="text-bold text-uppercase">ConnetcTo.Ai</span>. <span>All rights reserved</span>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

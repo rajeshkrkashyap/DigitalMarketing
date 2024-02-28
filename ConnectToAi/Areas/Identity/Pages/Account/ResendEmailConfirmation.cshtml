@@ -1,0 +1,42 @@
+﻿@page
+@model ResendEmailConfirmationModel
+@{
+    ViewData["Title"] = "Resend email confirmation";
+}
+
+<div class="main-login col-10 offset-1 col-sm-8 offset-sm-2 col-md-4 offset-md-4">
+    <div class="logo margin-top-30">
+        <a class="nav-link text-white" href="~/">
+            <img src="~/assets/images/ConnectoAi.svg" alt="Connecto.Ai">
+        </a>
+    </div>
+    <div class="box-forgot">
+        <form method="post">
+            <fieldset>
+                <legend>Enter your email.</legend>
+                <p>Enter your e-mail address below to resend email confirmation.</p>
+                <div class="form-group">
+                    <span class="input-icon">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" name="email" placeholder="Email" />
+                        <i class="fa fa-envelope-o"></i>
+                    </span>
+                </div>
+                <div class="form-actions">
+                    <p>
+                        Back to login? <a href="login">Log-in</a>
+                    </p>
+                    <button type="submit" class="btn btn-primary pull-right">
+                        Resend <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="copyright">
+            &copy; <span class="current-year"></span>
+            <span class="text-bold text-uppercase">ConnetcTo.Ai</span>. <span>All rights reserved</span>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

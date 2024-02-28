@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ConnectToAi</title>
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400italic,600,700|Raleway:100,300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/assets/css/vendors.bundle.min.css">
+    <link rel="stylesheet" href="~/assets/css/theme.bundle.min.css">
+    <link rel="stylesheet" href="~/assets/css/themes/theme-1.min.css" id="skin_color">
+</head>
+<body>
+    <div id="app">
+        <div class="app-content">
+            <header>
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="~/assets/images/ConnectoAi.svg" style="width:260px" />
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="ti-align-justify" style="color:#fff"></i>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav flex-grow-1">
+
+                                @*<li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                </li>*@
+                            </ul>
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+            @RenderBody()
+
+        </div>
+
+        <footer style="margin-left:0px">
+            <div class="footer-inner">
+                <div class="pull-left"> &copy; <span class="current-year"></span> <span class="text-bold text-uppercase">ClipTheme</span>. <span>All rights reserved</span> </div>
+                <div class="pull-right">
+                    <span class="go-top">
+                        <i class="ti-angle-up"></i>
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Function to get the value of a specific cookie
+        function getCookie(cookieName) {
+            const cookieString = document.cookie;
+            const cookies = cookieString.split('; ');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].split('=');
+                if (cookie[0] === cookieName) {
+                    return decodeURIComponent(cookie[1]);
+                }
+            }
+            return null;
+        }
+
+        const myCookieValue = getCookie('AuthToken'); // Replace 'myCookie' with your cookie name
+        if (myCookieValue !== null) {
+            const parsedCookieValue = JSON.parse(myCookieValue);
+            const role = parsedCookieValue.Role;
+            const name = parsedCookieValue.Name;
+
+            $('#register').show();
+            $('#login').show();
+            $('#logout').hide();
+            if (role == 'student') {
+                $('#register').hide();
+                $('#login').hide();
+
+                $('#logout').show();
+                $('span[class="username"][id="username"]').html('Hi! ' + name);
+            }
+            if (role == 'admin') {
+                $('#register').hide();
+                $('#login').hide();
+
+                $('#logout').show();
+                $('span[class="username"][id="adminUsername"]').html('Hi! ' + name);
+            }
+
+            console.log("Role:", role);
+        } else {
+            console.log('Cookie not found');
+        }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

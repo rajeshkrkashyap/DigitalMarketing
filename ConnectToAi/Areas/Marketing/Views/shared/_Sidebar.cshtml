@@ -1,0 +1,99 @@
+﻿@using Core.Shared.Entities;
+@using Core.Shared;
+@{
+    string title = ViewBag.Title;
+    string isOpenDashBoard = "";
+    string isOpenAnalysing= "";
+    string isActiveSettings = "";
+    string isOpenSEOAutomation = "";
+    string isActiveSubscription = "";
+    switch (title)
+    {
+        case "Dashboard":
+            isOpenDashBoard = "active";
+            break;
+        case "Seoautomation":
+            isOpenSEOAutomation = "active";
+            break;
+        case "Settings":
+            isActiveSettings = "active";
+            break;
+        case "Subscription":
+            isActiveSubscription = "active";
+            break;
+        default:
+            break;
+    }
+}
+
+<div class="sidebar app-aside" id="sidebar">
+    <div class="sidebar-container perfect-scrollbar">
+        <nav>
+            <ul class="main-navigation-menu" style="margin-top:0px;">
+                <li class="@isOpenDashBoard">
+                    <a href="/marketing/Dashboard/Index">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-dashboard"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Dashboard</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="@isOpenAnalysing">
+                    <a href="/marketing/Analysing/Index">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-wand"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Analysing</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="@isOpenSEOAutomation">
+                    <a href="/marketing/SEOAutomation/Index">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-agenda"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">SEO Automation</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="@isActiveSettings">
+                    <a href="/marketing/Default/Index">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-settings"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Settings</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="main-navigation-menu" style="margin-bottom:1px;bottom:0;position:absolute;">
+                <li class="@isActiveSubscription ">
+                    <a href="/marketing/Subscription/Index">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-package"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Subscription</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

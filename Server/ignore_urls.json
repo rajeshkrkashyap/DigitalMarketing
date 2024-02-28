@@ -1,0 +1,8 @@
+[
+  "^https?://twitter\\.com/",
+  "^https?://facebook\\.com/",
+  "^https?://instagram\\.com/",
+  "^https?://example\\.com/login",
+  "^https?://example\\.com/auth"
+  // Add more patterns as needed
+]

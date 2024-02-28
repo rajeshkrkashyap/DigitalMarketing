@@ -1,0 +1,322 @@
+﻿@{
+    string title = ViewBag.Title;
+    string isOpenDashboard = "";
+    string isOpenQuestion = "";
+    string isOpenInstruction = "";
+    string isActiveTeam = "";
+
+    switch (title)
+    {
+        case "Dashboard":
+            isOpenDashboard = "active";
+            break;
+        case "Question":
+            isOpenQuestion = "active";
+            break;
+        case "Instruction":
+            isOpenInstruction = "active";
+            break;
+        case "Team":
+            isActiveTeam = "active";
+            break;
+        default:
+            break;
+    }
+}
+
+<div class="sidebar app-aside" id="sidebar">
+    <div class="sidebar-container perfect-scrollbar">
+        <nav>
+            <div class="search-form">
+                <a class="s-open" href="#">
+                    <i class="ti-search"></i>
+                </a>
+                <form class="navbar-form" role="search">
+                    <a class="s-remove" href="#" target=".navbar-form">
+                        <i class="ti-close"></i>
+                    </a>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <button class="btn search-button" type="submit">
+                            <i class="ti-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="navbar-title">
+                <span>Main Navigation</span>
+            </div>
+            <ul class="main-navigation-menu">
+                <li class="@isOpenDashboard">
+                    <a href="#">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-home"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Dashboard</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="@isOpenQuestion">
+                    <a href="Question">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-help"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Question</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="@isOpenInstruction">
+                    <a href="Index">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-info"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Instruction</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-menu-alt"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">4 Level Menu </span>
+                                <i class="icon-arrow"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="javascript:;">
+                                <span>Item 1</span>
+                                <i class="icon-arrow"></i>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Sample Link 1</span>
+                                        <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">Sample Link 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Sample Link 2</span>
+                                        <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">Sample Link 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Sample Link 3</span>
+                                        <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">Sample Link 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <span>Item 2</span>
+                                <i class="icon-arrow"></i>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Sample Link 1</span>
+                                        <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">Sample Link 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Sample Link 2</span>
+                                        <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">Sample Link 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Sample Link 3</span>
+                                        <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">Sample Link 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <span>Item 3</span>
+                                <i class="icon-arrow"></i>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Sample Link 1</span>
+                                        <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">Sample Link 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Sample Link 2</span>
+                                        <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">Sample Link 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Sample Link 3</span>
+                                        <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">Sample Link 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sample Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="navbar-title">
+                <span>Core Features</span>
+            </div>
+            <ul class="folders">
+                <li>
+                    <a href="pages_calendar.html">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <span class="fa-stack">
+                                    <i class="fa fa-square fa-stack-2x"></i>
+                                    <i class="fa fa-terminal fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Calendar</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="pages_messages.html">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <span class="fa-stack">
+                                    <i class="fa fa-square fa-stack-2x"></i>
+                                    <i class="fa fa-folder-open-o fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Messages</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <div class="wrapper">
+                <a href="documentation.html" class="button-o">
+                    <i class="ti-settings"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+</div>

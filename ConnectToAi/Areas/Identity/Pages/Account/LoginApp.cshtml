@@ -1,0 +1,212 @@
+﻿@page
+@model LoginAppModel
+@{
+    ViewData["Title"] = "Log in";
+    var status = TempData["OTPNotMatch"];
+    var sessionId = TempData["SessionId"];
+    var countryCode = TempData["CountryCode"];
+    var mobileNumber = TempData["MobileNumber"];
+
+    if (!string.IsNullOrEmpty(Convert.ToString(mobileNumber)))
+    {
+        Model.Input.MobileNumber = mobileNumber.ToString();
+    }
+
+    if (!string.IsNullOrEmpty(Convert.ToString(sessionId)))
+    {
+        Model.Input.SessionId = sessionId.ToString();
+    }
+
+}
+
+<div class="main-login col-12 col-sm-12  col-md-4 offset-md-4">
+    <div class="logo margin-top-30">
+        <a class="nav-link text-white" href="~/">
+            <img src="~/assets/images/ConnectoAi.svg" alt="Connetc To Ai">
+        </a>
+    </div>
+    <div class="box-login">
+        <form id="account" method="post">
+            <fieldset>
+                <legend>Sign in to your account</legend>
+                <p>Please enter mobile number.</p>
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <input id="countryCode" type="hidden" asp-for="Input.CountryCode" />
+                <div id="errorMessage" style="display:none" class="text-danger" role="alert">Please enter valid mobile number.</div>
+                <div class="form-group">
+                    <select id="countries" class="js-example-placeholder-single js-states custom-selec form-control">
+                        <option></option>
+                        <option value="001">USA</option>
+                        <option value="001">CAN</option>
+                        <option value="044">UK</option>
+                        <option value="061">AUS</option>
+                        <option value="049">GER</option>
+                        <option value="033">FRA</option>
+                        <option value="081">JPN</option>
+                        <option value="055">BRA</option>
+                        <option value="091">IND</option>
+                        <option value="027">SAF</option>
+                        <option value="086">CHN</option>
+                        <option value="007">RUS</option>
+                        <option value="034">ESP</option>
+                        <option value="039">ITA</option>
+                        <option value="052">MEX</option>
+                        <option value="082">KOR</option>
+                        <option value="054">ARG</option>
+                        <option value="234">NGA</option>
+                        <option value="020">EGY</option>
+                        <option value="254">KEN</option>
+                        <option value="966">SAU</option>
+                        <option value="090">TUR</option>
+                        <option value="066">THA</option>
+                        <option value="084">VNM</option>
+                        <option value="062">IDN</option>
+                        <option value="031">NLD</option>
+                        <option value="030">GRC</option>
+                        <option value="046">SWE</option>
+                        <option value="047">NOR</option>
+                        <option value="051">PER</option>
+                        <option value="351">PRT</option>
+                        <option value="048">POL</option>
+                        <option value="353">IRL</option>
+                        <option value="041">CHE</option>
+                        <option value="043">AUT</option>
+                        <option value="032">BEL</option>
+                        <option value="045">DNK</option>
+                        <option value="358">FIN</option>
+                        <option value="064">NZL</option>
+                        <option value="065">SGP</option>
+                        <option value="060">MYS</option>
+                        <option value="063">PHL</option>
+                        <option value="098">IRN</option>
+                        <option value="096">IRQ</option>
+                        <option value="972">ISR</option>
+                        <option value="961">LBN</option>
+                        <option value="211">SSD</option>
+                        <option value="977">NPL</option>
+                        <option value="092">PAK</option>
+                        <option value="880">BGD</option>
+                        <option value="094">LKA</option>
+                        <option value="420">CZE</option>
+                        <option value="036">HUN</option>
+                        <option value="385">HRV</option>
+                        <option value="040">ROU</option>
+                        <option value="359">BGR</option>
+                        <option value="372">EST</option>
+                        <option value="371">LVA</option>
+                        <option value="370">LTU</option>
+                        <option value="381">SRB</option>
+                    </select>
+                    <span asp-validation-for="Input.CountryCode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+
+                    <span class="input-icon">
+                        <input id="divMobile" type="number" asp-for="Input.MobileNumber" maxlength="10" class="form-control" autocomplete="username" aria-required="true" placeholder="mobile number" />
+                        <i class="fa fa-user"></i>
+                    </span>
+                    <span asp-validation-for="Input.MobileNumber" class="text-danger"></span>
+                </div>
+                <p id="divMessage" style="color:forestgreen; display:none">OTP is sent to you mobile nuber, Please enter OTP.</p>
+                <p id="divErrorMessage" style="color:orangered; display:none">OTP is not match, Please enter correct OTP.</p>
+                <div id="divOtp" class="form-group form-actions" style="display:none">
+                    <span class="input-icon">
+                        <input asp-for="Input.OTP" type="number" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Enter OTP" />
+                        <i class="fa fa-lock"></i>
+                    </span>
+                    <span asp-validation-for="Input.OTP" class="text-danger"></span>
+                </div>
+                <div class="form-actions" style="display:block">
+                    <button id="btnNext" type="button" class="btn btn-secondry pull-right">
+                        Next <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+                </div>
+                <input asp-for="Input.SessionId" type="hidden" class="form-control" value="@Model.Input.SessionId" />
+                <div id="btnLogin" class="form-actions" style="display:none">
+                    <button type="button" id="btnBack" class="btn btn-secondry pull-left">
+                        Back <i class="fa fa-arrow-circle-left"></i>
+                    </button>
+                    <button type="submit" class="btn btn-primary pull-right">
+                        Login <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="copyright">
+            &copy; <span class="current-year"></span>
+            <span class="text-bold text-uppercase">ConnetcTo.Ai</span>. <span>All rights reserved</span>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+            console.log("ready!");
+
+            var isOTPMatch = '@status';
+
+            if (isOTPMatch.length > 0) {
+                var _sessionId = '@sessionId';
+                var countryCode = '@countryCode';
+                $('#btnNext').parent('div').hide();
+                $('#divMobile').parent("span").hide();
+                $("#countries").hide();
+                $('#Input_SessionId').val(_sessionId);
+                $('#divMessage').show();
+                $('#divOtp').show();
+                $('#btnLogin').show();
+                $('#divErrorMessage').show();
+                $("#countries").val(countryCode);
+            }
+        });
+
+        $('#btnBack').click(function () {
+            $('#divMobile').parent("span").show();
+            $("#countries").show();
+            $('#btnNext').parent('div').show();
+            $('#btnNext').prop("disabled", false);
+            $('#divMessage').hide();
+            $('#divOtp').hide();
+            $('#btnLogin').hide();
+            $('#divErrorMessage').hide();
+
+        });
+
+        $('#btnNext').click(function () {
+            if ($('#divMobile').val().length < 10) {
+                alert($('#divMobile').val().length);
+                $('#errorMessage').show();
+                return;
+            }
+            var _mobileNumber = $('#divMobile').val();
+            $('#errorMessage').hide();
+
+            $(this).prop("disabled", true);
+            $.ajax({
+                type: 'POST',
+                url: '/Home/SendOTP', //we are calling json method,
+                dataType: 'json',
+                data: {
+                    countryCode: "91",
+                    mobileNumber: _mobileNumber
+                },
+                success: function (result) {
+
+                    $('#btnNext').parent('div').hide();
+                    $('#divMobile').parent("span").hide();
+                    $('#Input_SessionId').val(result);
+                    $('#divMessage').show();
+                    $('#divOtp').show();
+                    $('#btnLogin').show();
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    //alert('Failed to retrieve status.' + ex.responseText);
+                }
+            });
+        });
+
+    </script>
+}

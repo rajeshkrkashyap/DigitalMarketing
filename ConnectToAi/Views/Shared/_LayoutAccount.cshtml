@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="ie8" lang="en">
+    <![endif]-->
+<!--[if IE 9]>
+    <html class="ie9" lang="en">
+        <![endif]-->
+<!--[if !IE]>
+        <!-->
+<html lang="en">
+<!--
+          <![endif]-->
+<head>
+    <title>ConnectTo.Ai</title>
+    <!--[if IE]>
+                <meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" />
+                <![endif]-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="ClipTwo - Responsive Admin Template build with Bootstrap" name="description">
+    <meta content="ClipTheme" name="author">
+    <link rel="apple-touch-icon" sizes="57x57" href="~/assets/images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/assets/images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/assets/images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/assets/images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/assets/images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/assets/images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/assets/images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/assets/images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/assets/images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/assets/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/images/favicon-16x16.png">
+    <link rel="manifest" href="~/assets/images/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="~/assets/images/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400italic,600,700|Raleway:100,300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/assets/css/vendors.bundle.min.css">
+    <link rel="stylesheet" href="~/assets/css/theme.bundle.min.css">
+    <link rel="stylesheet" href="~/assets/css/themes/theme-1.min.css" id="skin_color">
+    <link href="~/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" media="screen">
+    <link href="~/vendor/select2/dist/css/select2.min.css" rel="stylesheet" media="screen">
+    <link href="~/vendor/wickedpicker/dist/wickedpicker.min.css" rel="stylesheet" media="screen">
+     
+</head>
+
+<body class="login">
+    <div class="row">
+        @RenderBody()
+    </div>
+    <script src="~/assets/js/vendors.bundle.min.js"></script>
+    <script src="~/vendor/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/vendor/autosize/dist/autosize.min.js"></script>
+    <script src="~/vendor/selectFx/classie.js"></script>
+    <script src="~/vendor/selectFx/selectFx.js"></script>
+    <script src="~/vendor/select2/dist/js/select2.min.js"></script>
+    <script src="~/vendor/wickedpicker/dist/wickedpicker.min.js"></script>
+    <script src="~/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/assets/js/main.min.js"></script>
+    <script>
+        NProgress.configure({
+            showSpinner: !1
+        }), NProgress.start(), NProgress.set(.4);
+        var interval = setInterval(function () {
+            NProgress.inc()
+        }, 1e3);
+        jQuery(document).ready(function () {
+            NProgress.done(), clearInterval(interval), Main.init()
+        })
+    </script>
+    <script src="~/assets/js/login.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Login.init()
+        })
+    </script>
+    <script src="~/assets/js/form-elements.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            FormElements.init()
+        })
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

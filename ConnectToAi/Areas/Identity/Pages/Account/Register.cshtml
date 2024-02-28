@@ -1,0 +1,72 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="main-login col-10 offset-1 col-sm-8 offset-sm-2 col-md-4 offset-md-4">
+    <div class="logo margin-top-30">
+        <a class="nav-link text-white" href="~/">
+            <img src="~/assets/images/ConnectoAi.svg" alt="ConnectTo.Ai">
+        </a>
+    </div>
+    <div class="box-register">
+        <form id="registerForm" class="form-register" method="post">
+            <fieldset>
+                <legend>Sign Up</legend>
+                <p>Enter your account details below:</p>
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-group">
+                    <span class="input-icon">
+                        <input asp-for="Input.Name" class="form-control" autocomplete="name" aria-required="true" name="name" placeholder="Name" />
+                        <i class="fa fa-user"></i>
+                    </span>
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <span class="input-icon">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="email" aria-required="true" name="email" placeholder="Email" />
+                        <i class="fa fa-envelope"></i>
+                    </span>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <span class="input-icon">
+                        <input asp-for="Input.Password" type="password" class="form-control" autocomplete="new-password" aria-required="true" name="password" placeholder="password" />
+                        <i class="fa fa-lock"></i>
+                    </span>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <span class="input-icon">
+                        <input asp-for="Input.ConfirmPassword" type="password" class="form-control" autocomplete="password_again" aria-required="true" name="ConfirmPassword" placeholder="Password Again" />
+                        <i class="fa fa-lock"></i>
+                    </span>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox clip-check check-primary">
+                        <input type="checkbox" id="agree" value="agree">
+                        <label for="agree">I agree</label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <p>
+                        Already have an account? <a href="login">Log-in</a>
+                    </p>
+                    <button type="submit" class="btn btn-primary pull-right">
+                        Submit <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="copyright">
+            &copy; <span class="current-year"></span>
+            <span class="text-bold text-uppercase">ConnectTo.Ai</span>. <span>All rights reserved</span>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
