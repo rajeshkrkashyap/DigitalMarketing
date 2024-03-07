@@ -1,8 +1,435 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
+    var projects = (List<Project>)ViewBag.TotalProjectCreated;
+    if (projects == null)
+    {
+        return;
+    }
 }
+<link href="~/css/scanningstyle.css" rel="stylesheet" />
 <div class="main-content">
     <div class="wrap-content container " id="container">
         <h1>DashBoard</h1>
+        <a href="/marketing/Analysing/Index" class="btn btn-success btn-outline">
+            <i class="fa fa-circle-arrow-left"></i> Create Project
+        </a>
+        <a class="btn btn-info" href="#">@projects.Count()/5</a>
+        <div style="margin-top:10px;" class="row">
+            <div class="col-md-4">
+                <select class="form-control" id="projectSelect">
+                    <option value="" selected="selected">Select a Project</option>
+                    @foreach (var item in projects)
+                    {
+                        <option value="@item.Id" url="@item.URL">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-success" id="btnStart" style="display:none" href="#">START</a>
+            </div>
+        </div>
+
+        <div class="progress progress-lg" style="width:80%;height:40px;display:none">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                 role="progressbar" style="width:0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            </div>
+        </div>
+
+        <div id="analysisPanel" style="margin-top:10px;display:none">
+            <div class="row">
+                <div class="col-sm-5 col-md-4">
+                    <div class="user-left">
+
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Contact Information</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Time</td>
+                                    <td>
+                                        <div clas="text-center" id="time">
+                                            <span class="digits" id="hour">
+                                                00
+                                            </span>
+                                            <span class="text"> Hr </span>
+                                            <span class="digits" id="minute">
+                                                00
+                                            </span>
+                                            <span class="text"> Min </span>
+                                            <span class="digits" id="second">
+                                                00
+                                            </span>
+                                            <span class="text"> Sec </span>
+                                            <span class="digits" id="count" style="display:none">
+                                                00
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Total Analysed:</td>
+                                    <td id="totalPagesAnalysed">0 pages done</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="col-sm-7 col-md-8">
+                    <div class="panel panel-white" id="activities">
+                        <div class="panel-heading border-light">
+                            <h4 class="panel-title text-primary">Your website is analysing...</h4>
+                            <paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="load1" tool-dismiss="tool-dismiss"></paneltool>
+                        </div>
+                        <div collapse="activities" ng-init="activities=false" class="panel-wrapper">
+                            <div class="panel-body" style="height:100px">
+                                <div class="timeline-xs">
+
+                                    <div class="ocrloader" style="margin-top:10px">
+                                        <em></em>
+                                        <div>
+                                            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                                            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                                            <i></i><i></i><i></i>
+                                        </div>
+                                        <span></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-white space20">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Recent Tweets</h4>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="ltwt">
+                                <li class="ltwt_tweet">
+                                    <p class="ltwt_tweet_text"><a href class="text-info">Shakespeare </a>Some are born great, some achieve greatness, and some have greatness thrust upon them.</p><span class="block text-light"><i class="fa fa-fw fa-clock-o"></i> 2 minuts ago</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+
+            var hour = 0;
+            if (getCookie("connectToAi.Hours") !== null) {
+                hour = getCookie("connectToAi.Hours");
+            }
+
+            var minute = 0;
+            if (getCookie("connectToAi.Minuts") !== null) {
+                minute = getCookie("connectToAi.Minuts");
+            }
+
+            var second = 0;
+            if (getCookie("connectToAi.Seconds") !== null) {
+                second = getCookie("connectToAi.Seconds");
+            }
+
+            var count = 0;
+            if (getCookie("connectToAi.Count") !== null) {
+                count = getCookie("connectToAi.Count");
+            }
+
+            var isAnalysisUnderProcess = false;
+
+            if (getCookie("connectToAi.isAnalysisUnderProcess") !== null) {
+                isAnalysisUnderProcess = getCookie("connectToAi.isAnalysisUnderProcess") === "1";
+                if (isAnalysisUnderProcess) {
+                    $('#analysisPanel').show();
+                } else {
+                    $('#analysisPanel').hide();
+                    $('#btnStart').show();
+                }
+                $('#btnStart').attr("disabled", isAnalysisUnderProcess);
+                $('#projectSelect').attr("disabled", isAnalysisUnderProcess);
+
+                var selectedValue = getCookie("connectToAi.projectSelectValue");
+                $('#projectSelect').val(selectedValue);
+                $('#projectSelect').trigger('change');
+
+            } else {
+                $('#btnStart').attr("disabled", isAnalysisUnderProcess);
+                $('#projectSelect').attr("disabled", isAnalysisUnderProcess);
+                $('#analysisPanel').hide();
+            }
+
+            $('#projectSelect').on("change", function () {
+                if ($(this).val() != "") {
+                    $('#btnStart').attr("disabled", false);
+                    setCookie("connectToAi.projectSelectValue", $(this).val(), 7);
+                } else {
+                    $('#btnStart').attr("disabled", true);
+                }
+            });
+
+            $('#btnStart').click(function () {
+                var projectId = $('#projectSelect').val();
+                $.ajax({
+                    url: '@Url.Action("StartAnalysis", "DashBoard")',
+                    method: "POST",
+                    dataType: "text",
+                    data: { id: projectId },
+                    success: function (responseData) {
+                        // Update the content on the webpage
+                        console.log(responseData);
+                        $('#btnStart').attr("disabled", true);
+                        $('#projectSelect').attr("disabled", true);
+                        $('#analysisPanel').show();
+                        setCookie("connectToAi.isAnalysisUnderProcess", "1", 7);
+                        reset();
+                        start();
+                        getProjectStatus();
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors if any
+                        console.error("Error loading data. Status: " + status + ", Error: " + error);
+                        stop();
+                    }
+                });
+            });
+
+            function start() {
+                timer = true;
+                stopWatch();
+            }
+            function stop() {
+                timer = false;
+                reset();
+            }
+            function reset() {
+                timer = false;
+                hour = 0;
+                minute = 0;
+                second = 0;
+                count = 0;
+                document.getElementById('hour').innerHTML = "00";
+                document.getElementById('minute').innerHTML = "00";
+                document.getElementById('second').innerHTML = "00";
+                document.getElementById('count').innerHTML = "00";
+
+                setCookie("connectToAi.Seconds", second, 7);
+                setCookie("connectToAi.Minuts", minute, 7);
+                setCookie("connectToAi.Hours", hour, 7);
+            }
+            function stopWatch() {
+                if (timer) {
+                    count++;
+                    if (count == 100) {
+                        second = parseInt(second) + 1;
+                        count = 0;
+                        setCookie("connectToAi.Seconds", second, 7);
+                    }
+                    if (second == 60) {
+                        minute = parseInt(minute) + 1;
+                        second = 0;
+                        setCookie("connectToAi.Minuts", minute, 7);
+                    }
+                    if (minute == 60) {
+                        hour = parseInt(hour) + 1;
+                        minute = 0;
+                        second = 0;
+                        setCookie("connectToAi.Hours", hour, 7);
+                    }
+
+                    var hourString = parseInt(hour);
+                    var minuteString = parseInt(minute);
+                    var secondString = parseInt(second);
+                    var countString = parseInt(count);
+
+                    if (hour < 10) {
+                        hourString = 0 + hourString;
+                    }
+                    if (minute < 10) {
+                        minuteString = 0 + minuteString;
+                    }
+                    if (second < 10) {
+                        secondString = 0 + secondString;
+                    }
+                    if (count < 10) {
+                        countString = 0 + countString;
+                    }
+
+                    document.getElementById('hour').innerHTML = hourString;
+                    document.getElementById('minute').innerHTML = minuteString;
+                    document.getElementById('second').innerHTML = secondString;
+                    document.getElementById('count').innerHTML = countString;
+                    setTimeout(stopWatch, 10);
+                }
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set the value of the option you want to be selected
+            var selectedValue = getCookie("connectToAi.projectSelectValue");
+
+            // Use plain JavaScript to set the 'selected' attribute on the desired option
+            var selectElement = document.getElementById('projectSelect');
+            for (var i = 0; i < selectElement.options.length; i++) {
+                if (selectElement.options[i].value === selectedValue) {
+                    selectElement.options[i].selected = true;
+                    break;
+                }
+            }
+
+            // If you are using a library that enhances the appearance of the dropdown
+            // (e.g., select2, Chosen), trigger the 'change' event to notify the library
+            // about the change in the selected option.
+            var event = new Event('change');
+            selectElement.dispatchEvent(event);
+        });
+    </script>
+    <script>
+        var TxtType = function (el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 10) || 1000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+        };
+
+        TxtType.prototype.tick = function () {
+            var i = this.loopNum % this.toRotate.length;
+            var fullTxt = this.toRotate[i];
+
+            if (this.isDeleting) {
+                this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+                this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+
+            this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
+
+            var that = this;
+            var delta = 200 - Math.random() * 100;
+
+            if (this.isDeleting) { delta /= 2; }
+
+            if (!this.isDeleting && this.txt === fullTxt) {
+                delta = this.period;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.loopNum++;
+                delta = 500;
+            }
+
+            setTimeout(function () {
+                that.tick();
+            }, delta);
+        };
+
+        window.onload = function () {
+            var elements = document.getElementsByClassName('typewrite');
+            for (var i = 0; i < elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-type');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                    new TxtType(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // INJECT CSS
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
+            document.body.appendChild(css);
+        };
+    </script>
+    <script>
+        function setCookie(name, value, daysToExpire) {
+            var expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + daysToExpire);
+
+            var cookieString = name + "=" + encodeURIComponent(value) + "; expires=" + expirationDate.toUTCString() + "; path=/";
+            document.cookie = cookieString;
+        }
+
+        // Example: Set a cookie named "myCookie" with value "exampleValue" that expires in 7 days
+
+        function updateCookie(name, newValue) {
+            // Check if the cookie exists
+            if (getCookie(name) !== null) {
+                // Update the existing cookie by setting a new value
+                setCookie(name, newValue, 7); // Assuming you want to keep the same expiration period
+            }
+        }
+
+
+        function getCookie(name) {
+            var cookies = document.cookie.split("; ");
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].split("=");
+                if (cookie[0] === name) {
+                    return decodeURIComponent(cookie[1]);
+                }
+            }
+            return null;
+        }
+    </script>
+
+    <script>
+        function getProjectStatus() {
+            console.log(getCookie("connectToAi.isAnalysisUnderProcess"));
+            if (getCookie("connectToAi.isAnalysisUnderProcess") !== null) {
+                var isAnalysisUnderProcessing = getCookie("connectToAi.isAnalysisUnderProcess") === "1";
+                console.log(isAnalysisUnderProcessing);
+
+                if (isAnalysisUnderProcessing) {
+                    var projectId = $('#projectSelect').val();
+                    $.ajax({
+                        url: '@Url.Action("GetProjectStatus", "DashBoard")',
+                        method: "POST",
+                        dataType: "text",
+                        data: { id: projectId },
+                        success: function (responseData) {
+                            // Update the content on the webpage
+                            const responseDataObject = JSON.parse(responseData);
+                            if (responseDataObject.analysisStatus == "Processing") {
+                                //setCookie("connectToAi.isAnalysisUnderProcess", "1", 7);
+                                $('#totalPagesAnalysed').text(responseDataObject.totlaPages + " pages done")
+                            } else {
+                                $('#btnStart').attr("disabled", false);
+                                $('#projectSelect').attr("disabled", false);
+                                $('#analysisPanel').hide();
+                                setCookie("connectToAi.isAnalysisUnderProcess", "0", 7);
+                                reset();
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            //Handle errors if any
+                            console.error("Error loading data. Status: " + status + ", Error: " + error);
+                        }
+                    });
+                }
+                else {
+                    $('#analysisPanel').hide();
+                    $('#btnStart').attr("disabled", false);
+                    $('#projectSelect').attr("disabled", false);
+
+                    setCookie("connectToAi.isAnalysisUnderProcess", "0", 7);
+                    //reset();
+                }
+            }
+
+            setTimeout(getProjectStatus, 1000 * 15);
+        }
+
+        getProjectStatus();
+    </script>
+}

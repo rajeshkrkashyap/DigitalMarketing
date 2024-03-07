@@ -24,6 +24,21 @@ namespace Core.Api.Controllers
             return _dbContext.Projects.Where(t => t.AppUserId == userId).ToList();
         }
 
+        [HttpPost("ProjectCount")]
+        public int ProjectCount(string userId)
+        {
+            try
+            {
+                var count = _dbContext.Projects.Where(t => t.AppUserId == userId && t.IsActive == true).Count();
+                return count;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+
+        }
+
         [HttpPost("GetByURL")]
         public Project GetByURL(string url)
         {
@@ -42,8 +57,8 @@ namespace Core.Api.Controllers
         {
             if (!string.IsNullOrEmpty(id))
             {
-                var project = _dbContext.Projects.FirstOrDefault(inst => inst.Id == id && inst.IsActive);
-                if (project!=null)
+                var project = _dbContext.Projects.FirstOrDefault(inst => inst.Id == id && inst.IsActive == true);
+                if (project != null)
                 {
                     return project;
                 }
@@ -97,7 +112,6 @@ namespace Core.Api.Controllers
             return null;
         }
 
-
         [HttpPost("Update")]
         public bool Update(Project Project)
         {
@@ -138,6 +152,21 @@ namespace Core.Api.Controllers
             {
                 var dbProject = _dbContext.Projects.FirstOrDefault(inst => inst.Id == id);
                 dbProject.AnalysisStatus = status;
+                dbProject.Updated = DateTime.UtcNow;
+                _dbContext.Projects.Update(dbProject);
+                _dbContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        [HttpPost("UpdatePageCount")]
+        public bool UpdatePageCount(string id, int pageCount)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                var dbProject = _dbContext.Projects.FirstOrDefault(inst => inst.Id == id);
+                dbProject.TotlaPages = pageCount;
                 dbProject.Updated = DateTime.UtcNow;
                 _dbContext.Projects.Update(dbProject);
                 _dbContext.SaveChanges();

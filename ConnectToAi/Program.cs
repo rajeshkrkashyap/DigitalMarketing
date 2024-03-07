@@ -34,13 +34,13 @@ builder.Services.AddSingleton<HttpContextAccessor>();
 builder.Services.AddSingleton<BlobStorageService>();
 builder.Services.AddSingleton<IAccountService, AccountService>();
 builder.Services.AddSingleton<OcrService>();
-
+builder.Services.AddScoped<BaseService>();
 builder.Services.AddScoped<AppService>();
 builder.Services.AddScoped<LoginViewModel>();
 builder.Services.AddScoped<OrderViewModel>();
 builder.Services.AddSingleton<ConfigService>();
 builder.Services.AddSingleton<AuthService>();
-
+builder.Services.AddScoped<ProjectService>();
 builder.Services.AddSingleton<ServiceService>();
 builder.Services.AddSingleton<RechargeService>();
 builder.Services.AddSingleton<AppUserService>();

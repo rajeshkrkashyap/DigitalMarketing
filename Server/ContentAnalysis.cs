@@ -2,6 +2,7 @@
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using System.Collections.Specialized;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -11,26 +12,19 @@ namespace Server
     {
         private string _baseUrl = "";
         private readonly HtmlDocument document;
-        private readonly ContentAnalysisService contentAnalysisService;
-        private readonly List<string>? ignoreWordList;
-        public ContentAnalysis(string htmlContent, string baseURL)
+        private readonly ContentAnalysisService _contentAnalysisService;
+        private readonly List<string>? _ignoreWordList;
+        public ContentAnalysis(List<string>? ignoreWordList, ContentAnalysisService contentAnalysisService)
+        {
+            document = new HtmlDocument();
+            _contentAnalysisService = contentAnalysisService;
+            _ignoreWordList = ignoreWordList;
+        }
+
+        public async Task ExtractAllInformationAsync(string baseURL, string htmlContent, string crawledId)
         {
             _baseUrl = baseURL;
-            document = new HtmlDocument();
             document.LoadHtml(htmlContent);
-            contentAnalysisService = new ContentAnalysisService();
-            string jsonFilePath = "ignore_keywords.json"; // Replace with the path to your JSON file
-            ignoreWordList = ReadJsonToList<string>(jsonFilePath);
-        }
-
-        private static List<T>? ReadJsonToList<T>(string filePath)
-        {
-            string json = System.IO.File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<List<T>>(json);
-        }
-
-        public async Task ExtractAllInformationAsync(string crawledId)
-        {
             var keywordsInJson = ExtractMetaTagKeyword();
             var keywordFrequency = ExtractKeywordFromContentWithTheirFrequency();
             var headings = ExtractHeadingSubheadings();
@@ -41,7 +35,7 @@ namespace Server
             var externalLinks = ExtractExternalLinks();
             var uRLStructure = URLStructure();
 
-            await contentAnalysisService.Create(new Core.Shared.Entities.ContentAnalysis
+            await _contentAnalysisService.Create(new Core.Shared.Entities.ContentAnalysis
             {
                 CrawledId = crawledId,
                 MetaTagKeywords = keywordsInJson,
@@ -54,11 +48,10 @@ namespace Server
                 ExternalLinks = externalLinks,
                 URLStructure = uRLStructure
             });
-
         }
         private string ExtractMetaTagKeyword()
         {
-            if (ignoreWordList == null)
+            if (_ignoreWordList == null)
             {
                 return null;
             }
@@ -73,7 +66,7 @@ namespace Server
                     keywords.Add(keyword);
                 }
 
-                var filteredKeywords = keywords.Where(k => !ignoreWordList.Contains(k.ToLower()));
+                var filteredKeywords = keywords.Where(k => !_ignoreWordList.Contains(k.ToLower()));
 
                 return JsonConvert.SerializeObject(filteredKeywords);
             }
@@ -81,7 +74,7 @@ namespace Server
         }
         private string ExtractKeywordFromContentWithTheirFrequency()
         {
-            if (ignoreWordList == null)
+            if (_ignoreWordList == null)
             {
                 return null;
             }
@@ -108,7 +101,7 @@ namespace Server
             }
 
 
-            var filteredKeywords = keywords.Where(k => !ignoreWordList.Contains(k.ToLower())).ToList();
+            var filteredKeywords = keywords.Where(k => !_ignoreWordList.Contains(k.ToLower())).ToList();
 
 
             //Getting frequency of the each words
@@ -137,12 +130,16 @@ namespace Server
         private string ExtractTitle()
         {
             HtmlNode titleNode = document.DocumentNode.SelectSingleNode("//title");
-            return titleNode.InnerText;
+            if (titleNode!=null)
+            {
+                return titleNode.InnerText;
+            }
+            return "";
         }
         private string ExtractMetaDescription()
         {
             HtmlNode metaDescriptionNode = document.DocumentNode.SelectSingleNode("//meta[@name='description']");
-            if (metaDescriptionNode!=null)
+            if (metaDescriptionNode != null)
             {
                 return metaDescriptionNode.GetAttributeValue("content", "");
             }
@@ -202,13 +199,19 @@ namespace Server
         }
         private string ExtractExternalLinks()
         {
-            var externalLinks = document.DocumentNode.Descendants("a")
+            var links = document.DocumentNode.Descendants("a")
                                                      .Where(a => a.Attributes["href"] != null &&
                                                                  (a.Attributes["href"].Value.StartsWith("http://") ||
                                                                   a.Attributes["href"].Value.StartsWith("https://")))
                                                      .Select(a => a.Attributes["href"].Value);
-
-            return JsonConvert.SerializeObject(externalLinks);
+            if (links != null && links.Count() > 0)
+            {
+                Uri uri = new Uri(_baseUrl);
+                var host = uri.Host.Replace("www.", "");
+                var externalLinks = links.Where(l => !l.Contains(host));
+                return JsonConvert.SerializeObject(externalLinks);
+            }
+            return null;
         }
         private string URLStructure()
         {

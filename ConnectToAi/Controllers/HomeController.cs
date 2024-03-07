@@ -14,12 +14,13 @@ namespace ConnectToAi.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
- 
         private readonly AuthService _authService;
-        public HomeController(ILogger<HomeController> logger, AuthService authService)
+        private readonly ConfigService _configService;
+        public HomeController(ILogger<HomeController> logger, AuthService authService, ConfigService configService)
         {
             _logger = logger;
             _authService = authService;
+            _configService = configService;
         }
         public IActionResult Logout()
         {
@@ -75,7 +76,7 @@ namespace ConnectToAi.Controllers
 
         private void LocalRedirectFuntion(string cookieValue, string host)
         {
-            if (cookieValue==null || host ==null)
+            if (cookieValue == null || host == null)
             {
                 return;
             }
@@ -83,14 +84,15 @@ namespace ConnectToAi.Controllers
             UserDetail userDetail = JsonConvert.DeserializeObject<UserDetail>(cookieValue);
             switch (userDetail.Role.ToLower())
             {
-                case "customer":
-                    ViewBag.RedirectUrl = host + "/Student/AppUserSettings/Index";
-                    break;
-                case "avatar":
-                    ViewBag.RedirectUrl = host + "/avatar/settings/Index";
-                    break;
                 case "marketing":
-                    ViewBag.RedirectUrl = host + "/marketing/Analysing/Index";
+                    using (ProjectService projectService = new(_configService))
+                    {
+                        var projects = projectService.ListAsync(userDetail.UserID).Result;
+                        if (projects.Count() > 0)
+                        { ViewBag.RedirectUrl = host + "/marketing/Dashboard/Index"; }
+                        else
+                        { ViewBag.RedirectUrl = host + "/marketing/Analysis/Index"; }
+                    }
                     break;
                 case "admin":
                     ViewBag.RedirectUrl = host + "/Admin/Instruction/Index";

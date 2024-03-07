@@ -12,6 +12,7 @@ namespace Core.Shared.Entities
         public string? ProjectId { get; set; }
         public string? URL { get; set; }
         public string? PageContent { get; set; }
+        public string AnalysisStatus { get; set; } = "Pending"; //InProgress/Failed/Completed
         public bool IsActive { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }

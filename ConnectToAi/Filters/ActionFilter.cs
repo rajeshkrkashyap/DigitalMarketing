@@ -20,7 +20,7 @@ namespace ConnectToAi.Filters
 
             if (cookieValue == null)
             {
-                var redirectUrl = host + "/Identity/Account/Login";
+                var redirectUrl = host + "/Identity/Account/LoginApp";
                 context.HttpContext.Response.Redirect(redirectUrl);
                 return;
             }
@@ -33,7 +33,7 @@ namespace ConnectToAi.Filters
             {
                 if (jwtToken != null && jwtToken.ValidTo < DateTime.UtcNow)
                 {
-                    var redirectUrl = host + "/Identity/Account/Login";
+                    var redirectUrl = host + "/Identity/Account/LoginApp";
                     context.HttpContext.Response.Redirect(redirectUrl);
                     return;
                 }

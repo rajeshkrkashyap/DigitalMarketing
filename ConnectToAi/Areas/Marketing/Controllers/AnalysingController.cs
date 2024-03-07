@@ -18,69 +18,47 @@ namespace ConnectToAi.Areas.Marketing.Controllers
         }
         public IActionResult Index()
         {
+            if (UserDetail!=null)
+            {
+                using (ProjectService projectService = new(_configService))
+                {
+                    var projects = projectService.ListAsync(UserDetail.UserID).Result;
+
+                    if (projects.Count()>0)
+                    {
+                        return RedirectToAction("Index", "Dashboard");
+                    }
+                }
+
+            }
             return View(new ProjectViewModel());
         }
         public IActionResult AddProject(ProjectViewModel projectViewModel)
         {
-
-            Request.Cookies.TryGetValue("ConnectToAi_DigitalMarketing_AuthToken", out string? cookieValue);
-            if (cookieValue != null)
+            using (ProjectService projectService = new(_configService))
             {
-                var userDetail = JsonConvert.DeserializeObject<UserDetail?>(cookieValue);
-
-                using (ProjectService projectService = new(_configService))
+                var addProject = new Project
                 {
-                    var addProject = new Project
-                    {
-                        Name = projectViewModel.Name,
-                        Description = projectViewModel.Description,
-                        URL = projectViewModel.URL,
-                        Created = DateTime.UtcNow,
-                        Updated = DateTime.UtcNow,
-                        IsActive = true,
-                        AnalysisStatus = "Start",
-                        AppUserId = userDetail.UserID
-                    };
+                    Name = projectViewModel.Name,
+                    Description = projectViewModel.Description,
+                    URL = projectViewModel.URL,
+                    Created = DateTime.UtcNow,
+                    Updated = DateTime.UtcNow,
+                    IsActive = true,
+                    AnalysisStatus = "Start",
+                    AppUserId = UserDetail.UserID
+                };
 
-                    var project = projectService.CreateAsync(addProject).Result;
+                var project = projectService.CreateAsync(addProject).Result;
 
-                    if (!string.IsNullOrEmpty(project.URL))
-                    {
-                        SendProjectForAnalysis(project.Id);
-                    }
+                if (!string.IsNullOrEmpty(project.URL))
+                {
+                    SendProjectForAnalysis(project.Id);
                 }
             }
-            return View();
+
+            return RedirectToAction("Index", "Dashboard");
         }
-
-        private void SendProjectForAnalysis(string id)
-        {
-            TcpClient client = new();
-            try
-            {
-                client.Connect("127.0.0.1", 12345); //Connect to server at IP address 127.0.0.1 (localhost) and port 12345
-                NetworkStream stream = client.GetStream();
-                string message = id;    //projectId //"https://royallvastramm.com" ;
-                byte[] data = Encoding.ASCII.GetBytes(message);
-                stream.Write(data, 0, data.Length);
-
-                byte[] buffer = new byte[1024];
-                int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                string response = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                Console.WriteLine($"Received from server: {response}");
-                stream.Close();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
-            finally
-            {
-                client.Close();
-            }
-        }
-
 
     }
 }

@@ -76,5 +76,6 @@
             NProgress.done(), clearInterval(interval), Main.init()
         })
     </script>
+    @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>

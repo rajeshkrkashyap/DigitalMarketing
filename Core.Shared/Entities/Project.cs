@@ -13,7 +13,8 @@ namespace Core.Shared.Entities
         public string? Name { get; set; }
         public string? URL { get; set; }
         public string? Description { get; set; }
-        public string AnalysisStatus { get; set; }
+        public string AnalysisStatus { get; set; } = "Start"; //Processing/Completed
+        public int TotlaPages { get; set; }
         public bool IsActive { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }

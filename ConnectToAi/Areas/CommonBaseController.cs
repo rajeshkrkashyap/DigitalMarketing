@@ -17,6 +17,7 @@ namespace ConnectToAi.Areas
         protected readonly AppUserService? _appUserService;
         protected readonly IAppService _appService;
         protected readonly AuthService _authService;
+        protected readonly ProjectService _projectService;
         public CommonBaseController()
         {
 
@@ -24,6 +25,11 @@ namespace ConnectToAi.Areas
         public CommonBaseController(ConfigService configService)
         {
             _configService = configService;
+        }
+        public CommonBaseController(ConfigService configService, ProjectService projectService)
+        {
+            _configService = configService;
+            _projectService = projectService;
         }
         public CommonBaseController(AuthService authService,RechargeService rechargeService, AppService appService, AppUserService appUserService, ConfigService configService)
         {

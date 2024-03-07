@@ -63,5 +63,23 @@ namespace Core.Api.Controllers
             }
             return false;
         }
+
+        [HttpPost("UpdateAnalysisStatus")]
+        public bool UpdateAnalysisStatus(Crawled Crawled)
+        {
+            if (Crawled != null)
+            {
+                var dbCrawled = _dbContext.Crawleds.FirstOrDefault(c => c.Id ==Crawled.Id);
+                if (dbCrawled != null)
+                {
+                    dbCrawled.AnalysisStatus = Crawled.AnalysisStatus;
+                    dbCrawled.Updated = DateTime.UtcNow;
+                    _dbContext.Crawleds.Update(dbCrawled);
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -53,8 +53,10 @@ namespace Core.Shared
         public const string AppUserUpdate = "api/AppUser/Update";
 
         public const string ProjectList = "api/Project/List";
+        public const string ProjectCount = "api/Project/ProjectCount";
         public const string ProjectGetByURL = "api/Project/GetByURL";
         public const string ProjectUpdateStatus = "api/Project/UpdateStatus";
+        public const string ProjectUpdatePageCount = "api/Project/UpdatePageCount";
         public const string GetProjectsForAnalysisStatus = "api/Project/GetProjectsForAnalysisStatus";
         public const string ProjectGetNew = "api/Project/GetNew";
         public const string ProjectGetById = "api/Project/GetById";
@@ -67,6 +69,7 @@ namespace Core.Shared
 
         public const string CrawledCreate = "api/Crawled/Create";
         public const string CrawledUpdate = "api/Crawled/Update";
+        public const string CrawledUpdateAnalysisStatus = "api/Crawled/UpdateAnalysisStatus";
 
         public const string ContentAnalysisCreate = "api/ContentAnalysis/Create";
         public const string ContentAnalysisUpdateMetaTagKeywords = "api/ContentAnalysis/UpdateMetaTagKeywords";

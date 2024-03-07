@@ -45,8 +45,6 @@ namespace SeleniumLib
             }
             catch (Exception ex)
             {
-                // Handle or log the exception appropriately
-                Console.WriteLine($"Error: {ex.Message}");
                 return null;
             }
         }

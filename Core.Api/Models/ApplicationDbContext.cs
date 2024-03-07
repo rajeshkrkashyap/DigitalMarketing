@@ -23,6 +23,7 @@ namespace Core.Api.Models
         public DbSet<Project> Projects { get; set; }
         public DbSet<Crawled> Crawleds { get; set; }
         public DbSet<ContentAnalysis> ContentAnalysiss { get; set; }
+        public DbSet<BackLink> BackLinks { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

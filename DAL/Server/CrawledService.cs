@@ -31,6 +31,25 @@ namespace DAL.Server
             }
             return returnResponse;
         }
+        public async Task<bool> UpdateAnalysisStatus(Crawled crawled)
+        {
+            var returnResponse = false;
+            using (var client = new HttpClient())
+            {
+                var url = $"{ApiBaseURL}{APIs.CrawledUpdateAnalysisStatus}";
+
+                var serializedStr = JsonConvert.SerializeObject(crawled);
+
+                var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string contentStr = await response.Content.ReadAsStringAsync();
+                    returnResponse = JsonConvert.DeserializeObject<bool>(contentStr);
+                }
+            }
+            return returnResponse;
+        }
         public async Task<bool> Update(Crawled crawled)
         {
             var returnResponse = false;

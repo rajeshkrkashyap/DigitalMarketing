@@ -29,6 +29,24 @@ namespace ConnectToAi.Services
             return returnResponse;
         }
 
+        public async Task<int> ProjectCount(string userId)
+        {
+            var returnResponse = 0;
+            using (var client = new HttpClient())
+            {
+                var url = $"{ApiBaseURL}{APIs.ProjectCount}/?userId=" + userId;
+
+                var response = await client.PostAsync(url, null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string contentStr = await response.Content.ReadAsStringAsync();
+                    returnResponse = JsonConvert.DeserializeObject<int>(contentStr);
+                }
+            }
+            return returnResponse;
+        }
+
         public async Task<Project> GetById(string id)
         {
             var returnResponse = new Project();

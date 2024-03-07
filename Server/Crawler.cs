@@ -17,7 +17,9 @@ namespace Server
     internal class Crawler
     {
         // URL Discovery
-
+        private readonly CrawledService _crawledService;
+        private readonly ContentAnalysis _contentAnalysis;
+        private readonly ProjectService _projectService;
         private List<string> SeedUrls { get; set; }
         private string _seedUrl = string.Empty;
 
@@ -79,27 +81,29 @@ namespace Server
         // Reporting and Logging
         public bool EnableLogging { get; set; }
         // public Robots robots;
-        public string RobotsTxtContent { get; set; }
-        public string UserAgent { get; set; }
+        public string? RobotsTxtContent { get; set; }
+        public string? UserAgent { get; set; }
 
-        public List<string> UrlsToIgnore { get; set; }
-        SortedList<string, string> UrlSortedList { get; set; }
+        public List<string?> UrlsToIgnore { get; set; }
+        SortedList<string?, string?> UrlSortedList { get; set; }
+
         Uri baseUri = null;
-        string _projectId;
+        string? _projectId;
 
         private void SetProjectId()
         {
-            ProjectService projectService = new ProjectService();
-            var project = projectService.GetProjectId(_seedUrl);
+
+            var project = _projectService.GetProjectId(_seedUrl);
             _projectId = project.Id;
 
             if (!string.IsNullOrEmpty(_projectId))
             {
-                projectService.ProjectUpdateStatus(_projectId, "Processing");
+                _projectService.ProjectUpdateStatus(_projectId, "Processing");
             }
         }
+
         // Constructor
-        public Crawler()
+        public Crawler(ProjectService projectService, CrawledService crawledService, ContentAnalysis contentAnalysis, LoggerConfiguration logger)
         {
             SeedUrls = new List<string>();
             VisitedUrls = new HashSet<string>();
@@ -111,20 +115,12 @@ namespace Server
             EnableLogging = true;
             //string robotsTxtContent = "User-Agent: *\nDisallow: /private/\nAllow: /public/\n";
             // robots = new Robots(RobotsTxtContent);
-            Serilog.Log.Logger = new LoggerConfiguration()
-            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
-            .CreateLogger();
-
-            UrlsToIgnore = LoadIgnoreUrls("ignore_urls.json");
-
+            Serilog.Log.Logger = logger.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day).CreateLogger();
+            _projectService = projectService;
+            _crawledService = crawledService;
+            _contentAnalysis = contentAnalysis;
         }
 
-        //Methods for specific actions would be defined here
-        static List<string> LoadIgnoreUrls(string filePath)
-        {
-            string jsonContent = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<List<string>>(jsonContent);
-        }
         //private long CrawlDelay()
         //{
         //    return robots.CrawlDelay(UserAgent);
@@ -133,59 +129,18 @@ namespace Server
         {
             //if (UserAgent != null && url != null)
             //    return robots.IsPathAllowed(UserAgent, url);//URL example:  "/public/page.html"
-
             return true;
         }
-        public string Crawl()
+        public string? Crawl()
         {
-            // Get the base domain of the current page
-            baseUri = new Uri(_seedUrl); // Replace with the actual base URL of the page
+            //Get the base domain of the current page
+            baseUri = new Uri(_seedUrl); //Replace with the actual base URL of the page
             SetProjectId();
             if (string.IsNullOrEmpty(_projectId))
             {
                 Console.WriteLine("ProjectURL does not exist!");
                 return _projectId;
             }
-
-            //update Ignore urls list
-            UrlsToIgnore.Add("^https?://" + baseUri.Host + "#");
-            UrlsToIgnore.Add("^https?://" + baseUri.Host + "/#");
-            UrlsToIgnore.Add("^https?://" + baseUri.Host + "/login");
-            UrlsToIgnore.Add("^https?://" + baseUri.Host + "/auth");
-            UrlsToIgnore.Add("^https?://" + baseUri.Host + "/register");
-            UrlsToIgnore.Add("^https?://" + baseUri.Host + "/registeration");
-
-            UrlsToIgnore.Add("^https?://" + baseUri.Host + "/account/login");
-            UrlsToIgnore.Add("^https?://" + baseUri.Host + "/account/auth");
-            UrlsToIgnore.Add("^https?://" + baseUri.Host + "/account/register");
-            UrlsToIgnore.Add("^https?://" + baseUri.Host + "/account/registeration");
-
-            UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/page\/\d+$");
-            UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/page\/\d+$");
-            UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/page\/\d+$");
-            UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/pagenumber\/\d+$");
-
-            UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/products\?page=\d+$");
-            UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/products\/page\/\d+$");
-            UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/products\?page=[\w-]+$");
-
-            UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/login");
-            UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/auth");
-            UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/register");
-            UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/registeration");
-            UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/account/login");
-            UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/account/auth");
-            UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/account/register");
-            UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/account/registeration");
-            UrlsToIgnore.Add(@"^https:\/\/www" + baseUri.Host + @"/page\/\d+$");
-            UrlsToIgnore.Add(@"^https:\/\/www" + baseUri.Host + @"/page\/\d+$");
-            UrlsToIgnore.Add(@"^https:\/\/www" + baseUri.Host + @"/page\/\d+$");
-            UrlsToIgnore.Add(@"^https:\/\/www" + baseUri.Host + @"/products\?page=\d+$");
-            UrlsToIgnore.Add(@"^https:\/\/www" + baseUri.Host + @"/products\/page\/\d+$");
-            UrlsToIgnore.Add(@"^https:\/\/www" + baseUri.Host + @"/products\?page=[\w-]+$");
-
-            UrlsToIgnore.Add(@"\?cursor=([^&]+)");
-            UrlsToIgnore.Add(@"offset=(\d+)&limit=(\d+)");
 
             foreach (string url in SeedUrls)
             {
@@ -219,19 +174,24 @@ namespace Server
                     }
                 }
             }
+
             Log.CloseAndFlush();
+
+            var pageCount = VisitedUrls.Count();
 
             Console.Write(baseUri.Host + $"\n Crawling Finished!");
             Console.Write($"\nWaiting for another website URL!");
+
             return _projectId;
         }
+
         private string DownloadHtmlContent(string url)
         {
             //using (HttpClient client = new HttpClient())
             //{
             //    return client.GetStringAsync(url).Result;
             //}
-            return  WebDocument.DownloadPageSource(url); 
+            return WebDocument.DownloadPageSource(url);
         }
         HtmlDocument doc = null;
         private void ExtractLinksFromHtml(string htmlContent)
@@ -332,21 +292,42 @@ namespace Server
             }
         }
 
-        CrawledService crawledService;
+
         private async Task AddUpdateToDatabase(string url, string htmlContent)
         {
-            crawledService = new CrawledService();
             var crawled = new Crawled
             {
                 ProjectId = _projectId,
                 URL = url,
-                PageContent = htmlContent
+                PageContent = htmlContent,
+                AnalysisStatus = "InProgress"
             };
 
-            if (await crawledService.Create(crawled))
+            if (await _crawledService.Create(crawled))
             {
-                await new ContentAnalysis(htmlContent, _seedUrl).ExtractAllInformationAsync(crawled.Id);
+                try
+                {
+                    await _contentAnalysis.ExtractAllInformationAsync(_seedUrl, htmlContent, crawled.Id);
+                    var updateCrawled = new Crawled
+                    {
+                        Id = crawled.Id,
+                        AnalysisStatus = "Completed"
+                    };
+                    await _crawledService.UpdateAnalysisStatus(updateCrawled);
+                    _projectService.ProjectUpdatePageCount(_projectId, VisitedUrls.Count());
+
+                }
+                catch (Exception ex)
+                {
+                    var updateCrawled = new Crawled
+                    {
+                        Id = crawled.Id,
+                        AnalysisStatus = "Failed"
+                    };
+                    await _crawledService.UpdateAnalysisStatus(updateCrawled);
+                }
             }
+
         }
         private void Logger(string message)
         {

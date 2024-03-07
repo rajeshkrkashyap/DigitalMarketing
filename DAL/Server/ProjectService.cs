@@ -95,6 +95,24 @@ namespace DAL.Server
             }
             return returnResponse;
         }
+        public bool ProjectUpdatePageCount(string id, int pageCount)
+        {
+            var returnResponse = false;
+            using (var client = new HttpClient())
+            {
+                var url = $"{ApiBaseURL}{APIs.ProjectUpdatePageCount}/?id=" + id + "&&pageCount=" + pageCount;
 
+                var response = client.PostAsync(url, null).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string contentStr = response.Content.ReadAsStringAsync().Result;
+                    returnResponse = JsonConvert.DeserializeObject<bool>(contentStr);
+                }
+            }
+            return returnResponse;
+        }
     }
+
+
 }

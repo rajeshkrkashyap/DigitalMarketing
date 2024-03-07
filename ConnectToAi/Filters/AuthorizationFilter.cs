@@ -18,7 +18,8 @@ namespace ConnectToAi.Filters
             context.HttpContext.Request.Cookies.TryGetValue("ConnectToAi_DigitalMarketing_AuthToken", out string cookieValue);
             if (cookieValue == null)
             {
-                context.Result = new ForbidResult();
+                //context.Result = new ForbidResult();
+                context.HttpContext.Response.Redirect("/Identity/Account/LoginApp");
                 return;
             }
             else
@@ -26,7 +27,8 @@ namespace ConnectToAi.Filters
                 UserDetail userDetail = JsonConvert.DeserializeObject<UserDetail>(cookieValue);
                 if (userDetail == null || userDetail.Role.ToLower() != _role.ToLower())
                 {
-                    context.Result = new ForbidResult();
+                    //context.Result = new ForbidResult();
+                    context.HttpContext.Response.Redirect("/Identity/Account/LoginApp");
                     return;
                 }
             }
