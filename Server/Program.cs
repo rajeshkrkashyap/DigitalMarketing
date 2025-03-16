@@ -3,12 +3,15 @@ using System.Net;
 using System.Text;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using DAL.Server;
-using DAL;
+using Core.Service.Server;
+using Core.Service;
 using System;
 using Serilog;
 using Newtonsoft.Json;
 using Core.Shared.Entities;
+using System.IO;
+using Core.Shared;
+using HtmlAgilityPack;
 
 namespace Server
 {
@@ -17,40 +20,56 @@ namespace Server
         public static void Main(string[] args)
         {
             // Set up the server socket
-            TcpListener server = new TcpListener(IPAddress.Any, 12345); // Listening on port 12345
+            TcpListener server = new TcpListener(IPAddress.Any, Constants.CrwalerServerPORT); // Listening on port 12345
             server.Start();
 
             Console.WriteLine("\nServer started, waiting for connections...");
+            string jsonFilePath = "ignore_keywords.json"; // Replace with the path to your JSON file
+            var _ignoreWordList = ReadJsonToList<string>(jsonFilePath);
+
+            Crawler crawler = new Crawler(new HtmlDocument(), new ProjectService(), new CrawledService(), new ContentAnalysis(new HtmlDocument(), _ignoreWordList, new ContentAnalysisService()), new LoggerConfiguration());
+            ProjectService projectService = new ProjectService();
 
             while (true)
             {
                 TcpClient client = server.AcceptTcpClient();
-                Console.WriteLine("\nClient connected");
-
                 NetworkStream stream = client.GetStream();
-                byte[] buffer = new byte[1024];
-                int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                Console.WriteLine($"\nReceived: {message}");
+                try
+                {
+                    Console.WriteLine("\nClient connected");
+                    byte[] buffer = new byte[1024];
+                    int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                    string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                    Console.WriteLine($"\nReceived: {message}");
 
-                // Start the crawler with the received URL
-                StartCrawler(message);
+                    // Start the crawler with the received URL
+                    StartServer(message, crawler, projectService);
 
-                // Respond to the client
-                byte[] response = Encoding.ASCII.GetBytes("\nServer received your message.");
-                stream.Write(response, 0, response.Length);
+                    // Respond to the client
+                    byte[] response = Encoding.ASCII.GetBytes("\nServer received your message.");
+                    stream.Write(response, 0, response.Length);
 
-                // Clean up
-                stream.Close();
-                client.Close();
+                    // Clean up
+                    stream.Close();
+                    client.Close();
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    // Clean up
+                    stream.Close();
+                    client.Close();
+                }
             }
         }
 
-        static async void StartCrawler(string id)
+        static async void StartServer(string id, Crawler crawler, ProjectService projectService)
         {
             if (!string.IsNullOrEmpty(id))
             {
-                ProjectService projectService = new ProjectService();
                 var project = projectService.GetProjectById(id);
                 if (project != null && !string.IsNullOrEmpty(project.Id))
                 {
@@ -59,11 +78,8 @@ namespace Server
                     {
                         // Add your crawler logic here
                         // This code will run asynchronously on a separate thread
-                        string jsonFilePath = "ignore_keywords.json"; // Replace with the path to your JSON file
-                        var _ignoreWordList = ReadJsonToList<string>(jsonFilePath);
-                        Crawler crawler = new Crawler(new ProjectService(), new CrawledService(),new ContentAnalysis(_ignoreWordList, new ContentAnalysisService()), new LoggerConfiguration());
-                        crawler.SeedUrl = project.URL;
                         crawler.UrlsToIgnore = LoadIgnoreUrls("ignore_urls.json");
+                        crawler.SeedUrl = project.URL;
                         AddIgnoreList(crawler, project.URL);
                         Thread.Sleep(5000);
                         var projectId = crawler.Crawl();
@@ -72,23 +88,22 @@ namespace Server
                 }
             }
         }
+
         private static List<T>? ReadJsonToList<T>(string filePath)
         {
             string json = System.IO.File.ReadAllText(filePath);
             return JsonConvert.DeserializeObject<List<T>>(json);
         }
-
-        //Methods for specific actions would be defined here
-        static List<string> LoadIgnoreUrls(string filePath)
+        private static List<string> LoadIgnoreUrls(string filePath)
         {
             string jsonContent = File.ReadAllText(filePath);
             return JsonConvert.DeserializeObject<List<string>>(jsonContent);
         }
-
         private static void AddIgnoreList(Crawler crawler, string seedUrl)
         {
             var baseUri = new Uri(seedUrl);
             //update Ignore urls list
+            crawler.UrlsToIgnore.Clear();
             crawler.UrlsToIgnore.Add("^https?://" + baseUri.Host + "#");
             crawler.UrlsToIgnore.Add("^https?://" + baseUri.Host + "/#");
             crawler.UrlsToIgnore.Add("^https?://" + baseUri.Host + "/login");
@@ -105,11 +120,11 @@ namespace Server
             crawler.UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/page\/\d+$");
             crawler.UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/page\/\d+$");
             crawler.UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/pagenumber\/\d+$");
-            
+
             crawler.UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/products\?page=\d+$");
             crawler.UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/products\/page\/\d+$");
             crawler.UrlsToIgnore.Add(@"^https:\/\/" + baseUri.Host + @"\/products\?page=[\w-]+$");
-            
+
             crawler.UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/login");
             crawler.UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/auth");
             crawler.UrlsToIgnore.Add("^https?://www." + baseUri.Host + "/register");
@@ -124,10 +139,10 @@ namespace Server
             crawler.UrlsToIgnore.Add(@"^https:\/\/www" + baseUri.Host + @"/products\?page=\d+$");
             crawler.UrlsToIgnore.Add(@"^https:\/\/www" + baseUri.Host + @"/products\/page\/\d+$");
             crawler.UrlsToIgnore.Add(@"^https:\/\/www" + baseUri.Host + @"/products\?page=[\w-]+$");
-            
+
             crawler.UrlsToIgnore.Add(@"\?cursor=([^&]+)");
             crawler.UrlsToIgnore.Add(@"offset=(\d+)&limit=(\d+)");
-            
+
             // Add exclusion for .js and .css files
             crawler.UrlsToIgnore.Add(@"\.js$");
             crawler.UrlsToIgnore.Add(@"\.css$");

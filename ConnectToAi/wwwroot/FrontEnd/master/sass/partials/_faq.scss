@@ -1,0 +1,54 @@
+/* ---------------------------------------------------------------------- */
+/*  Affix
+/* ---------------------------------------------------------------------- */
+.bs-docs-sidenav {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.faq-sidebar .nav > li > a {
+    color: #767676;
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 20px;
+    margin-bottom: 5px;
+}
+
+.faq-sidebar .nav > li > a:focus, .faq-sidebar .nav > li > a:hover {
+    background-color: transparent;
+    border-left: 1px solid $primary;
+    color: $primary;
+    padding-left: 19px;
+    text-decoration: none;
+}
+
+.faq-sidebar .nav > .active:focus > a, .faq-sidebar .nav > .active:hover > a, .faq-sidebar .nav > .active > a {
+    background-color: transparent;
+    border-left: 2px solid $primary;
+    color: $primary;
+    font-weight: 700;
+    padding-left: 18px;
+}
+
+.faq-sidebar .nav .nav {
+    display: none;
+    padding-bottom: 10px;
+}
+
+.faq-sidebar .nav .nav > li > a {
+    font-size: 12px;
+    font-weight: 400;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    padding-top: 1px;
+}
+
+.faq-sidebar .nav .nav > li > a:focus, .faq-sidebar .nav .nav > li > a:hover {
+    padding-left: 29px;
+}
+
+.faq-sidebar .nav .nav > .active:focus > a, .faq-sidebar .nav .nav > .active:hover > a, .faq-sidebar .nav .nav > .active > a {
+    font-weight: 500;
+    padding-left: 28px;
+}

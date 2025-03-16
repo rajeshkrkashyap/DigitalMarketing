@@ -66,15 +66,20 @@ namespace ConnectToAi.Areas.Identity.Pages.Account
                 return null;
             }
 
-            if (!OtpManager.VerifyOtp(Input.SessionId, Input.OTP))
-            {
-                TempData["OTPNotMatch"] = "OPT not match";
-                TempData["SessionId"] = Input.SessionId;
-                TempData["MobileNumber"] = Input.MobileNumber;
-                TempData["CountryCode"] = Input.CountryCode;
-                return RedirectToAction("Loginapp", "Account"); //"OTP not match"; 
-            }
 
+            //if (!OtpManager.VerifyOtp(Input.SessionId, Input.OTP))
+            //{
+            //    TempData["OTPNotMatch"] = "OPT not match";
+            //    TempData["SessionId"] = Input.SessionId;
+            //    TempData["MobileNumber"] = Input.MobileNumber;
+            //    TempData["CountryCode"] = Input.CountryCode;
+            //    return RedirectToAction("Loginapp", "Account"); //"OTP not match"; 
+            //}
+
+            if (Input.CountryCode==null)
+            {
+                Input.CountryCode = "91";
+            }
 
             LoginRegisterMobileViewModel loginViewModel = new LoginRegisterMobileViewModel
             {

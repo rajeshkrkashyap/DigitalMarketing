@@ -17,8 +17,9 @@ namespace SMSLibrary
             _smsSender = smsSender;
         }
             
-        public HttpResponseMessage SendSms(string mobileNumber, string countryCode, string message)
+        public bool SendSms(string mobileNumber, string countryCode, string message)
         {
+
             // You can add additional logic here if needed
             return _smsSender.SendSms(mobileNumber, countryCode, message);
         }

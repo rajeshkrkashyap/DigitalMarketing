@@ -15,6 +15,10 @@ namespace Core.Shared.Entities
         public string? Description { get; set; }
         public string AnalysisStatus { get; set; } = "Start"; //Processing/Completed
         public int TotlaPages { get; set; }
+        public string? WhoIsDomain { get; set; }
+        public bool IsMalicious { get; set; }
+        public bool HasValidSSL { get; set; }
+        public bool IsBlacklisted { get; set; }
         public bool IsActive { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }

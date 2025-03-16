@@ -1,4 +1,4 @@
-﻿using Core.Api.Models;
+﻿ 
 using Core.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -17,17 +17,19 @@ using Core.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 using Twilio.Types;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Core.Api.Models;
 
 namespace Core.Api.Services
 {
     public interface IUserService
     {
+        Task<MainResponse> SendOtp(string mobileNumber, string countryCode);
         Task<MainResponse> RegisterAndLoginByUserMobileAsync(LoginRegisterMobileViewModel model);
         Task<MainResponse> RegisterUserAsync(RegisterViewModel model);
         Task<MainResponse> LoginUserAsync(LoginViewModel model);
         Task<MainResponse> ConfirmEmailAsync(string userId, string token);
         Task<MainResponse> ForgetPasswordAsync(string email);
-        Task<MainResponse> ResetPasswordAsync(ResetPasswordViewModel model);
+        Task<MainResponse> ResetPasswordAsync(Core.Shared.ResetPasswordViewModel model);
         Task<MainResponse> RefreshTokenAsync(AuthenticationResponse model);
         Task<MainResponse> GetUserByEmail(string email);
         Task<MainResponse> IsEmailConfirmedAsync(AppUser user);
@@ -49,6 +51,31 @@ namespace Core.Api.Services
             _configuration = configuration;
             _mailService = mailService;
             _dbContext = dbContext;
+        }
+
+        public async Task<MainResponse> SendOtp(string mobileNumber, string countryCode)
+        {
+            var user = await _userManger.FindByNameAsync(mobileNumber.ToString());
+            if (user == null)
+            {
+                return new MainResponse
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "This mobile number is not register!"
+                };
+            }
+
+            OTPManager otpManager = new OTPManager(_dbContext);
+            string userId = user.Id;
+            //Generate OTP
+            string generatedOTP = otpManager.GenerateOTP(userId);
+            var status = SMSLibrary.SmsServiceProvider.SendSMS(mobileNumber, countryCode, generatedOTP);
+
+            return new MainResponse
+            {
+                IsSuccess = true,
+                Content = status
+            };
         }
 
         #region "Mobile Login and Registration"
@@ -111,9 +138,14 @@ namespace Core.Api.Services
                     ////string url = $"{_configuration["AppUrl"]}/Identity/Account/confirmemail?userid={AppUser.Id}&code={validEmailToken}";
                     //string url = $"{model.EmailConfirmUrl}?userid={AppUser.Id}&code={validEmailToken}";
                     //await _mailService.SendEmailAsync(AppUser.Email, "Confirm your email", $"<h1>Welcome to Connectto.Ai </h1>" +
-                    //    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
-
+                    //$"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
                     //Send registration message to Mobile Number
+
+                    OTPManager otpManager = new OTPManager(_dbContext);
+                    string userId = AppUser.Id;
+                    // Generate OTP
+                    string generatedOTP = otpManager.GenerateOTP(userId);
+                    SMSLibrary.SmsServiceProvider.SendSMS(model.MobileNumber, model.CountryCode, generatedOTP);
 
                     return new MainResponse
                     {
@@ -159,6 +191,17 @@ namespace Core.Api.Services
                 {
                     IsSuccess = false,
                     ErrorMessage = "Verify your Mobile number!",
+                };
+            }
+
+            OTPManager otpManager = new OTPManager(_dbContext);
+            var isOtpVerified = otpManager.VerifyOTP(user.Id, Convert.ToInt32(model.OTP));
+            if (!isOtpVerified)
+            {
+                return new MainResponse
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Wrong OTP!",
                 };
             }
 
@@ -367,7 +410,7 @@ namespace Core.Api.Services
                 Content = "Reset password URL has been sent to the email successfully!"
             };
         }
-        public async Task<MainResponse> ResetPasswordAsync(ResetPasswordViewModel model)
+        public async Task<MainResponse> ResetPasswordAsync(Core.Shared.ResetPasswordViewModel model)
         {
             var user = await _userManger.FindByEmailAsync(model.Email);
             if (user == null)

@@ -1,0 +1,141 @@
+﻿@model ArticleType
+@{
+    ViewData["Title"] = "CreateArticle";
+    var projects = (List<Project>)ViewBag.TotalProjectCreated;
+    var articleCount = 0;// (int)ViewBag.ArticleCount;
+    if (projects == null)
+    {
+        return;
+    }
+}
+
+<div class="main-content">
+    <div class="wrap-content container " id="container">
+        <h2>CreateArticle</h2>
+        <label style="font-size:large;margin-right:10px">Total Project Created: </label><a class="btn btn-info" href="#"> @projects.Count()/5</a>
+        @using (Html.BeginForm("Create", "Article", FormMethod.Post))
+        {
+            <div style="margin-top:10px;" class="row">
+                <div class="col-md-4">
+                    @Html.HiddenFor(item => item.ProjectId)
+                    <select class="form-control" id="projectSelect">
+                        <option value="" selected="selected">Select a Project</option>
+                        @foreach (var item in projects)
+                        {
+                            <option value="@item.Id" url="@item.URL">@item.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-success" id="btnStart" style="display:none" href="#">START</a>
+                </div>
+            </div>
+
+            <div class="container-fluid container-fullw bg-white" id="panelKeywords" style="display:none">
+                <div class="row">
+                    <div class="panel-body col-md-12">
+                        <div class="form-group">
+                            <label style="font-size:large;margin-right:10px">Describe your article content briefly: </label>
+                            @if (articleCount == 1)
+                            {
+                                @Html.TextAreaFor(item => item.Description, new { @maxlength = "200", @id = "projectDescription", @style = "height:100px", @class = "form-control limited", @readonly = "readonly" })
+                            }else
+                            {
+                                @Html.TextAreaFor(item => item.Description, new { @maxlength = "200", @id = "projectDescription", @style = "height:100px", @class = "form-control limited" })
+                            }
+                            <div class="alert alert-warning" id="limit"></div>
+                            </div>
+                        </div>
+                    @if (articleCount == 0)
+                    {
+                        <div class="col-md-12 form-group">
+                            <button type="submit" id="btnGenerate" class="btn btn-primary btn btn-wide pull-right">
+                                Genrate
+                            </button>
+                            <button type="button" id="btnViewAll" class="btn btn-secondary btn btn-wide pull-right" style="margin-right:20px">
+                                View All
+                            </button>
+                        </div>
+                    }
+                </div>
+             
+
+                <div id="articlePanel" class="row" style="display:none">
+                    <div class="col-md-12 panel-body panel panel-white" id="panel4">
+                        <div class="panel-heading" style="background-color:#e8f6f0">
+                            <h4 class="panel-title text-primary">All Tools</h4>
+                            <div class="panel-tools"><a data-original-title="Collapse" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-collapse" href="#"><i class="ti-minus collapse-off"></i> <i class="ti-plus collapse-on"></i> </a><a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="ti-reload"></i> </a><a data-original-title="Close" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-close" href="#"><i class="ti-close"></i></a></div>
+                        </div>
+                        <div class="panel-body">
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <a class="btn btn-wide btn-primary mr-2 pull-right" href="#"><i class="ti-plus"></i> Add More</a>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/cookiemanagerlib.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#projectSelect').on("change", function () {
+                if ($(this).val() != "") {
+                    $('#btnStart').attr("disabled", false);
+                    $('#btnStart').show();
+                    $('#panelKeywords').attr("disabled", false);
+                    $('#panelKeywords').show();
+                    $('#ProjectId').val($(this).val())
+
+                    CookieManager.setCookie("connectToAi.projectSelectValue", $(this).val(), 7);
+                } else {
+                    $('#btnStart').attr("disabled", true);
+                    $('#btnStart').hide();
+                    $('#panelKeywords').attr("disabled", true);
+                    $('#panelKeywords').hide();
+                    $('#ProjectId').val("");
+                    CookieManager.setCookie("connectToAi.projectSelectValue", $(this).val(), 7);
+                }
+            });
+
+            function articleList(projectId) {
+                // Make AJAX call
+                $.ajax({
+                    url: '/marketing/Article/GetArticleTypeList',
+                    type: 'GET',
+                    data: { projectId: projectId },
+                    success: function (data) {
+                        // Clear existing options
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+
+            $('#btnViewAll').on("click", function () {
+                $('#articlePanel').show();
+            });
+        });
+    </script>
+
+    <script src="~/assets/js/form-elements.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $("#limit").append('<span id="rchars">200</span> Character(s) Remaining'), $("#projectDescription").keyup(function () {
+                var e = 200 - $(this).val().length;
+                $("#rchars").text(e)
+            })
+            $("#keywordLimit").append('<span id="readchars">250</span> Character(s) Remaining'), $("#projectKeywords").keyup(function () {
+                var e = 250 - $(this).val().length;
+                $("#readchars").text(e)
+            })
+        })
+    </script>
+}

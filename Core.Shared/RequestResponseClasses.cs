@@ -1,5 +1,6 @@
 ﻿using Azure.AI.OpenAI;
 using Core.Shared.Entities;
+ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,7 @@ namespace Core.Shared
         public string model { get; set; }
         public Chatchoice[] choices { get; set; }
         public Usage usage { get; set; }
-        public ChatCompletions ChatCompletions { get; set; }
+        public ChatCompletion ChatCompletions { get; set; }
     }
     public class Chatchoice
     {

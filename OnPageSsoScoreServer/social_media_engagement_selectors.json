@@ -1,0 +1,81 @@
+{
+  "SocialMediaList": [
+    {
+      "platform": "Facebook",
+      "selector": "//meta[@property='og:share_count']"
+    },
+    {
+      "platform": "Twitter",
+      "selector": "//meta[@name='twitter:mentions']"
+    },
+    {
+      "platform": "LinkedIn",
+      "selector": "//meta[@name='linkedin:shares']"
+    },
+    {
+      "platform": "Pinterest",
+      "selector": "//meta[@property='pinterest:pin_count']"
+    },
+    {
+      "platform": "Reddit",
+      "selector": "//span[@class='score']"
+    },
+    {
+      "platform": "Instagram",
+      "selector": "//meta[@property='instagram:likes']"
+    },
+    {
+      "platform": "YouTube",
+      "selector": "//meta[@property='og:video:views']"
+    },
+    {
+      "platform": "TikTok",
+      "selector": "//meta[@property='tiktok:likes']"
+    },
+    {
+      "platform": "Snapchat",
+      "selector": "//meta[@property='snapchat:views']"
+    },
+    {
+      "platform": "Tumblr",
+      "selector": "//span[@class='note-count']"
+    },
+    {
+      "platform": "WhatsApp",
+      "selector": "//meta[@property='whatsapp:shares']"
+    },
+    {
+      "platform": "Telegram",
+      "selector": "//meta[@property='telegram:shares']"
+    },
+    {
+      "platform": "WeChat",
+      "selector": "//meta[@property='wechat:shares']"
+    },
+    {
+      "platform": "VKontakte (VK)",
+      "selector": "//meta[@property='vk:shares']"
+    },
+    {
+      "platform": "Line",
+      "selector": "//meta[@property='line:shares']"
+    },
+    {
+      "platform": "Viber",
+      "selector": "//meta[@property='viber:shares']"
+    },
+    {
+      "platform": "Medium",
+      "selector": "//meta[@property='medium:claps']"
+    },
+    {
+      "platform": "Quora",
+      "selector": "//div[@class='AnswerListItem']"
+    },
+    {
+      "platform": "SoundCloud",
+      "selector": "//meta[@property='soundcloud:plays']"
+    }
+  ]
+
+}

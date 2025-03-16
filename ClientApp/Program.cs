@@ -1,5 +1,5 @@
 ﻿using Core.Shared.Entities;
-using DAL.Server;
+using Core.Service.Server;
 using System;
 using System.Net.Sockets;
 using System.Text;

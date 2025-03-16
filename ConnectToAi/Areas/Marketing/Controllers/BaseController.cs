@@ -12,6 +12,7 @@ using Stripe.Terminal;
 using System.Net.Sockets;
 using System.Text;
 using NUnit.Framework;
+using ConnectToAi.Controllers;
 
 namespace ConnectToAi.Areas.Marketing.Controllers
 {
@@ -32,13 +33,15 @@ namespace ConnectToAi.Areas.Marketing.Controllers
         {
 
         }
+        public BaseController(ConfigService configService, ProjectService projectService, ArticleTypeService articleTypeService) : base(configService, projectService, articleTypeService)
+        {
+
+        }
         public BaseController(AppUserService appUserService, ConfigService configService) :
             base(appUserService, configService)
         {
 
         }
-
-
         public BaseController(AppUserService appUserService, ServiceService service, RechargeService rechargeService) :
             base(appUserService, service, rechargeService)
         {

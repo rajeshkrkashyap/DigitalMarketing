@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "SpeedTest";
+    var projects = (List<Project>)ViewBag.TotalProjectCreated;
+    if (projects == null)
+    {
+        return;
+    }
+}
+
+<div class="main-content">
+    <div class="wrap-content container " id="container">
+        <section id="page-title">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1 class="mainTitle">Speed Testing: <kbd>87/100</kbd> <kbd style="background-color:green">GREAT</kbd></h1>
+                    <br />
+                </div>
+            </div>
+        </section>
+
+        <div style="margin-top:10px;" class="row">
+            <div class="col-md-4">
+                <select class="form-control" id="projectSelect">
+                    <option value="" selected="selected">Select a Project</option>
+                    @foreach (var item in projects)
+                    {
+                        <option value="@item.Id" url="@item.URL">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-success" id="btnStart" style="display:none" href="#">START</a>
+            </div>
+        </div>
+
+
+        <div id="completionPanel" class="panel panel-white space20" style="margin-top:30px;display:none">
+            <div class="panel-heading">
+                <h4>SPEED TESTING</h4>
+                <hr />
+            </div>
+            <div class="panel-body">
+                <div class="row space20">
+                    <div class="col-sm-3">
+                        <div class="btn btn-icon margin-bottom-5 margin-bottom-5 btn-block" style="height:120px;">
+                            <h5 style="margin-top: 10px;">ON-PAGE SEO SCORE</h5>
+                            <h4 class="mainTitle"><kbd>97</kbd> <kbd style="background-color:green">GREAT</kbd> </h4>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="btn btn-icon margin-bottom-5 margin-bottom-5 btn-block" style="height:120px">
+                            <h5 style="margin-top: 10px;">ORGANIC MONTHLY TRAFFIC</h5>
+                            <h4 class="mainTitle"><kbd>212</kbd> <kbd style="background-color:green">GREAT</kbd> </h4>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="btn btn-icon margin-bottom-5 margin-bottom-5 btn-block" style="height:120px">
+                            <h5 style="margin-top: 10px;">ORGANIC KEYWORDS</h5>
+                            <h4 class="mainTitle"><kbd>109</kbd> <kbd style="background-color:green">GREAT</kbd> </h4>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="btn btn-icon margin-bottom-5 margin-bottom-5 btn-block" style="height:120px">
+                            <h5 style="margin-top: 10px;">BACKLINKS</h5>
+                            <h4 class="mainTitle"><kbd>5,061</kbd> <kbd style="background-color:green">GREAT</kbd> </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+
+    <script>
+        $('#projectSelect').on("change", function () {
+            if ($(this).val() != "") {
+                $('#btnStart').show();
+                $('#completionPanel').show();
+            } else {
+                $('#btnStart').hide();
+                $('#completionPanel').hide();
+            }
+        });
+    </script>
+}

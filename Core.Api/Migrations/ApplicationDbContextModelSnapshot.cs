@@ -143,6 +143,75 @@ namespace Core.Api.Migrations
                     b.ToTable("ApplicationServices");
                 });
 
+            modelBuilder.Entity("Core.Shared.Entities.ArticleTitle", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ArticleTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleTypeId");
+
+                    b.ToTable("ArticleTitles");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.ArticleType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Intent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MainKeywords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtherKeywords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserProvidedKeywords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ArticleTypes");
+                });
+
             modelBuilder.Entity("Core.Shared.Entities.BackLink", b =>
                 {
                     b.Property<string>("Id")
@@ -201,6 +270,54 @@ namespace Core.Api.Migrations
                     b.ToTable("BackLinks");
                 });
 
+            modelBuilder.Entity("Core.Shared.Entities.Blog", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Auther")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MediaType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MediaURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaProperty")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PageURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SmallDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Blogs");
+                });
+
             modelBuilder.Entity("Core.Shared.Entities.ContentAnalysis", b =>
                 {
                     b.Property<string>("Id")
@@ -241,6 +358,63 @@ namespace Core.Api.Migrations
                     b.HasIndex("CrawledId");
 
                     b.ToTable("ContentAnalysiss");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.ContentQuality", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EngagementAndInteractivity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAccuracyAndCredibility")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsClarityAndReadability")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDepthAndBreadthOfCoverage")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFeedbackAndMetrics")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPurposeAndIntent")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRelevanceToTheTopic")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReputationAndAuthority")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PageTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UniquenessAndOriginality")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserExperience")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("ContentQualities");
                 });
 
             modelBuilder.Entity("Core.Shared.Entities.Crawled", b =>
@@ -306,6 +480,253 @@ namespace Core.Api.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("Core.Shared.Entities.ImagesAndMultimedia", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AltText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MediaSitemap")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MultimediaURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PageContext")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResponsiveDesign")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SizeAndFormat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("ImagesAndMultimedias");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.InternalLinking", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsInternal")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("InternalLinkings");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.KeywordUsage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMainKeyword")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Keyword")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("KeywordsInContent")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KeywordsInHeading")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KeywordsInMetaDescription")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KeywordsInTitle")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("KeywordUsages");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.MetaTag", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Canonical")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Charset")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Keywords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OgDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OgImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OgTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OgType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OgUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Robots")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Viewport")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("MetaTags");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.MobileFriendliness", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AvoidanceOfFlashAndPopUps")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConsistentContentAndFunctionality")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MobileFriendlyNavigation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OptimizedImagesAndMedia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TextReadabilityAndFontSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TouchFriendlyElements")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Viewport")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("MobileFriendliness");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.OneTimePassword", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("ExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OTP")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OneTimePasswords");
+                });
+
             modelBuilder.Entity("Core.Shared.Entities.Order", b =>
                 {
                     b.Property<string>("Id")
@@ -332,6 +753,36 @@ namespace Core.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.PageLoadingSpeed", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<TimeSpan?>("PageLoadTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("URL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("PageLoadingSpeeds");
                 });
 
             modelBuilder.Entity("Core.Shared.Entities.Product", b =>
@@ -385,7 +836,16 @@ namespace Core.Api.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("HasValidSSL")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsBlacklisted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMalicious")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -399,6 +859,9 @@ namespace Core.Api.Migrations
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("WhoIsDomain")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -461,6 +924,114 @@ namespace Core.Api.Migrations
                     b.HasIndex("ApplicationServiceId");
 
                     b.ToTable("Recharges");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.Security", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsWebSiteHTTPSSecure")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("Securities");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.SocialSignal", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AnalyzeSocialSignals")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("SocialSignals");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.TechnicalSEO", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("TechnicalSEOs");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.URLStructure", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CrawledId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCleanURL")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("URL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrawledId");
+
+                    b.ToTable("URLStructures");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -619,7 +1190,34 @@ namespace Core.Api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Shared.Entities.ArticleTitle", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.ArticleType", "ArticleType")
+                        .WithMany()
+                        .HasForeignKey("ArticleTypeId");
+
+                    b.Navigation("ArticleType");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.ArticleType", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("Core.Shared.Entities.BackLink", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.Blog", b =>
                 {
                     b.HasOne("Core.Shared.Entities.Project", "Project")
                         .WithMany()
@@ -637,6 +1235,15 @@ namespace Core.Api.Migrations
                     b.Navigation("Crawled");
                 });
 
+            modelBuilder.Entity("Core.Shared.Entities.ContentQuality", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
+                });
+
             modelBuilder.Entity("Core.Shared.Entities.Crawled", b =>
                 {
                     b.HasOne("Core.Shared.Entities.Project", "Project")
@@ -644,6 +1251,60 @@ namespace Core.Api.Migrations
                         .HasForeignKey("ProjectId");
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.ImagesAndMultimedia", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.InternalLinking", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.KeywordUsage", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.MetaTag", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.MobileFriendliness", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.PageLoadingSpeed", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
                 });
 
             modelBuilder.Entity("Core.Shared.Entities.Project", b =>
@@ -668,6 +1329,42 @@ namespace Core.Api.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("ApplicationService");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.Security", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.SocialSignal", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.TechnicalSEO", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
+                });
+
+            modelBuilder.Entity("Core.Shared.Entities.URLStructure", b =>
+                {
+                    b.HasOne("Core.Shared.Entities.Crawled", "Crawled")
+                        .WithMany()
+                        .HasForeignKey("CrawledId");
+
+                    b.Navigation("Crawled");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

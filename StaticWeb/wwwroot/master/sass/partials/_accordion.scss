@@ -1,0 +1,212 @@
+/* ---------------------------------------------------------------------- */
+/*  Accordion
+/* ---------------------------------------------------------------------- */
+.accordion {
+    .panel {
+        border: none;
+        @include border-radius(0);
+        @include box-shadow(0,0,0,rgba(0,0,0,0));
+    }
+
+    .panel-heading {
+        padding: 0;
+        background-image: none;
+        height: auto;
+        min-height: 0;
+        @include box-shadow(0,0,0,rgba(0,0,0,0));
+        @include border-radius(0);
+
+        .accordion-toggle {
+            background-color: #E6E8E8;
+            color: $text-dark;
+            display: block;
+            font-size: $font-size-base;
+            line-height: 20px;
+            padding: 10px;
+            position: relative;
+
+            &:hover, &:focus {
+                text-decoration: none;
+            }
+
+            &.collapsed {
+                background-color: #F3F3F3;
+                border-color: #D9D9D9;
+                border-width: 0 0 0 1px;
+                color: $darkGrey;
+                font-weight: 300;
+
+                > .icon-arrow {
+                    @include opacity(0.75);
+
+                    &:before {
+                        content: "\f067" !important;
+                    }
+                }
+            }
+
+            > .icon-arrow {
+                font-family: FontAwesome;
+                font-size: 11px;
+                padding: 0 5px;
+                display: inline-block;
+                font-family: FontAwesome;
+                font-style: normal;
+                font-weight: normal;
+                line-height: 1;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                color: $lightGrey;
+
+                &:before {
+                    content: "\f068";
+                }
+            }
+        }
+    }
+
+    .panel-body {
+        border: none !important;
+    }
+
+    &.panel-group .panel + .panel {
+        margin-top: 1px;
+    }
+
+    &.accordion-white {
+        .panel-heading {
+            .accordion-toggle {
+                background-color: $white;
+
+                &.collapsed {
+                    background-color: $white;
+                }
+            }
+        }
+
+        &.panel-group .panel + .panel {
+            margin-top: 0;
+            border-top: 1px solid lighten($text-color,10%);
+        }
+    }
+
+    &.heading-white {
+        .accordion-toggle {
+            background-color: $white;
+            color: $text-color;
+        }
+
+        .panel-group .panel + .panel {
+            margin-top: 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.07);
+        }
+    }
+
+    &.no-padding {
+        .panel-body {
+            padding: 0;
+        }
+    }
+
+    &.body-light-grey {
+        .panel-body {
+            background: $lightGrey !important;
+        }
+    }
+
+    .panel-group {
+        margin-bottom: 0;
+    }
+
+    .panel-group .panel + .panel {
+        margin-top: 0;
+        border-top: 1px solid transparent;
+    }
+}
+
+.accordion-custom {
+    .panel {
+        background-color: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+
+        .panel-heading {
+            background-image: none;
+            border-radius: 0;
+            box-shadow: none;
+            height: auto;
+            padding: 0;
+
+            .accordion-toggle {
+                background-color: none;
+                color: #606060;
+                display: block;
+                font-size: 13px;
+                font-weight: bold;
+                line-height: 22px;
+                padding: 10px;
+                position: relative;
+
+                &:hover, &:focus {
+                    text-decoration: none;
+                }
+
+                &.collapsed {
+                    background-color: none;
+                    border-color: #d9d9d9;
+                    border-bottom: 1px solid #e7e7e7 !important;
+                    border-width: 0 0 0 1px;
+                    color: #606060;
+                    font-weight: normal;
+
+                    > .icon-arrow {
+
+                        &::before {
+                            content: "\f067" !important;
+                            font-family: "fontawesome" !important;
+                            font-style: normal;
+                            font-weight: normal;
+                            background-color: #333;
+                            color: $white;
+                        }
+                    }
+
+                    &:hover {
+                        > .icon-arrow {
+
+                            &::before {
+                                background-color: $primary;
+                            }
+                        }
+                    }
+                }
+
+                > .icon-arrow {
+                    font-size: 11px;
+                    padding: 0 5px;
+
+                    &::before {
+                        content: "\f068";
+                        font-family: "fontawesome" !important;
+                        font-style: normal;
+                        font-weight: normal;
+                        display: block;
+                        float: left;
+                        font-weight: normal;
+                        height: 22px;
+                        line-height: 22px;
+                        text-align: center;
+                        width: 22px;
+                        background-color: $primary;
+                        color: $white;
+                    }
+                }
+            }
+        }
+
+        .panel-body {
+            border: none !important;
+        }
+    }
+}

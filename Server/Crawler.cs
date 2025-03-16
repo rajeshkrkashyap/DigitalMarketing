@@ -1,4 +1,4 @@
-﻿using DAL.Server;
+﻿using Core.Service.Server;
 using HtmlAgilityPack;
 using Core.Shared;
 using Core.Shared.Entities;
@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using System.Net.Http;
 using SeleniumLib;
 using System.Net.Http.Headers;
+using ServerLib;
+using ServerLib.SeoScore;
 
 namespace Server
 {
@@ -20,6 +22,8 @@ namespace Server
         private readonly CrawledService _crawledService;
         private readonly ContentAnalysis _contentAnalysis;
         private readonly ProjectService _projectService;
+        private readonly HtmlDocument doc;
+        
         private List<string> SeedUrls { get; set; }
         private string _seedUrl = string.Empty;
 
@@ -35,7 +39,6 @@ namespace Server
                 SeedUrls.Add(_seedUrl);
             }
         }
-
 
         // Robots.txt Compliance
         public bool RobotsTxt { get; set; }
@@ -86,15 +89,16 @@ namespace Server
 
         public List<string?> UrlsToIgnore { get; set; }
         SortedList<string?, string?> UrlSortedList { get; set; }
+        private readonly List<string>? _ignoreWordList;
+        public Project  Project { get; set; }
 
         Uri baseUri = null;
         string? _projectId;
-
         private void SetProjectId()
         {
 
-            var project = _projectService.GetProjectId(_seedUrl);
-            _projectId = project.Id;
+             Project = _projectService.GetProjectId(_seedUrl);
+            _projectId = Project.Id;
 
             if (!string.IsNullOrEmpty(_projectId))
             {
@@ -103,7 +107,7 @@ namespace Server
         }
 
         // Constructor
-        public Crawler(ProjectService projectService, CrawledService crawledService, ContentAnalysis contentAnalysis, LoggerConfiguration logger)
+        public Crawler(HtmlDocument document, ProjectService projectService, CrawledService crawledService, ContentAnalysis contentAnalysis, LoggerConfiguration logger)
         {
             SeedUrls = new List<string>();
             VisitedUrls = new HashSet<string>();
@@ -119,6 +123,8 @@ namespace Server
             _projectService = projectService;
             _crawledService = crawledService;
             _contentAnalysis = contentAnalysis;
+            _ignoreWordList = contentAnalysis.IgnoreWordList;
+            doc = document;
         }
 
         //private long CrawlDelay()
@@ -157,13 +163,21 @@ namespace Server
                     {
                         try
                         {
-                            string htmlContent = DownloadHtmlContent(url);
-                            VisitedUrls.Add(url);
-                            ExtractLinksFromHtml(htmlContent);
-                            _ = AddUpdateToDatabase(url, htmlContent);
-                            Logger($"\nCrawled: {url} ");
+                            string visitedUrl = "";
+                            string htmlContent = DownloadHtmlContent(url, out visitedUrl);
+                            if (VisitedUrls.Add(visitedUrl))
+                            {
+                                doc.LoadHtml(htmlContent);
+                                ExtractLinksFromHtml();
+                                _ = AddUpdateToDatabase(doc, visitedUrl, htmlContent);
+                                Logger($"\nCrawled: {visitedUrl} \n");
+                            }
+                            else
+                            {
+                                Logger($"\nAlready Visited: {visitedUrl} \n");
+                            }
 
-                            Console.Write(DateTime.UtcNow + $"\n Crawled: {url}  ");
+                            //Console.Write(DateTime.UtcNow + $"\n Crawled: {visitedUrl}  ");
                             break;
                         }
                         catch (Exception ex)
@@ -184,21 +198,16 @@ namespace Server
 
             return _projectId;
         }
-
-        private string DownloadHtmlContent(string url)
+        private string DownloadHtmlContent(string url, out string visitedUrl)
         {
             //using (HttpClient client = new HttpClient())
             //{
             //    return client.GetStringAsync(url).Result;
             //}
-            return WebDocument.DownloadPageSource(url);
+            return WebDocument.DownloadPageSource(url, out visitedUrl);
         }
-        HtmlDocument doc = null;
-        private void ExtractLinksFromHtml(string htmlContent)
+        private void ExtractLinksFromHtml()
         {
-            doc = new HtmlDocument();
-            doc.LoadHtml(htmlContent);
-
             // Perform actions on the HTML content
             // Example: Extract all links
 
@@ -271,6 +280,7 @@ namespace Server
                     }
                 }
                 if (IsJavaScriptLink(url)
+                    || IsJavaScriptLibLink(url)
                     || IsStylesheetLink(url)
                     || IsImageLink(url)
                     || IsFileLink(url)
@@ -291,9 +301,7 @@ namespace Server
                 return false;
             }
         }
-
-
-        private async Task AddUpdateToDatabase(string url, string htmlContent)
+        private async Task AddUpdateToDatabase(HtmlDocument doc, string url, string htmlContent)
         {
             var crawled = new Crawled
             {
@@ -307,15 +315,18 @@ namespace Server
             {
                 try
                 {
-                    await _contentAnalysis.ExtractAllInformationAsync(_seedUrl, htmlContent, crawled.Id);
+                    //await _contentAnalysis.ExtractAllInformationAsync(_seedUrl, htmlContent, crawled.Id);
+
+                    //Extract All Information in details and analyse This function Process htmlpage and store in database
+                    OnPageSeoScore.ProcessSeoScore(doc,Project, _ignoreWordList, htmlContent,  crawled.Id, _seedUrl);
+
                     var updateCrawled = new Crawled
                     {
                         Id = crawled.Id,
                         AnalysisStatus = "Completed"
                     };
                     await _crawledService.UpdateAnalysisStatus(updateCrawled);
-                    _projectService.ProjectUpdatePageCount(_projectId, VisitedUrls.Count());
-
+                    var status = _projectService.ProjectUpdatePageCount(_projectId, VisitedUrls.Count());
                 }
                 catch (Exception ex)
                 {
@@ -341,6 +352,10 @@ namespace Server
         static bool IsJavaScriptLink(string url)
         {
             return url.StartsWith("javascript:", StringComparison.OrdinalIgnoreCase);
+        }
+        static bool IsJavaScriptLibLink(string url)
+        {
+            return url.EndsWith(".js", StringComparison.OrdinalIgnoreCase);
         }
         static bool IsStylesheetLink(string url)
         {

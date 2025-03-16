@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Core.Shared.Entities;
 using Core.Shared;
 using Newtonsoft.Json;
-using Core.Api.Models;
+ 
 
 namespace ConnectToAi.Areas.Identity.Pages.Account
 {

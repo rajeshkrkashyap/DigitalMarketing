@@ -24,7 +24,23 @@ namespace Core.Api.Controllers
             _mailService = mailService;
             _configuration = configuration;
         }
-        
+
+        [HttpPost("SendOTP")]
+        public async Task<IActionResult> SendOTP(string mobileNumber, string countrycode)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.SendOtp(mobileNumber, countrycode);
+                if (result.IsSuccess)
+                {
+                    //await _mailService.SendEmailAsync(model.MobileNumber, "New login", "<h2>Hey!, new login to your account noticed</h2><p>New login to your account at " + DateTime.Now + "</p>");
+                    return Ok(result);
+                }
+                return Ok(result);
+            }
+
+            return BadRequest("Some properties are not valid");
+        }
         // /api/auth/login
         [HttpPost("MobileLogin")]
         public async Task<IActionResult> MobileLoginAsync([FromBody] LoginRegisterMobileViewModel model)

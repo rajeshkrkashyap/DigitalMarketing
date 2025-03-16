@@ -11,9 +11,10 @@ namespace Core.Shared
         public const string Login = "api/auth/login";
         public const string Register = "api/auth/register";
         public const string RefreshToken = "api/auth/refreshtoken";
-        
+
         public const string MobileLogin = "api/Auth/MobileLogin";
-        public const string SMSSend = "api/SMS/send";
+        public const string SendOTP = "api/Auth/SendOtp";
+ 
 
         public const string ConfirmEmail = "api/auth/ConfirmEmail";
         public const string GetUserByEmail = "api/auth/GetUserByEmail";
@@ -21,7 +22,7 @@ namespace Core.Shared
         public const string GeneratePasswordResetTokenAsync = "api/auth/GeneratePasswordResetTokenAsync";
         public const string ResetPasswordAsync = "api/auth/ResetPasswordAsync";
         public const string AddToRoleAsync = "api/auth/AddToRoleAsync";
- 
+
         public const string AppUserSettingList = "api/AppUserSetting/List";
         public const string AppSettingQueryActiveByAppUserIdAsync = "api/AppUserSetting/QueryActiveByAppUserIdAsync";
         public const string AppUserSettingGetById = "api/AppUserSetting/GetById";
@@ -67,6 +68,7 @@ namespace Core.Shared
         public const string ProjectUpdate = "api/Project/Update";
         public const string ProjectUpdateParent = "api/Project/UpdateParent";
 
+        public const string CrawledPageContent = "api/Crawled/PageContent";
         public const string CrawledCreate = "api/Crawled/Create";
         public const string CrawledUpdate = "api/Crawled/Update";
         public const string CrawledUpdateAnalysisStatus = "api/Crawled/UpdateAnalysisStatus";
@@ -80,5 +82,38 @@ namespace Core.Shared
 
         public const string ModelTrainingDelete = "api/ModelTraining/FineTune";
         public const string OCRReadImageData = "api/Ocr/ReadImageData";
+
+        public const string ProjectCrawledList = "api/Crawled/List";
+
+
+        public const string ContentQualityContent = "api/ContentQuality/PageContent";
+        public const string ContentQualityCreate = "api/ContentQuality/Create";
+        public const string ContentQualityUpdate = "api/ContentQuality/Update";
+        public const string ContentQualityUpdateAnalysisStatus = "api/ContentQuality/UpdateAnalysisStatus";
+
+
+        public const string BlogList = "api/Blog/List";
+        public const string BlogGetById = "api/Blog/GetById";
+        public const string BlogGetByTitle = "api/Blog/GetByTitle";
+        public const string BlogCreate = "api/Blog/Create";
+        public const string BlogIsExist = "api/Blog/IsExist";
+        public const string BlogUpdate = "api/Blog/Update";
+        public const string BlogDelete = "api/Blog/Delete";
+
+
+        public const string ArticleTypeList = "api/ArticleType/List";
+        public const string ArticleTypeGetById = "api/ArticleType/GetById";
+        public const string ArticleTypeCount = "api/ArticleType/Count";
+        public const string ArticleTypeCreate = "api/ArticleType/Create";
+        public const string ArticleTypeUpdate = "api/ArticleType/Update";
+        public const string ArticleTypeDelete = "api/ArticleType/Delete";
+
+
+        public const string KeywordUsageCreate = "api/KeywordUsage/Create";
+        public const string KeywordUsageUpdate = "api/KeywordUsage/Update";
+
+        public const string AzureOpenAiGenerateText = "api/AzureOpenAi/GenerateText";
+        public const string AzureOpenAiGenerateArticleText = "api/AzureOpenAi/GenerateArticleText";
+
     }
 }

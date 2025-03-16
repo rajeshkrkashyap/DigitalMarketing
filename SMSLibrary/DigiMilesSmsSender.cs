@@ -13,14 +13,14 @@ namespace SMSLibrary
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(DigiMilesSmsSender));
 
-        public HttpResponseMessage SendSms(string mobileNumber, string countryCode, string textMessage)
+        public bool SendSms(string mobileNumber, string countryCode, string textMessage)
         {
             // Implement Digi miles SMS sending logic here
             Console.WriteLine($"Sending SMS using DigiMiles to {countryCode}{mobileNumber}: {textMessage}");
             return SendSMSHttpClient(mobileNumber, countryCode, textMessage);
         }
 
-        private static HttpResponseMessage SendSMSHttpClient(string mobileNumber, string countryCode, string textMessage)
+        private static bool SendSMSHttpClient(string mobileNumber, string countryCode, string textMessage)
         {
             // DEFINE PARAMETERS USED IN URL
             // To what server you need to connect to for submission
@@ -84,15 +84,20 @@ namespace SMSLibrary
                 using (HttpClient httpClient = new HttpClient())
                 {
                     log.Info("SMS service is calling");
-                    return httpClient.GetAsync(URL).Result;
+                    var result =  httpClient.GetAsync(URL).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
                 }
 
             }
             catch (Exception ex)
             {
                 log.Error(ex);
-                throw ex;
+                
             }
+            return false;
         }
         private static string SendSMS(string mobileNumber, string countryCode, string textMessage)
         {

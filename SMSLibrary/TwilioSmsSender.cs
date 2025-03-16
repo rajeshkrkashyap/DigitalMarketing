@@ -8,11 +8,11 @@ namespace SMSLibrary
 {
     internal class TwilioSmsSender : ISmsSender
     {
-        public HttpResponseMessage SendSms(string mobileNumber, string countryCode, string textMessage)
+        public bool SendSms(string mobileNumber, string countryCode, string textMessage)
         {
             // Implement Twilio SMS sending logic here
             Console.WriteLine($"Sending SMS using Twilio to {countryCode}{mobileNumber}: {textMessage}");
-            return new HttpResponseMessage();
+            return false;
         }
     }
 

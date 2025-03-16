@@ -1,0 +1,85 @@
+﻿@model List<Blog>
+@{
+    ViewBag.PageCategory = "Blogs";
+    Layout = "/Views/Shared/_LayoutBlog.cshtml";
+}
+<div class="blog-posts">
+    @foreach (var blog in Model)
+    {
+        <article>
+            <div class="row">
+                <div class="col-md-12">
+
+                    @if (blog.MediaType == "Image")
+                    {
+                        <div class="swiper-container horizontal-slider margin-bottom-30">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="../assets/blog/images/" @blog.MediaURL alt="" style="width:100%" class="img-responsive" />
+                                </div>
+                            </div>
+                            <!-- Add Pagination -->
+                            <div class="swiper-pagination"></div>
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="post-media margin-bottom-30">
+                            <iframe src="https://player.vimeo.com/video/87701971" width="500" height="381" style="width: 720px;height: 404.64px;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-12">
+                    <div class="post-content">
+                        <h2><a href="/Blogs/post/1"> @blog.Title </a></h2>
+                        <p class="text-dark">
+                            @blog.SmallDescription
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="post-meta text-light">
+                        <span><i class="fa fa-calendar"></i> @blog.Created </span>
+                        <span><i class="fa fa-user"></i> By <a href="#"> @blog.Auther </a> </span>
+                        <a href="blog_post.html" class="btn btn-primary btn-wide btn-scroll btn-scroll-top fa-arrow-right pull-right" data-caption-class="fadeIn" data-caption-delay="900"> <span>Read more...</span> </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <hr />
+    }
+
+    <ul class="pagination">
+        <li>
+            <a href="#"> « </a>
+        </li>
+        @{
+            int count = 1;
+            foreach (var blogItem in Model)
+            {
+                if (blogItem.Title == ViewBag.Title)
+                {
+                    <li class="active">
+                        <a href="#"> @count++  </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="#"> @count++  </a>
+                    </li>
+                }
+            }
+        }
+        <li>
+            <a href="#"> » </a>
+        </li>
+
+    </ul>
+</div>
+

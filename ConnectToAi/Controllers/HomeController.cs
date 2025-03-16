@@ -36,8 +36,8 @@ namespace ConnectToAi.Controllers
         public async Task<JsonResult> SendOTP(string countryCode, string mobileNumber)
         {
             string sessionId = HttpContext.Session.Id;
-            string messageOTP = OtpManager.GenerateOtp(sessionId);
-            var response = await _authService.SendSMS(mobileNumber, countryCode, messageOTP);
+
+            var response = await _authService.SendOTP(mobileNumber, countryCode);
 
             return Json(sessionId);
         }

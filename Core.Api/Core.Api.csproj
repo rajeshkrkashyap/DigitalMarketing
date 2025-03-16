@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AzureOpenAiLib\AzureOpenAiLib.csproj" />
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj" />
     <ProjectReference Include="..\SMSLibrary\SMSLibrary.csproj" />
   </ItemGroup>

@@ -11,16 +11,16 @@ namespace ConnectToAi.Services
         {
         }
 
-        public async Task<HttpResponseMessage> SendSMS(string mobileNumber, string countryCode, string message)
+        public async Task<HttpResponseMessage> SendOTP(string mobileNumber, string countryCode)
         {
-            if (!string.IsNullOrEmpty(mobileNumber) && !string.IsNullOrEmpty(countryCode) && !string.IsNullOrEmpty(message))
+            if (!string.IsNullOrEmpty(mobileNumber) && !string.IsNullOrEmpty(countryCode))
             {
-                var url = $"{ApiBaseURL}{APIs.SMSSend}";
+                var url = $"{ApiBaseURL}{APIs.SendOTP}";
                 try
                 {
                     using (HttpClient httpClient = new HttpClient())
                     {
-                        return await httpClient.GetAsync(url + "/?mobileNumber=" + mobileNumber + "&countryCode=" + countryCode + "&message=" + message);
+                        return await httpClient.PostAsync(url + "/?mobileNumber=" + mobileNumber + "&countryCode=" + countryCode, null);
                     }
                 }
                 catch (Exception ex)

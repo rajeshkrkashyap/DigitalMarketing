@@ -23,7 +23,7 @@ builder.Services.AddSession(options =>
 {
     // Configure session options as needed
     options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = true;
+    options.Cookie.HttpOnly = false;
     options.Cookie.IsEssential = true;
 });
 
@@ -44,6 +44,7 @@ builder.Services.AddScoped<ProjectService>();
 builder.Services.AddSingleton<ServiceService>();
 builder.Services.AddSingleton<RechargeService>();
 builder.Services.AddSingleton<AppUserService>();
+builder.Services.AddSingleton<ArticleTypeService>();
 
 var app = builder.Build();
 

@@ -1,10 +1,11 @@
 ﻿using log4net;
+using System.Configuration;
 
 namespace SMSLibrary
 {
     public class SmsServiceProvider
     {
-        public static HttpResponseMessage SendSMS(string mobileNumber, string countryCode, string otp)
+        public static bool SendSMS(string mobileNumber, string countryCode, string otp)
         {
             SmsService smsService;
             switch (countryCode)
@@ -25,14 +26,14 @@ namespace SMSLibrary
                     // Example usage
                     smsService = new SmsService(new NexmoSmsSender());
                     return smsService.SendSms(mobileNumber, "+1", otp);
-                    
+
                 default:
                     break;
             }
 
             //var smsServiceTeleSign = new SmsService(new TeleSignSender());
             //return smsServiceTeleSign.SendSms(mobileNumber, "91");
-            return null;
+            return false;
         }
     }
 }

@@ -1,0 +1,29 @@
+/* ---------------------------------------------------------------------- */
+/* Revolution Slider
+/* ---------------------------------------------------------------------- */
+.tp-banner-container {
+  width:100%;
+  position:relative;
+  padding:0;
+
+}
+
+.tp-banner {
+  width:100%;
+  position:relative;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0; 
+  }
+}
+
+.tp-banner-fullscreen-container {
+    width:100%;
+    position:relative;
+    padding:0;
+}
+.tp-bannertimer {
+    height: 3px !important;
+    background: $primary !important;
+}

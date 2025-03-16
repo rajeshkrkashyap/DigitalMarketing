@@ -18,12 +18,27 @@ namespace Core.Api.Models
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OneTimePassword> OneTimePasswords { get; set; }
         public DbSet<ApplicationService> ApplicationServices { get; set; }
         public DbSet<Recharge> Recharges { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Crawled> Crawleds { get; set; }
         public DbSet<ContentAnalysis> ContentAnalysiss { get; set; }
         public DbSet<BackLink> BackLinks { get; set; }
+        public DbSet<KeywordUsage> KeywordUsages { get; set; }
+        public DbSet<ContentQuality> ContentQualities { get; set; }
+        public DbSet<MetaTag> MetaTags { get; set; }
+        public DbSet<URLStructure> URLStructures { get; set; }
+        public DbSet<InternalLinking> InternalLinkings { get; set; }
+        public DbSet<ImagesAndMultimedia> ImagesAndMultimedias { get; set; }
+        public DbSet<PageLoadingSpeed> PageLoadingSpeeds { get; set; }
+        public DbSet<MobileFriendliness> MobileFriendliness { get; set; }
+        public DbSet<SocialSignal> SocialSignals { get; set; }
+        public DbSet<TechnicalSEO> TechnicalSEOs { get; set; }
+        public DbSet<Security> Securities { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<ArticleType> ArticleTypes { get; set; }
+        public DbSet<ArticleTitle> ArticleTitles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

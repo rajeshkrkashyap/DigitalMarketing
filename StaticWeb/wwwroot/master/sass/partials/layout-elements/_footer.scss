@@ -1,0 +1,124 @@
+/* ---------------------------------------------------------------------- */
+/*  Footer
+/* ---------------------------------------------------------------------- */
+.app-content > footer {
+    border-top: 1px solid $border-default;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position: absolute;
+    font-size: $font-size-small;
+    background: #363839;
+    padding-top: 40px;
+    height: $footer-height;
+
+    @media (max-width: $screen-sm-max) {
+        position: relative;
+        height: auto !important;
+    }
+
+    .footer-inner {
+        padding: 0 20px;
+        line-height: $footer-height;
+
+        @media (max-width: $screen-sm-max) {
+            line-height: inherit;
+        }
+    }
+
+    h4 {
+        font-size: 1.8em;
+        font-weight: 200;
+        text-shadow: 1px 1px 1px #000000;
+    }
+
+    h1, h2, h3, h4, a {
+        color: #FFFFFF !important;
+    }
+
+    h1, h2, h3, h4 {
+        color: #FFFFFF !important;
+
+        @media (max-width: $screen-sm-max) {
+            margin-top: 30px !important;
+            margin-bottom: 10px !important;
+        }
+    }
+
+    div.twitter {
+        a.time {
+            color: #999999;
+            display: block;
+            font-size: 0.9em;
+            padding-top: 3px;
+            margin-bottom: 20px;
+        }
+
+        .fa {
+            clear: both;
+            font-size: 20px;
+            position: relative;
+            top: 3px;
+        }
+    }
+
+    ul.posts {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            border-bottom: 1px solid $text-dark;
+            padding: 10px;
+        }
+    }
+
+    div.footer-copyright {
+        background: #333333;
+        border-top: 1px solid #444444;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px 0 20px;
+
+        @media (max-width: $screen-sm-max) {
+            text-align: center;
+            position: relative;
+        }
+
+        nav {
+            float: right;
+
+            @media (max-width: $screen-sm-max) {
+                float: none;
+                padding-top: 15px;
+            }
+
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+
+                li {
+                    border-left: 1px solid #505050;
+                    display: inline-block;
+                    line-height: 12px;
+                    margin: 0;
+                    padding: 0 8px;
+
+                    &:first-child {
+                        border: none;
+                        padding-left: 0;
+                    }
+                }
+            }
+        }
+
+        p {
+            color: #555555;
+            margin: 0;
+            padding: 0;
+        }
+    }
+}

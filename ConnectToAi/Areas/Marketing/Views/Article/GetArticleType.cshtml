@@ -1,0 +1,74 @@
+﻿@model List<ArticleType>
+@{
+    ViewData["Title"] = "GetArticleType";
+    var projects = (List<Project>)ViewBag.TotalProjectCreated;
+    if (projects == null)
+    {
+        return;
+    }
+}
+
+<div class="main-content">
+    <div class="wrap-content container " id="container">
+        <h2>CreateArticle</h2>
+        <label style="font-size:large;margin-right:10px">Total Project Created: </label><a class="btn btn-info" href="#"> @projects.Count()/5</a>
+        <div style="margin-top:10px;" class="row">
+            <div class="col-md-4">
+                <select class="form-control" id="projectSelect">
+                    <option value="" selected="selected">Select a Project</option>
+                    @foreach (var item in projects)
+                    {
+                        <option value="@item.Id" url="@item.URL">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <select class="form-control" id="articleTypeSelect">
+                    <option value="" selected="selected">Select a Article Type</option>
+                </select>
+                <a class="btn btn-success" id="btnStart" style="display:none" href="#">START</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $('#projectSelect').on("change", function () {
+            if ($(this).val() != "") {
+                $('#btnStart').attr("disabled", false);
+                $('#btnStart').show();
+                articleList($(this).val());
+                $('#ProjectId').val($(this).val())
+            } else {
+                $('#btnStart').attr("disabled", true);
+                $('#btnStart').hide();
+                $('#ProjectId').val("");
+            }
+        });
+
+        $(document).ready(function () {
+            function articleList(projectId) {
+                // Make AJAX call
+                $.ajax({
+                    url: '/marketing/Article/GetArticleTypeList',
+                    type: 'GET',
+                    data: { projectId: projectId },
+                    success: function (data) {
+                        // Clear existing options
+                        $('#articleTypeSelect').empty();
+
+                        // Populate dropdown with data
+                        $.each(data, function (index, value) {
+                            $('#articleTypeSelect').append($('<option>').text(value.name).attr('value', value.id));
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+        });
+    </script>
+}
+

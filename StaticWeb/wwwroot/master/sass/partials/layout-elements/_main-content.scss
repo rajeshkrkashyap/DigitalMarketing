@@ -1,0 +1,45 @@
+/* ---------------------------------------------------------------------- */
+/*  Main Content
+/* ---------------------------------------------------------------------- */
+.main-content {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: $footer-height;
+    padding-top: $header-height;
+
+    @media (min-width: $screen-md-min) {
+
+        .app-navbar-fixed & {
+            margin-top: 0;
+
+            &:before, &:after {
+                content: " ";
+                display: table;
+            }
+
+            &:after {
+                clear: both;
+            }
+        }
+    }
+
+    @media (max-width: $screen-sm-max) {
+        display: block;
+        height: 100%;
+        overflow: hidden;
+        padding-bottom: 0;
+
+        .wrap-content {
+            height: 100%;
+            overflow: auto;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+        }
+    }
+}
+
+#main-slider + .app-content {
+    .main-content {
+        padding-top: 0;
+    }
+}

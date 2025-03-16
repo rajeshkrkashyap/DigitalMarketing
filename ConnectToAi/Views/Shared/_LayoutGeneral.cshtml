@@ -1,26 +1,30 @@
 ﻿<!DOCTYPE html>
 <!--[if IE 8]>
 <html class="ie8" lang="en">
-    <![endif]-->
+   <![endif]-->
 <!--[if IE 9]>
-    <html class="ie9" lang="en">
-        <![endif]-->
+   <html class="ie9" lang="en">
+      <![endif]-->
 <!--[if !IE]>
-        <!-->
+      <!-->
 <html lang="en">
 <!--
-          <![endif]-->
+
+                   <![endif]-->
+
 <head>
-    <title>ClipTwo - Responsive Admin Template</title>
+    <title>Automate Your Digital Marketing- </title>
     <!--[if IE]>
                 <meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" />
                 <![endif]-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1,maximum-scale=1">
+ 
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta content="ClipTwo - Responsive Admin Template build with Bootstrap" name="description">
-    <meta content="ClipTheme" name="author">
+    <meta content="Digital Marketing - Automate your digital marketing" name="description">
+    <meta content="Digital Marketing" name="author">
     <link rel="apple-touch-icon" sizes="57x57" href="~/assets/images/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="~/assets/images/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="~/assets/images/apple-icon-72x72.png">
@@ -42,6 +46,7 @@
     <link rel="stylesheet" href="~/assets/css/vendors.bundle.min.css">
     <link rel="stylesheet" href="~/assets/css/theme.bundle.min.css">
     <link rel="stylesheet" href="~/assets/css/themes/theme-1.min.css" id="skin_color">
+    <link href="~/vendor/datatables/media/css/dataTables.bootstrap4.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
 
@@ -64,7 +69,14 @@
     </div>
 
     <script src="~/assets/js/vendors.bundle.min.js"></script>
+    <script src="~/vendor/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="~/vendor/jquery.sparkline/jquery.sparkline.min.js"></script>
     <script src="~/assets/js/main.min.js"></script>
+    <script src="~/js/cookiemanagerlib.js"></script>
+
     <script>
         NProgress.configure({
             showSpinner: !1
@@ -76,6 +88,13 @@
             NProgress.done(), clearInterval(interval), Main.init()
         })
     </script>
+    <script src="~/assets/js/table-data.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $(TableData).init()
+        })
+    </script>
     @await RenderSectionAsync("scripts", required: false)
 </body>
+
 </html>

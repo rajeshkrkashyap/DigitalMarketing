@@ -1,4 +1,4 @@
-﻿using DAL.Server;
+﻿using Core.Service.Server;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using System.Collections.Specialized;
@@ -11,20 +11,20 @@ namespace Server
     public class ContentAnalysis
     {
         private string _baseUrl = "";
-        private readonly HtmlDocument document;
+        private readonly HtmlDocument _document;
         private readonly ContentAnalysisService _contentAnalysisService;
-        private readonly List<string>? _ignoreWordList;
-        public ContentAnalysis(List<string>? ignoreWordList, ContentAnalysisService contentAnalysisService)
+        public readonly List<string>? IgnoreWordList;
+        public ContentAnalysis(HtmlDocument document, List<string>? _ignoreWordList, ContentAnalysisService contentAnalysisService)
         {
-            document = new HtmlDocument();
+            _document = document;
             _contentAnalysisService = contentAnalysisService;
-            _ignoreWordList = ignoreWordList;
+            IgnoreWordList = _ignoreWordList;
         }
 
         public async Task ExtractAllInformationAsync(string baseURL, string htmlContent, string crawledId)
         {
             _baseUrl = baseURL;
-            document.LoadHtml(htmlContent);
+            _document.LoadHtml(htmlContent);
             var keywordsInJson = ExtractMetaTagKeyword();
             var keywordFrequency = ExtractKeywordFromContentWithTheirFrequency();
             var headings = ExtractHeadingSubheadings();
@@ -39,24 +39,25 @@ namespace Server
             {
                 CrawledId = crawledId,
                 MetaTagKeywords = keywordsInJson,
-                Headings = headings,
                 KeywordFrequency = keywordFrequency,
-                MetaDescription = metaDescription,
+                Headings = headings,
                 Title = title,
+                MetaDescription = metaDescription,
                 ImageDetail = imageDetail,
                 InternalLinks = internalLinks,
                 ExternalLinks = externalLinks,
                 URLStructure = uRLStructure
             });
         }
+
         private string ExtractMetaTagKeyword()
         {
-            if (_ignoreWordList == null)
+            if (IgnoreWordList == null)
             {
                 return null;
             }
 
-            HtmlNodeCollection keywordNodes = document.DocumentNode.SelectNodes("//meta[@name='keywords']");
+            HtmlNodeCollection keywordNodes = _document.DocumentNode.SelectNodes("//meta[@name='keywords']");
             List<string> keywords = new List<string>();
             if (keywordNodes != null)
             {
@@ -66,7 +67,7 @@ namespace Server
                     keywords.Add(keyword);
                 }
 
-                var filteredKeywords = keywords.Where(k => !_ignoreWordList.Contains(k.ToLower()));
+                var filteredKeywords = keywords.Where(k => !IgnoreWordList.Contains(k.ToLower()));
 
                 return JsonConvert.SerializeObject(filteredKeywords);
             }
@@ -74,12 +75,12 @@ namespace Server
         }
         private string ExtractKeywordFromContentWithTheirFrequency()
         {
-            if (_ignoreWordList == null)
+            if (IgnoreWordList == null)
             {
                 return null;
             }
 
-            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//p");
+            HtmlNodeCollection nodes = _document.DocumentNode.SelectNodes("//p");
             List<string> keywords = new List<string>();
 
             if (nodes != null)
@@ -101,7 +102,7 @@ namespace Server
             }
 
 
-            var filteredKeywords = keywords.Where(k => !_ignoreWordList.Contains(k.ToLower())).ToList();
+            var filteredKeywords = keywords.Where(k => !IgnoreWordList.Contains(k.ToLower())).ToList();
 
 
             //Getting frequency of the each words
@@ -113,7 +114,7 @@ namespace Server
         }
         private string ExtractHeadingSubheadings()
         {
-            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//h1 | //h2 | //h3 | //h4 | //h5 | //h6");
+            HtmlNodeCollection nodes = _document.DocumentNode.SelectNodes("//h1 | //h2 | //h3 | //h4 | //h5 | //h6");
             List<string> headingList = new List<string>();
 
             if (nodes != null)
@@ -129,7 +130,7 @@ namespace Server
         }
         private string ExtractTitle()
         {
-            HtmlNode titleNode = document.DocumentNode.SelectSingleNode("//title");
+            HtmlNode titleNode = _document.DocumentNode.SelectSingleNode("//title");
             if (titleNode!=null)
             {
                 return titleNode.InnerText;
@@ -138,7 +139,7 @@ namespace Server
         }
         private string ExtractMetaDescription()
         {
-            HtmlNode metaDescriptionNode = document.DocumentNode.SelectSingleNode("//meta[@name='description']");
+            HtmlNode metaDescriptionNode = _document.DocumentNode.SelectSingleNode("//meta[@name='description']");
             if (metaDescriptionNode != null)
             {
                 return metaDescriptionNode.GetAttributeValue("content", "");
@@ -158,7 +159,7 @@ namespace Server
         private string ExtractImageDetail()
         {
 
-            HtmlNodeCollection imageNodes = document.DocumentNode.SelectNodes("//img");
+            HtmlNodeCollection imageNodes = _document.DocumentNode.SelectNodes("//img");
 
 
             List<Img> imageList = new List<Img>();
@@ -179,7 +180,7 @@ namespace Server
         }
         private string ExtractInternalLinks()
         {
-            var anchorElements = document.DocumentNode.SelectNodes("//a[@href]");
+            var anchorElements = _document.DocumentNode.SelectNodes("//a[@href]");
 
             foreach (var anchorElement in anchorElements)
             {
@@ -199,7 +200,7 @@ namespace Server
         }
         private string ExtractExternalLinks()
         {
-            var links = document.DocumentNode.Descendants("a")
+            var links = _document.DocumentNode.Descendants("a")
                                                      .Where(a => a.Attributes["href"] != null &&
                                                                  (a.Attributes["href"].Value.StartsWith("http://") ||
                                                                   a.Attributes["href"].Value.StartsWith("https://")))

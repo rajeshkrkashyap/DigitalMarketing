@@ -7,7 +7,7 @@ namespace SMSLibrary
     internal class TeleSignSender : ISmsSender
     {
       
-        public HttpResponseMessage SendSms(string mobileNumber, string countryCode, string textMessage)
+        public bool SendSms(string mobileNumber, string countryCode, string textMessage)
         {
             //        // Replace the defaults below with your Telesign authentication credentials.
             //        string customerId = "0104D86A-63FE-4BC9-A1CF-9D3BF50A2278";
@@ -57,7 +57,7 @@ namespace SMSLibrary
             //        //Console.WriteLine("Press any key to quit.");
             //        //Console.ReadKey();
 
-            return new HttpResponseMessage();
+            return false;
         }
     }
 }

@@ -58,6 +58,7 @@
      <![endif]-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1,maximum-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="directive1 value1; directive2 value2;">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="apple-touch-icon" sizes="57x57" href="~/assets/images/apple-icon-57x57.png">
@@ -137,7 +138,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="~/assets/js/main.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
+    <script src="~/js/cookiemanagerlib.js"></script>
     <script>
         NProgress.configure({
             showSpinner: !1
@@ -164,7 +165,7 @@
         })
     </script>
     <script>
-        // Function to get the value of a specific cookie
+        // // Function to get the value of a specific cookie
         function getCookie(cookieName) {
             const cookieString = document.cookie;
             const cookies = cookieString.split('; ');
@@ -177,7 +178,7 @@
             return null;
         }
 
-        const myCookieValue = getCookie('AuthToken'); // Replace 'myCookie' with your cookie name
+        const myCookieValue = CookieManager.getCookie('AuthToken'); // Replace 'myCookie' with your cookie name
         if (myCookieValue !== null) {
             const parsedCookieValue = JSON.parse(myCookieValue);
             const name = parsedCookieValue.Name;
@@ -352,7 +353,7 @@
     </script>
     <script>
 
-        const subjectsCookie = getCookie('cookie_Subjects');
+        const subjectsCookie = CookieManager.getCookie('cookie_Subjects');
 
         if ('@role' == 'student' && subjectsCookie == null) {
             $.ajax({
@@ -361,7 +362,7 @@
                 dataType: 'json',
                 success: function (result) {
                     var resultStr = JSON.stringify(result);
-                    Cookies.set("cookie_Subjects", resultStr);
+                    setCookie("cookie_Subjects", resultStr);
                 },
                 error: function (ex) {
                     console.log(ex);

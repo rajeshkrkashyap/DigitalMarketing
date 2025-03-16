@@ -8,11 +8,11 @@ namespace SMSLibrary
 {
     internal class NexmoSmsSender : ISmsSender
     {
-        public HttpResponseMessage SendSms(string mobileNumber, string countryCode, string textMessage)
+        public bool SendSms(string mobileNumber, string countryCode, string textMessage)
         {
             // Implement Nexmo SMS sending logic here
             Console.WriteLine($"Sending SMS using Nexmo to {countryCode}{mobileNumber}: {textMessage}");
-            return new HttpResponseMessage();
+            return false;
         }
     }
 

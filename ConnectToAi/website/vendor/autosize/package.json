@@ -25,12 +25,7 @@
     "url": "http://github.com/jackmoore/autosize.git"
   },
   "dependencies": {},
-  "devDependencies": {
-    "babel": "^5.4.3",
-    "gaze": "^1.1.2",
-    "jshint": "^2.9.4",
-    "uglify-js": "^2.7.4"
-  },
+   
   "config": {
     "bower": {
       "name": "autosize",

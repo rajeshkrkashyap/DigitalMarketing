@@ -1,0 +1,95 @@
+/* ---------------------------------------------------------------------- */
+/* Progress Bar
+/* ---------------------------------------------------------------------- */
+
+
+.progress.progress-xs {
+    height: 7px;
+}
+
+.progress.progress-sm {
+    height: 12px;
+}
+
+.progress.progress-lg {
+    height: 20px;
+}
+
+.progress.transparent-black {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+    background-color: $primary;
+}
+
+.progress-bar-success {
+    background-color: $success;
+}
+
+.progress-bar-info {
+    background-color: $info;
+}
+
+.progress-bar-warning {
+    background-color: $warning;
+}
+
+.progress-bar-danger {
+    background-color: $danger;
+}
+
+.progress-percent {
+    background-color: #333;
+    border-radius: 2px;
+    color: #f9f9f9;
+    font-size: 11px;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 5px;
+    position: absolute;
+    right: -10px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    top: -28px;
+    width: 40px;
+    z-index: 2;
+}
+
+.progress-percent::after {
+    content: " ";
+    height: 0;
+    position: absolute;
+    bottom: -4px;
+    width: 0;
+    border-color: transparent transparent transparent #333;
+    border-style: solid;
+    border-width: 4px;
+    left: 0;
+}
+
+.progress-animated {
+
+    .progress-bar {
+        position: relative;
+        @include transition(width 0.6s ease-in-out 0s);
+    }
+}
+
+.progress-tooltip {
+    overflow: visible !important;
+    margin-bottom: 0;
+    margin-top: 30px;
+    position: relative;
+
+    span {
+        color: $text-dark;
+        font-size: 12px;
+        font-weight: 700;
+        left: 0;
+        line-height: 20px;
+        position: absolute;
+        text-transform: uppercase;
+        top: -23px;
+        z-index: 1;
+    }
+}

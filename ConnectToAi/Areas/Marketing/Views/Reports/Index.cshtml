@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Crawled>
+@{
+    ViewData["Title"] = "Index";
+    int counter = 1;
+}
+
+<div class="main-content">
+    <div class="wrap-content container " id="container">
+        <section id="page-title">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1 class="mainTitle">Total Page Analysed: <kbd>39</kbd></h1><br />
+                </div>
+            </div>
+        </section>
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped table-border table-hover table-full-width" id="sample_1">
+                        <thead style="background-color:aliceblue">
+                            <tr>
+                                <th>Sr.#</th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.URL)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.AnalysisStatus)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var count = @counter++;
+                                <tr>
+                                    <td>@count</td>
+                                    <td>
+                                        @if (item.URL.Length > 50)
+                                        {
+                                            <a href="@item.URL" title="@item.URL">@item.URL.Substring(0, 50)...</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@item.URL" title="@item.URL">@item.URL</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AnalysisStatus)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

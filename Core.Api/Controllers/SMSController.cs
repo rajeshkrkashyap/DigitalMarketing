@@ -10,7 +10,7 @@ namespace Core.Api.Controllers
     {
 
         [HttpGet("Send")]
-        public HttpResponseMessage Send(string mobileNumber, string countryCode, string message)
+        public bool Send(string mobileNumber, string countryCode, string message)
         {
             return SMSLibrary.SmsServiceProvider.SendSMS(mobileNumber, countryCode, message);
         }

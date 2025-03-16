@@ -64,7 +64,7 @@
                                     Hit 'Create' to finalize the project setup.
                                 </span>
                             </div>
-                           
+
                         </div>
                     </section>
                     <div class="container-fluid container-fullw bg-white">
@@ -136,7 +136,7 @@
                                                             <a href="javascript:void(0)" data-content="Your project information is not required for unlawful purposes, but only in order to analysis perpuse" data-title="Don't worry!" data-placement="top" data-toggle="popover">Why do you need my Project information?</a>
                                                         </p>
                                                     </fieldset>
-                                                  
+
                                                     <div class="form-group">
                                                         <button class="btn btn-primary btn-o next-step btn-wide pull-right">
                                                             Next <i class="fa fa-arrow-circle-right"></i>
@@ -170,7 +170,7 @@
                                                             </label>
                                                             <input type="url" placeholder="Enter your's Website ULR'" class="form-control" name="URL">
                                                         </div>
-                                                         
+
                                                     </fieldset>
                                                     <div class="form-group">
                                                         <button class="btn btn-primary btn-o back-step btn-wide pull-left">
@@ -200,6 +200,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -208,6 +209,7 @@
         }
     </div>
     <script src="/assets/js/vendors.bundle.min.js"></script>
+
     <script src="/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="/vendor/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
     <script src="/vendor/selectFx/classie.js"></script>
@@ -221,7 +223,9 @@
             NProgress.inc()
         }, 1e3);
         jQuery(document).ready(function () {
-            NProgress.done(), clearInterval(interval), Main.init()
+            NProgress.done(),
+                clearInterval(interval),
+                Main.init()
         })
     </script>
     <script src="/assets/js/form-wizard.min.js"></script>
@@ -230,6 +234,7 @@
             FormWizard.init()
         })
     </script>
- 
+  
+
 </body>
 </html>

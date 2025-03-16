@@ -1,0 +1,138 @@
+/* ---------------------------------------------------------------------- */
+/*  Page Title
+/* ---------------------------------------------------------------------- */
+
+#page-title {
+    border-bottom: 1px solid #eee;
+    padding: 50px 0;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+
+    .title-white, .title-white + .mainDescription {
+        text-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+        color: $white;
+    }
+
+    .title-white {
+        font-weight: bold;
+    }
+
+    &.page-title-background {
+        margin-top: - $header-height;
+        padding-top: $header-height;
+        padding-bottom: 0;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 480px;
+
+        > .container {
+            height: 100%;
+            display: table;
+
+            > .row {
+                display: table-cell;
+                vertical-align: middle;
+            }
+        }
+
+        .breadcrumb {
+            position: relative;
+            @include transform(none);
+            top: auto !important;
+            right: auto !important;
+            padding: 8px 15px !important;
+            background-color: rgba(0, 0, 0, 0.6) !important;
+            display: inline-block;
+            margin-left: 15px !important;
+            margin-top: 15px !important;
+            color: #fff;
+
+            .active {
+                color: #ccc;
+            }
+        }
+    }
+
+    @media (max-width: $screen-xs-max) {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+
+    h1 {
+        color: #333;
+        font-size: 28px;
+        font-weight: 300;
+        letter-spacing: 1px;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+        text-transform: uppercase;
+
+        @media (max-width: $screen-xs-max) {
+            font-size: 24px;
+        }
+    }
+
+    .mainDescription {
+        font-family: $font-family-secondary;
+        color: #777;
+        display: block;
+        font-size: 18px;
+        font-weight: 300;
+        margin-top: 10px;
+
+        small {
+            font-size: 60%;
+            margin-top: 10px;
+            display: block;
+        }
+    }
+
+    .breadcrumb {
+        background-color: transparent !important;
+        font-size: 12px;
+        left: auto !important;
+        margin: 0 !important;
+        @include transform(translate3d(0px, -50%, 0px));
+        padding: 0 !important;
+        position: absolute;
+        right: 30px !important;
+        top: 50% !important;
+        width: auto !important;
+        font-family: $font-family-secondary;
+
+        @media (max-width: $screen-xs-max) {
+            left: 0 !important;
+            margin: 15px 0 0 !important;
+            position: relative !important;
+            right: 0 !important;
+            top: 0 !important;
+        }
+    }
+
+    .breadcrumb > li + li {
+        padding: 0 5px;
+        position: relative;
+
+        &:before {
+            color: #007AFF;
+            content: "/ ";
+            padding: 0 5px;
+        }
+    }
+
+    &.page-title-center {
+        text-align: center;
+
+        .breadcrumb {
+            left: 0 !important;
+            margin: 15px 0 0 !important;
+            position: relative !important;
+            right: 0 !important;
+            top: 0 !important;
+        }
+    }
+}

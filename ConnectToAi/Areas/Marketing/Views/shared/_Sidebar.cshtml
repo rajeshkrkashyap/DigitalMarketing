@@ -3,14 +3,46 @@
 @{
     string title = ViewBag.Title;
     string isOpenDashBoard = "";
-    string isOpenAnalysing= "";
+    string isOpenSiteAudit = "";
+    string isOpenArticle = "";
+    string isOpenAnalysing = "";
+
     string isActiveSettings = "";
+    string isActiveSiteAudit = "";
+    string isActiveSiteAuditAnalysys = "";
+    string isActiveSiteAuditSpeedTest = "";
+    string isActiveArticle = "";
+    string isActiveArticleCreate = "";
+
+    string isActiveManage = "";
+    string isActiveManageWebsite = "";
     string isOpenSEOAutomation = "";
     string isActiveSubscription = "";
     switch (title)
     {
         case "Dashboard":
             isOpenDashBoard = "active";
+            break;
+        case "SiteAudit":
+            isActiveSiteAudit = "active Open";
+            isOpenSiteAudit = "open";
+            break;
+        case "SpeedTest":
+            isActiveSiteAudit = "active Open";
+            isActiveSiteAuditSpeedTest = "active Open";
+            break;
+        case "Analysis":
+            isActiveSiteAudit = "active Open";
+            isActiveSiteAuditAnalysys = "active Open";
+            break;
+        case "CreateArticle":
+            isActiveArticle = "active Open";
+            isActiveArticleCreate= "active Open";
+            break;
+
+        case "ManageWebSite":
+            isActiveManage = "active Open";
+            isActiveManageWebsite = "active Open";
             break;
         case "Seoautomation":
             isOpenSEOAutomation = "active";
@@ -42,18 +74,66 @@
                         </div>
                     </a>
                 </li>
-             @*<li class="@isOpenAnalysing">
-                    <a href="/marketing/Analysing/Index">
+                <li class="@isActiveSiteAudit">
+                    <a href="/marketing/SiteAudit/Index">
                         <div class="item-content">
                             <div class="item-media">
-                                <i class="ti-wand"></i>
+                                <i class="ti-pulse"></i>
                             </div>
                             <div class="item-inner">
-                                <span class="title">Analysing</span>
+                                <span class="title">Site Audit</span>
                             </div>
                         </div>
                     </a>
-                </li>*@
+                    <ul class="sub-menu">
+                        <li class="@isActiveSiteAuditSpeedTest">
+                           <a href="/marketing/SiteAudit/SpeedTest"> <span>Speed Test</span> </a>
+                        </li>
+                        <li class="@isActiveSiteAuditAnalysys">
+                            <a href="/marketing/SiteAudit/Analysis"> <span>Analysys</span> </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"> <span>Item 3</span> </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="@isActiveArticle">
+                    <a href="/marketing/Article/Create">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-file"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Article</span>
+                            </div>
+                        </div>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class="@isActiveArticleCreate">
+                            <a href="/marketing/Article/Create"> <span>Create</span> </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="@isActiveManage">
+                    <a href="/marketing/Manage/WebSite">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-world"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Manage</span>
+                            </div>
+                        </div>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class="@isActiveManageWebsite">
+                            <a href="/marketing/Manage/Website"> <span>WebSite</span> </a>
+                        </li>
+                    </ul>
+                </li>
+          
                 <li class="@isOpenSEOAutomation">
                     <a href="/marketing/SEOAutomation/Index">
                         <div class="item-content">

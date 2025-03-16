@@ -6,6 +6,7 @@ using Core.Shared;
 using Core.Shared.Entities;
 using Newtonsoft.Json;
 using Stripe;
+using ConnectToAi.Controllers;
 
 namespace ConnectToAi.Areas.Admin.Controllers
 {

@@ -1,0 +1,7 @@
+﻿@model List<Blog>
+@{
+    Layout = "/Views/Shared/_LayoutBlog.cshtml";
+    var htmlContent = ViewBag.HtmlContent;
+}
+
+@Html.Raw(htmlContent);

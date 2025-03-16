@@ -8,7 +8,7 @@ namespace SMSLibrary
 {
     internal interface ISmsSender
     {
-        HttpResponseMessage SendSms(string mobileNumber, string countryCode, string textMessage=null);
+        bool SendSms(string mobileNumber, string countryCode, string textMessage=null);
 
     }
 }
