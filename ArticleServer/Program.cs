@@ -3,7 +3,7 @@ using System.Net;
 using System.Text;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Core.Service.Server;
+using Core.Service.ServerCommon;
 using Core.Service;
 
 using Core.Shared;

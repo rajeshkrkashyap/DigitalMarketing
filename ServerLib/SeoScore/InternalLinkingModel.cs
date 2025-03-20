@@ -1,5 +1,5 @@
 ﻿using Core.Service.Azure;
-using Core.Service.SeoScore;
+using Core.Service.OnPageSeoScore;
 using Core.Shared.Entities;
 using HtmlAgilityPack;
 using System;

@@ -19,7 +19,7 @@ namespace ConnectToAi.Controllers
         protected readonly AuthService? _authService;
         protected readonly ProjectService? _projectService;
         protected readonly BlogService? _blogService;
-        protected readonly ArticleTypeService _articleTypeService;
+        protected readonly ArticleTypeService? _articleTypeService;
         public CommonBaseController()
         {
 
@@ -37,6 +37,12 @@ namespace ConnectToAi.Controllers
         {
             _configService = configService;
             _projectService = projectService;
+        }
+        public CommonBaseController(ConfigService configService, ProjectService projectService, BlogService blogService)
+        {
+            _configService = configService;
+            _projectService = projectService;
+            _blogService = blogService;
         }
         public CommonBaseController(ConfigService configService, ProjectService projectService, ArticleTypeService articleTypeService)
         {

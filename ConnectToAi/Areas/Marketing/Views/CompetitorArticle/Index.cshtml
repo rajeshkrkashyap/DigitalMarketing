@@ -1,0 +1,53 @@
+﻿@model List<Core.Shared.Entities.Blog>
+@{
+    ViewBag.Title = "CompetitorArticle";
+}
+<div class="main-content">
+    <div class="wrap-content container " id="container">
+        <section class="container-fluid container-fullw bg-white">
+            <div class="container">
+                <div class="row">
+                    <p>
+                        <a asp-action="Create">Create New Blog</a>
+                    </p>
+                    <hr />
+                    <table class="table table-striped table-hover table-full-width" id="sample_1">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Title
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(item.Title, null, null, new { id = item.Id })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("MetaTags", "Index", "MetaTags", new { id = item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+@section scripts {
+
+    <script src="~/vendor/datatables/jquery.datatables.js"></script>
+    <script src="~/assets/js/table-data.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            TableData.init()
+        })
+    </script>
+}

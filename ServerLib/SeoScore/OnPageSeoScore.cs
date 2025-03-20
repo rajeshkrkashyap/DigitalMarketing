@@ -1,4 +1,4 @@
-﻿using Core.Service.SeoScore;
+﻿using Core.Service.OnPageSeoScore;
 using Core.Shared;
 using Core.Shared.Entities;
 using HtmlAgilityPack;

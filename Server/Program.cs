@@ -3,7 +3,7 @@ using System.Net;
 using System.Text;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Core.Service.Server;
+using Core.Service.Crawl;
 using Core.Service;
 using System;
 using Serilog;
@@ -12,6 +12,7 @@ using Core.Shared.Entities;
 using System.IO;
 using Core.Shared;
 using HtmlAgilityPack;
+using Core.Service.ServerCommon;
 
 namespace Server
 {

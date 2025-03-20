@@ -1,8 +1,8 @@
 ﻿using Core.Shared.Entities;
-using Core.Service.Server;
 using System;
 using System.Net.Sockets;
 using System.Text;
+using Core.Service.ServerCommon;
 
 internal class Program
 {

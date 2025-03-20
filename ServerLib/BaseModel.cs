@@ -1,4 +1,4 @@
-﻿using Core.Service.Server;
+﻿using Core.Service.Crawl;
 using Core.Shared.Entities;
 using HtmlAgilityPack;
 using ServerLib.SeoScore;

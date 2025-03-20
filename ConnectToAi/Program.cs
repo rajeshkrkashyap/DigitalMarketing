@@ -45,6 +45,8 @@ builder.Services.AddSingleton<ServiceService>();
 builder.Services.AddSingleton<RechargeService>();
 builder.Services.AddSingleton<AppUserService>();
 builder.Services.AddSingleton<ArticleTypeService>();
+builder.Services.AddSingleton<BlogService>();
+builder.Services.AddSingleton<CompetitorArticleService>();
 
 var app = builder.Build();
 

@@ -18,6 +18,8 @@
     string isActiveManageWebsite = "";
     string isOpenSEOAutomation = "";
     string isActiveSubscription = "";
+    string isCompetitorArticle = "";
+
     switch (title)
     {
         case "Dashboard":
@@ -53,6 +55,9 @@
         case "Subscription":
             isActiveSubscription = "active";
             break;
+        case "CompetitorArticle":
+            isCompetitorArticle = "active";
+            break;
         default:
             break;
     }
@@ -75,7 +80,7 @@
                     </a>
                 </li>
                 <li class="@isActiveSiteAudit">
-                    <a href="/marketing/SiteAudit/Index">
+                    <a href="/marketing/SiteAudit/Analysis">
                         <div class="item-content">
                             <div class="item-media">
                                 <i class="ti-pulse"></i>
@@ -86,12 +91,13 @@
                         </div>
                     </a>
                     <ul class="sub-menu">
-                        <li class="@isActiveSiteAuditSpeedTest">
-                           <a href="/marketing/SiteAudit/SpeedTest"> <span>Speed Test</span> </a>
-                        </li>
                         <li class="@isActiveSiteAuditAnalysys">
                             <a href="/marketing/SiteAudit/Analysis"> <span>Analysys</span> </a>
                         </li>
+                        <li class="@isActiveSiteAuditSpeedTest">
+                           <a href="/marketing/SiteAudit/SpeedTest"> <span>Speed Test</span> </a>
+                        </li>
+                      
                         <li>
                             <a href="javascript:;"> <span>Item 3</span> </a>
                         </li>
@@ -133,7 +139,18 @@
                         </li>
                     </ul>
                 </li>
-          
+                <li class="@isCompetitorArticle">
+                    <a href="/marketing/CompetitorArticle/Index">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="fa fa-files-o"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">Competitor Article</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
                 <li class="@isOpenSEOAutomation">
                     <a href="/marketing/SEOAutomation/Index">
                         <div class="item-content">

@@ -115,5 +115,10 @@ namespace Core.Shared
         public const string AzureOpenAiGenerateText = "api/AzureOpenAi/GenerateText";
         public const string AzureOpenAiGenerateArticleText = "api/AzureOpenAi/GenerateArticleText";
 
+        public const string CompetitorArticlePrimaryKeywords = "api/CompetitorArticle/PrimaryKeywords";
+        public const string CompetitorArticleSecondaryKeywords = "api/CompetitorArticle/SecondaryKeywords";
+        public const string CompetitorArticleContent = "api/CompetitorArticle/Content";
+        public const string CompetitorArticleMetaTags = "api/CompetitorArticle/MetaTags";
+
     }
 }

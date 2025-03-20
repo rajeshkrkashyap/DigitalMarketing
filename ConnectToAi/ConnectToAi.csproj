@@ -10,12 +10,16 @@
   <ItemGroup>
     <Compile Remove="Areas\Identity\Pages\Account\Manage\**" />
     <Compile Remove="Areas\Identity\Pages\Account\OldManage\**" />
+    <Compile Remove="Util\**" />
     <Content Remove="Areas\Identity\Pages\Account\Manage\**" />
     <Content Remove="Areas\Identity\Pages\Account\OldManage\**" />
+    <Content Remove="Util\**" />
     <EmbeddedResource Remove="Areas\Identity\Pages\Account\Manage\**" />
     <EmbeddedResource Remove="Areas\Identity\Pages\Account\OldManage\**" />
+    <EmbeddedResource Remove="Util\**" />
     <None Remove="Areas\Identity\Pages\Account\Manage\**" />
     <None Remove="Areas\Identity\Pages\Account\OldManage\**" />
+    <None Remove="Util\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -505,7 +509,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.58" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.12.0" />
     <PackageReference Include="MathParser.org-mXparser" Version="5.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.1" />
@@ -519,7 +523,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Razorpay" Version="3.1.0" />
+    <PackageReference Include="Razorpay" Version="3.1.4" />
     <PackageReference Include="Tesseract" Version="5.2.0" />
   </ItemGroup>
 
@@ -1204,6 +1208,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core.Api\Core.Api.csproj" />
+    <ProjectReference Include="..\Core.Service\Core.Service.csproj" />
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj" />
   </ItemGroup>
 

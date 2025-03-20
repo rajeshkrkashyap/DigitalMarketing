@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Core.Service.SeoScore;
+using Core.Service.OnPageSeoScore;
 namespace ServerLib.SeoScore
 {
     public class KeywordUsageModel : BaseModel

@@ -7,118 +7,130 @@ namespace ConnectToAi.Services
 {
     public class BlogService : BaseService
     {
+        readonly HttpClient httpClient; 
         public BlogService(ConfigService configService) : base(configService)
         {
+            httpClient = new HttpClient();
         }
-
-        public async Task<List<Blog>> ListAsync()
+        public async Task<IEnumerable<Blog>> BlogList()
         {
-            var returnResponse = new List<Blog>();
-            using (var client = new HttpClient())
+            // In a real application, send the OTP via SMS service
+            var url = $"{ApiBaseURL}{APIs.BlogList}";
+            try
             {
-                var url = $"{ApiBaseURL}{APIs.BlogList}";
+                //using (HttpClient httpClient = new HttpClient())
+                //{
+                var response = await httpClient.PostAsync(url, null);
 
-                var response = await client.PostAsync(url, null);
-
-                if (response.IsSuccessStatusCode)
+                List<Blog>? blogList = null;
+                if (response != null && response.IsSuccessStatusCode)
                 {
-                    string contentStr = await response.Content.ReadAsStringAsync();
-                    returnResponse = JsonConvert.DeserializeObject<List<Blog>>(contentStr);
+                    var mainResponse = JsonConvert.DeserializeObject<MainResponse>(await response.Content.ReadAsStringAsync());
+                    if (mainResponse != null && mainResponse.IsSuccess)
+                    {
+                        blogList = JsonConvert.DeserializeObject<List<Blog>>(mainResponse.Content.ToString());
+                    }
                 }
+                return blogList;
             }
-            return returnResponse;
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+            }
+            // If we got this far, something failed, redisplay form
+            return null;
         }
-
-        
-
-        public async Task<Blog> GetById(string id)
+        public async Task<Blog> BlogGetById(string id)
         {
-            var returnResponse = new Blog();
-            using (var client = new HttpClient())
+            // In a real application, send the OTP via SMS service
+            var url = $"{ApiBaseURL}{APIs.BlogGetById}";
+            try
             {
-                var url = $"{ApiBaseURL}{APIs.BlogGetById}/?id=" + id;
-                var response = await client.PostAsync(url, null);
-
-                if (response.IsSuccessStatusCode)
+                //using (HttpClient httpClient = new HttpClient())
+                //{
+                var response = await httpClient.PostAsync(url + "/?id=" + id, null);
+                Blog? Blog = null;
+                if (response != null && response.IsSuccessStatusCode)
                 {
-                    string contentStr = await response.Content.ReadAsStringAsync();
-                    returnResponse = JsonConvert.DeserializeObject<Blog>(contentStr);
+                    var mainResponse = JsonConvert.DeserializeObject<MainResponse>(await response.Content.ReadAsStringAsync());
+                    if (mainResponse != null && mainResponse.IsSuccess)
+                    {
+                        Blog = JsonConvert.DeserializeObject<Blog>(mainResponse.Content.ToString());
+                    }
                 }
+                return Blog;
+
             }
-            return returnResponse;
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+            }
+            // If we got this far, something failed, redisplay form
+            return null;
         }
-
-       
-        public async Task<bool> IsTitleExist(string title)
+        public async Task<bool> Create(Blog Blog)
         {
-            var returnResponse = false;
-            using (var client = new HttpClient())
+            var url = $"{ApiBaseURL}{APIs.BlogCreate}";
+            try
             {
-                var url = $"{ApiBaseURL}{APIs.BlogIsExist}/?title=" + title;
-                var response = await client.PostAsync(url, null);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string contentStr = await response.Content.ReadAsStringAsync();
-                    returnResponse = JsonConvert.DeserializeObject<bool>(contentStr);
-                }
+                //using (HttpClient httpClient = new HttpClient())
+                //{
+                //Serialize the testResult to JSON
+                string jsonContent = JsonConvert.SerializeObject(Blog);
+                //Create the HttpContent with the JSON and specify the content type as "application/json"
+                HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                //Send the POST request with the serialized content
+                HttpResponseMessage response = await httpClient.PostAsync(url, httpContent);
+                //Check if the response was successful
+                return response.IsSuccessStatusCode;
+                //}
             }
-            return returnResponse;
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+            }
+            //something failed
+            return false;
         }
-        public async Task<Blog> CreateAsync(Blog Blog)
+        public async Task<bool> Update(Blog Blog)
         {
-            var returnResponse = new Blog();
-            using (var client = new HttpClient())
+            var url = $"{ApiBaseURL}{APIs.BlogUpdate}";
+            try
             {
-                var url = $"{ApiBaseURL}{APIs.BlogCreate}";
-
-                var serializedStr = JsonConvert.SerializeObject(Blog);
-
-                var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var returnResponseStr = await response.Content.ReadAsStringAsync();
-                    returnResponse = JsonConvert.DeserializeObject<Blog>(returnResponseStr);
-                }
+                //using (HttpClient httpClient = new HttpClient())
+                //{
+                //Serialize the testResult to JSON
+                string jsonContent = JsonConvert.SerializeObject(Blog);
+                //Create the HttpContent with the JSON and specify the content type as "application/json"
+                HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                //Send the POST request with the serialized content
+                HttpResponseMessage response = await httpClient.PostAsync(url, httpContent);
+                //Check if the response was successful
+                return response.IsSuccessStatusCode;
+                //}
             }
-            return returnResponse;
-        }
-
-   
-
-        public async Task<Blog> Update(string id)
-        {
-            var returnResponse = new Blog();
-            using (var client = new HttpClient())
+            catch (HttpRequestException ex)
             {
-                var url = $"{ApiBaseURL}{APIs.BlogUpdate}/?id=" + id;
-                var response = await client.PostAsync(url, null);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string contentStr = await response.Content.ReadAsStringAsync();
-                    returnResponse = JsonConvert.DeserializeObject<Blog>(contentStr);
-                }
+                Console.WriteLine($"Request error: {ex.Message}");
             }
-            return returnResponse;
-        }
-
-        public async Task<bool> Delete(string id)
-        {
-            var returnResponse = false;
-            using (var client = new HttpClient())
+            catch (Exception ex)
             {
-                var url = $"{ApiBaseURL}{APIs.BlogDelete}/?id=" + id;
-                var response = await client.PostAsync(url, null);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string contentStr = await response.Content.ReadAsStringAsync();
-                    returnResponse = JsonConvert.DeserializeObject<bool>(contentStr);
-                }
+                Console.WriteLine($"Unexpected error: {ex.Message}");
             }
-            return returnResponse;
+            //something failed
+            return false;
         }
     }
 }

@@ -1,0 +1,660 @@
+﻿@model Core.Shared.Entities.Blog
+@{
+    ViewBag.Title = "CompetitorArticle";
+}
+<div class="main-content">
+    <div class="wrap-content container " id="container">
+        <h2>Create</h2>
+        <div class="row">
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal col-md-12">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary();
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: 10 Proven Tips for Mock Test Preparation</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContentType, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.ContentType, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ContentType, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: Type of content (blog, guide, FAQ, etc.)</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TargetAudience, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.TargetAudience, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TargetAudience, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: Students preparing for competitive exams, parents etc.</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SearchIntent, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.SearchIntent, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SearchIntent, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: Informational, Navigational, or Transactional.</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CtaAction, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.CtaAction, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CtaAction, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: Desired action at the end "Sign up for free tests on MockTestLab.com"</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TargetLocation, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.TargetLocation, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TargetLocation, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: Geographic region focus</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ToneOfVoice, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.ToneOfVoice, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ToneOfVoice, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: Writing style or tone - Conversational</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.InternalLinkTopic, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.InternalLinkTopic, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.InternalLinkTopic, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: Topics for internal links</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ExternalLinkTopic, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.ExternalLinkTopic, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ExternalLinkTopic, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: External authoritative topic</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.WordCountMin, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.WordCountMin, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.WordCountMin, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: 3000</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.WordCountMax, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.WordCountMax, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.WordCountMax, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: 5000</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AdditionalNotes, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.AdditionalNotes, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AdditionalNotes, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">
+                                e.g: Any extra instructions like- "Focus on mobile-friendly formatting."
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CompetitorUrls, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.CompetitorUrls, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CompetitorUrls, "", new { @class = "text-danger" })
+                            <label class="fa fa-small">e.g: URLs of competitor content for inspiration</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="btnPrimaryKeywords">Get Primary Keywords:</label>
+                        <div class="col-md-10">
+                            <button type="button" id="btnPrimaryKeywords" class="btn btn-outline-primary">Get Primary Keywords</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PrimaryKeyword, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.PrimaryKeyword, new { @class = "ckeditor form-control", @cols = "5", @rows = "10" })
+                            @Html.ValidationMessageFor(model => model.PrimaryKeyword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="btnSecondaryKeywords">Get Secondary Keywords:</label>
+                        <div class="col-md-10">
+                            <button type="button" id="btnSecondaryKeywords" class="btn btn-outline-primary">Get Secondary Keywords</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SecondaryKeywords, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.SecondaryKeywords, new { @class = "ckeditor form-control", @cols = "5", @rows = "10" })
+                            @Html.ValidationMessageFor(model => model.SecondaryKeywords, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="btnGenerateMetaTags">Generate MetaTags:</label>
+                        <div class="col-md-10">
+                            <button type="button" id="btnGenerateMetaTags" class="btn btn-outline-primary">Generate MetaTags</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MetaTags, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.MetaTags, new { @class = "ckeditor form-control", @cols = "5", @rows = "10" })
+                            @Html.ValidationMessageFor(model => model.MetaTags, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="IsOption4Correct">Get Content:</label>
+                        <div class="col-md-10">
+                            <button type="button" id="btnContent" class="btn btn-outline-primary">Get Content</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.Content, new { @class = "ckeditor form-control", @cols = "5", @rows = "10" })
+                            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-9">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div style="margin-bottom:30px">
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Content/vendor/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/vendor/ckeditor/adapters/jquery.js"></script>
+    <script src="~/Content/assets/js/form-text-editor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@0.3.19/marked.min.js"></script>
+    
+    <script>
+        jQuery(document).ready(function () {
+            TextEditor.init();
+        });
+    </script>
+
+    <script>
+         jQuery(document).ready(function() {
+            $('#btnPrimaryKeywords').on('click', function () {
+                // Gather input values
+                var _title = $('#Title').val();
+                var _contentType = $('#ContentType').val();
+                var _searchIntent = $('#SearchIntent').val();
+                var _ctaAction= $('#CtaAction').val();
+                var _targetAudience= $('#TargetAudience').val();
+                var _targetLocation= $('#TargetLocation').val();
+                var _toneOfVoice= $('#ToneOfVoice').val();
+                var _internalLinkTopic= $('#InternalLinkTopic').val();
+                var _externalLinkTopic= $('#ExternalLinkTopic').val();
+                var _wordCountMin= $('#WordCountMin').val();
+                var _wordCountMax= $('#WordCountMax').val();
+                var _additionalNotes= $('#AdditionalNotes').val();
+                var _competitorUrls= $('#CompetitorUrls').val();
+                var _primaryKeyword= $('#PrimaryKeyword').val();
+                var _secondaryKeywords= $('#SecondaryKeywords').val();
+
+                var data = {
+                              title : _title,
+                              contentType  : _contentType,
+                              searchIntent : _searchIntent,
+                              ctaAction : _ctaAction,
+                              targetAudience:_targetAudience,
+                              targetLocation: _targetLocation,
+                              toneOfVoice: _toneOfVoice,
+                              internalLinkTopic:_internalLinkTopic,
+                              externalLinkTopic:_externalLinkTopic,
+                              wordCountMin: _wordCountMin,
+                              wordCountMax : _wordCountMax,
+                              additionalNotes : _additionalNotes,
+                              competitorUrls: _competitorUrls,
+                              primaryKeyword: _primaryKeyword,
+                              secondaryKeywords: _secondaryKeywords,
+                            };
+
+                var isValid = false;
+                isValid = validation();
+
+                if(isValid==false)
+                {
+                      setTimeout(function(){
+                            $('#btnPrimaryKeywords').removeClass("disabled").html('Get Primary Keywords');
+                        },2000);
+                    return;
+                }
+                // Make an AJAX call to the backend API
+                $.ajax({
+                    url: '/CompetitorArticle/GeneratePrimaryKeywords', // Replace with your actual API endpoint
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data), // Convert data to JSON string
+                    // Send the prompt to the backend
+                    success: function (response) {
+                        // Render the HTML content in the preview div
+                        const htmlContent = marked(response.primaryKeywords);
+                        $('#PrimaryKeyword').val(htmlContent);
+                        $('#btnPrimaryKeywords').removeClass("disabled").html('Get Primary Keywords');
+                        // Assuming `response.solution` contains the generated solution
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error generating solution:', error);
+                        alert('An error occurred while generating the solution. Please try again.');
+                    }
+                });
+            });
+        });
+
+    </script>
+    <script>
+        jQuery(document).ready(function() {
+           $('#btnSecondaryKeywords').on('click', function () {
+                  // Gather input values
+                  var _title = $('#Title').val();
+                  var _contentType = $('#ContentType').val();
+                  var _searchIntent = $('#SearchIntent').val();
+                  var _ctaAction= $('#CtaAction').val();
+                  var _targetAudience= $('#TargetAudience').val();
+                  var _targetLocation= $('#TargetLocation').val();
+                  var _toneOfVoice= $('#ToneOfVoice').val();
+                  var _internalLinkTopic= $('#InternalLinkTopic').val();
+                  var _externalLinkTopic= $('#ExternalLinkTopic').val();
+                  var _wordCountMin= $('#WordCountMin').val();
+                  var _wordCountMax= $('#WordCountMax').val();
+                  var _additionalNotes= $('#AdditionalNotes').val();
+                  var _competitorUrls= $('#CompetitorUrls').val();
+                  var _primaryKeyword= $('#PrimaryKeyword').val();
+                  var _secondaryKeywords= $('#SecondaryKeywords').val();
+
+                   var data = {
+                                title : _title,
+                                contentType  : _contentType,
+                                searchIntent : _searchIntent,
+                                ctaAction : _ctaAction,
+                                targetAudience:_targetAudience,
+                                targetLocation: _targetLocation,
+                                toneOfVoice: _toneOfVoice,
+                                internalLinkTopic:_internalLinkTopic,
+                                externalLinkTopic:_externalLinkTopic,
+                                wordCountMin: _wordCountMin,
+                                wordCountMax : _wordCountMax,
+                                additionalNotes : _additionalNotes,
+                                competitorUrls: _competitorUrls,
+                                primaryKeyword: _primaryKeyword,
+                                secondaryKeywords: _secondaryKeywords,
+                              };
+
+                  var isValid = false;
+                  isValid = validation();
+
+                  if(isValid==false)
+                  {
+                    setTimeout(function(){
+                      $('#btnSecondaryKeywords').removeClass("disabled").html('Get Secondary Keywords');
+                    },2000);
+
+                      return;
+                  }
+                  // Make an AJAX call to the backend API
+                  $.ajax({
+                      url: '/CompetitorArticle/GenerateSecondaryKeywords', // Replace with your actual API endpoint
+                      type: 'POST',
+                      contentType: 'application/json',
+                      data: JSON.stringify(data), // Convert data to JSON string
+                      // Send the prompt to the backend
+                      success: function (response) {
+                          // Render the HTML content in the preview div
+                           const htmlContent = marked(response.secondaryKeywords);
+                          $('#SecondaryKeywords').val(htmlContent);
+                          $('#btnSecondaryKeywords').removeClass("disabled").html('Get Secondary Keywords');
+                          // Assuming `response.solution` contains the generated solution
+                      },
+                      error: function (xhr, status, error) {
+                          console.error('Error generating solution:', error);
+                          alert('An error occurred while generating the solution. Please try again.');
+                      }
+                  });
+              });
+             });
+    </script>
+    <script>
+        jQuery(document).ready(function () {
+
+            $('#btnContent').on('click', function () {
+                // Gather input values
+                var _title = $('#Title').val();
+                var _contentType = $('#ContentType').val();
+                var _searchIntent = $('#SearchIntent').val();
+                var _ctaAction= $('#CtaAction').val();
+                var _targetAudience= $('#TargetAudience').val();
+                var _targetLocation= $('#TargetLocation').val();
+                var _toneOfVoice= $('#ToneOfVoice').val();
+                var _internalLinkTopic= $('#InternalLinkTopic').val();
+                var _externalLinkTopic= $('#ExternalLinkTopic').val();
+                var _wordCountMin= $('#WordCountMin').val();
+                var _wordCountMax= $('#WordCountMax').val();
+                var _additionalNotes= $('#AdditionalNotes').val();
+                var _competitorUrls= $('#CompetitorUrls').val();
+                var _primaryKeyword= $('#PrimaryKeyword').val();
+                var _secondaryKeywords= $('#SecondaryKeywords').val();
+
+                 var data = {
+                              title : _title,
+                              contentType  : _contentType,
+                              searchIntent : _searchIntent,
+                              ctaAction : _ctaAction,
+                              targetAudience:_targetAudience,
+                              targetLocation: _targetLocation,
+                              toneOfVoice: _toneOfVoice,
+                              internalLinkTopic:_internalLinkTopic,
+                              externalLinkTopic:_externalLinkTopic,
+                              wordCountMin: _wordCountMin,
+                              wordCountMax : _wordCountMax,
+                              additionalNotes : _additionalNotes,
+                              competitorUrls: _competitorUrls,
+                              primaryKeyword: _primaryKeyword,
+                              secondaryKeywords: _secondaryKeywords,
+                            };
+
+                var isValid = false;
+                isValid = validation();
+
+                if(isValid==false)
+                {
+                    setTimeout(function(){
+                        $('#btnContent').removeClass("disabled").html('Get Content');
+                     },2000);
+                    return;
+                }
+                // Make an AJAX call to the backend API
+                $.ajax({
+                    url: '/CompetitorArticle/GenerateContent', // Replace with your actual API endpoint
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data), // Convert data to JSON string
+                    // Send the prompt to the backend
+                    success: function (response) {
+                        // Update the SolutionText textarea with the response
+                        // Convert Markdown to HTML using Marked.js
+                        const htmlContent = marked(response.content);
+                        // Render the HTML content in the preview div
+                        $('#Content').val(htmlContent);
+                        $('#btnContent').removeClass("disabled").html('Get Content');
+                        // Assuming `response.solution` contains the generated solution
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error generating solution:', error);
+                        alert('An error occurred while generating the solution. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+           jQuery(document).ready(function() {
+
+             $('#btnGenerateMetaTags').on('click', function () {
+
+                // Gather input values
+                var _title = $('#Title').val();
+                var _contentType = $('#ContentType').val();
+                var _primaryKeyword= $('#PrimaryKeyword').val();
+                var _secondaryKeywords= $('#SecondaryKeywords').val();
+
+                 var data = {
+                              title : _title,
+                              contentType  : _contentType,
+                              primaryKeyword: _primaryKeyword,
+                              secondaryKeywords: _secondaryKeywords,
+                            };
+
+                var isValid = false;
+                isValid = validation();
+
+                if(isValid==false)
+                {
+                      setTimeout(function(){
+                         $('#btnGenerateMetaTags').removeClass("disabled").html('Generate MetaTags');
+                        },2000);
+                    return;
+                }
+
+                // Make an AJAX call to the backend API
+                $.ajax({
+                    url: '/CompetitorArticle/GenerateMetaTags', // Replace with your actual API endpoint
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data), // Convert data to JSON string
+                    // Send the prompt to the backend
+                    success: function (response) {
+                        // Render the HTML content in the preview div
+                        const htmlContent = marked(response.metaTags);
+                        console.log(htmlContent);
+                        //console.log(response.metaTags);
+                         if (response.metaTags) {
+                            let metaTags = response.metaTags;
+
+                            // Convert object to string if necessary
+                            if (typeof metaTags === "object") {
+                                metaTags = JSON.stringify(metaTags);
+                            }
+
+                            // Remove unwanted line breaks
+                            //metaTags = metaTags.replace(/\n/g, ' ');
+
+                            // Check if #MetaTags is an input field
+                            if ($('#MetaTags').is('input, textarea')) {
+                                 metaTags = metaTags.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                                // Update the textarea
+                                $('#MetaTags').val(metaTags);
+                                //$('#MetaTags').val(htmlContent);
+                            } else {
+                                $('#MetaTags').html(metaTags);
+                            }
+
+                            console.log("Final MetaTags Value:", $('#MetaTags').val());
+                        } else {
+                            console.error("metaTags is empty or undefined");
+                        }
+
+                    $('#btnGenerateMetaTags').removeClass("disabled").html('Generate MetaTags');
+                        // Assuming `response.solution` contains the generated solution
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error generating solution:', error);
+                        alert('An error occurred while generating the solution. Please try again.');
+                    }
+                });
+            });
+
+
+            $('[type="submit"], [type="button"]').click(function () {
+                $(this).addClass("disabled").html('<i class="fa fa-spinner fa-spin"></i> Please wait...');
+            });
+        });
+    </script>
+    <script>
+        function validation(isValid){
+                    // Clear any previous error messages
+            $('.error-message').remove();
+            isValid= true;
+
+            function addErrorMessage(field, message) {
+                $(field).after(`<span class="error-message" style="color:red;font-size:12px;">${message}</span>`);
+                isValid = false;
+            }
+
+            // Title validation (required)
+            var _title = $('#Title').val();
+            if (!_title.trim()) {
+                addErrorMessage('#Title', 'Title is required.');
+            }
+
+            // Content Type validation (required)
+            var _contentType = $('#ContentType').val();
+            if (!_contentType.trim()) {
+                addErrorMessage('#ContentType', 'Content type is required.');
+            }
+
+            // Search Intent validation (required)
+            var _searchIntent = $('#SearchIntent').val();
+            if (!_searchIntent.trim()) {
+                addErrorMessage('#SearchIntent', 'Search intent is required.');
+            }
+
+            // // CTA Action validation (required)
+            // var _ctaAction = $('#CtaAction').val();
+            // if (!_ctaAction.trim()) {
+            //     addErrorMessage('#CtaAction', 'CTA Action is required.');
+            // }
+
+                // Target Audience validation (optional but check if input exists)
+            var _targetAudience = $('#TargetAudience').val();
+
+            if (!_targetAudience.trim()) {
+                addErrorMessage('#TargetAudience', 'Target Audience must not be empty if provided.');
+            }
+
+            // Target Location validation (optional but check if input exists)
+            var _targetLocation = $('#TargetLocation').val();
+            if (!_targetLocation.trim()) {
+                addErrorMessage('#TargetLocation', 'Target location must not be empty if provided.');
+            }
+
+            // Tone of Voice validation (required)
+            var _toneOfVoice = $('#ToneOfVoice').val();
+            if (!_toneOfVoice.trim()) {
+                addErrorMessage('#ToneOfVoice', 'Tone of voice is required.');
+            }
+
+            // // Internal Link Topic validation (optional but check if input exists)
+            // var _internalLinkTopic = $('#InternalLinkTopic').val();
+            // if (_internalLinkTopic && !_internalLinkTopic.trim()) {
+            //     addErrorMessage('#InternalLinkTopic', 'Internal link topic must not be empty if provided.');
+            // }
+
+            // // External Link Topic validation (optional but check if input exists)
+            // var _externalLinkTopic = $('#ExternalLinkTopic').val();
+            // if (_externalLinkTopic && !_externalLinkTopic.trim()) {
+            //     addErrorMessage('#ExternalLinkTopic', 'External link topic must not be empty if provided.');
+            // }
+
+            // Word Count Min validation (required, must be a number)
+            var _wordCountMin = $('#WordCountMin').val();
+            if (!_wordCountMin.trim() || isNaN(_wordCountMin) || parseInt(_wordCountMin) <= 0) {
+                addErrorMessage('#WordCountMin', 'Minimum word count is required and must be a positive number.');
+            }
+
+            // Word Count Max validation (required, must be a number greater than Min)
+            var _wordCountMax = $('#WordCountMax').val();
+            if (!_wordCountMax.trim() || isNaN(_wordCountMax) || parseInt(_wordCountMax) <= parseInt(_wordCountMin)) {
+                addErrorMessage('#WordCountMax', 'Maximum word count is required and must be greater than minimum word count.');
+            }
+
+            // // Additional Notes validation (optional but check if input exists)
+            // var _additionalNotes = $('#AdditionalNotes').val();
+            // if (_additionalNotes && !_additionalNotes.trim()) {
+            //     addErrorMessage('#AdditionalNotes', 'Additional notes must not be empty if provided.');
+            // }
+
+            // // Competitor URLs validation (optional, must contain valid URLs if provided)
+            // var _competitorUrls = $('#CompetitorUrls').val();
+            // if (_competitorUrls) {
+            //     var urls = _competitorUrls.split(',');
+            //     var urlRegex = /^(https?:\/\/)?([\w\-]+(\.[\w\-]+)+)(\/[\w\-]*)*\/?$/;
+            //     urls.forEach(function (url) {
+            //         if (!urlRegex.test(url.trim())) {
+            //             addErrorMessage('#CompetitorUrls', `Invalid URL: ${url}`);
+            //         }
+            //     });
+            // }
+
+            // // Primary Keyword validation (required)
+            // var _primaryKeyword = $('#PrimaryKeyword').val();
+            // if (!_primaryKeyword.trim()) {
+            //     addErrorMessage('#PrimaryKeyword', 'Primary keyword is required.');
+            // }
+
+            // // Secondary Keywords validation (optional but check if input exists)
+            // var _secondaryKeywords = $('#SecondaryKeywords').val();
+            // if (_secondaryKeywords && !_secondaryKeywords.trim()) {
+            //     addErrorMessage('#SecondaryKeywords', 'Secondary keywords must not be empty if provided.');
+            // }
+              // If all fields are valid, proceed with form submission
+            if (isValid) {
+                // Submit the form or perform further actions
+                // alert('Form is valid. Proceeding...');
+                // For example: $('#yourForm').submit();
+               return true;
+            } else {
+                return false;
+            }
+        }
+         function validationForMetaTags(isValid){
+                    // Clear any previous error messages
+            $('.error-message').remove();
+            isValid= true;
+
+            function addErrorMessage(field, message) {
+                $(field).after(`<span class="error-message" style="color:red;font-size:12px;">${message}</span>`);
+                isValid = false;
+            }
+
+            // Title validation (required)
+            var _title = $('#Title').val();
+            if (!_title.trim()) {
+                addErrorMessage('#Title', 'Title is required.');
+            }
+
+            // Content Type validation (required)
+            var _contentType = $('#ContentType').val();
+            if (!_contentType.trim()) {
+                addErrorMessage('#ContentType', 'Content type is required.');
+            }
+
+            // Primary Keyword validation (required)
+            var _primaryKeyword = $('#PrimaryKeyword').val();
+            if (!_primaryKeyword.trim()) {
+                addErrorMessage('#PrimaryKeyword', 'Primary Keyword is required.');
+            }
+            // Content Type validation (required)
+            var _secondaryKeywords = $('#SecondaryKeywords').val();
+            if (!_secondaryKeywords.trim()) {
+                addErrorMessage('#SecondaryKeywords', 'Secondary Keywords is required.');
+            }
+
+            if (isValid) {
+                // Submit the form or perform further actions
+                // alert('Form is valid. Proceeding...');
+                // For example: $('#yourForm').submit();
+               return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+}

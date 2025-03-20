@@ -1,5 +1,4 @@
 ﻿using ConnectToAi.Services;
-using ConnectToAi.Util;
 using Core.Shared;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;

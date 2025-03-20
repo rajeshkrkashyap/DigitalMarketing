@@ -1,7 +1,6 @@
 ﻿using Azure.Core;
 using ConnectToAi.Models;
 using ConnectToAi.Services;
-using ConnectToAi.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Core.Shared;

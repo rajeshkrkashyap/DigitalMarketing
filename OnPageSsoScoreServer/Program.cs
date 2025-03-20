@@ -1,18 +1,13 @@
-﻿using System.Net.Sockets;
-using System.Net;
-using System.Text;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Core.Service.Server;
-using Core.Service;
-using System;
-using Serilog;
-using Newtonsoft.Json;
-using Core.Shared.Entities;
+﻿using Core.Service.Crawl;
+using Core.Service.ServerCommon;
 using Core.Shared;
 using HtmlAgilityPack;
+using Serilog;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 
-namespace OnPageSsoScoreServer
+namespace OnPageSeoScoreServer
 {
     public class Program
     {

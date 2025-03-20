@@ -15,7 +15,7 @@ namespace ConnectToAi.Controllers
         {
             if (_blogService != null)
             {
-                return View(await _blogService.ListAsync());
+                return View(await _blogService.BlogList() );
             }
             return View();
         }
@@ -31,7 +31,7 @@ namespace ConnectToAi.Controllers
                 if (_blogService != null)
                 {
                     ViewBag.HtmlContent = htmlContent;
-                    return View("Post", await _blogService.ListAsync());
+                    return View("Post", await _blogService.BlogList());
                 }
             }
 

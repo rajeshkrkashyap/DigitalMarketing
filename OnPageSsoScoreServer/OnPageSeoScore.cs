@@ -1,10 +1,10 @@
 ﻿using Core.Shared.Entities;
-using Core.Service.Server;
 using HtmlAgilityPack;
 using Serilog;
 using System.Reflection.Metadata;
+using Core.Service.ServerCommon;
 
-namespace OnPageSsoScoreServer
+namespace OnPageSeoScoreServer
 {
     public class OnPageSeoScore
     {

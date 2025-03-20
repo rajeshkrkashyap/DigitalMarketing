@@ -1,4 +1,4 @@
-﻿using Core.Service.Server;
+﻿using Core.Service.Crawl;
 using HtmlAgilityPack;
 using Core.Shared;
 using Core.Shared.Entities;
@@ -13,6 +13,7 @@ using SeleniumLib;
 using System.Net.Http.Headers;
 using ServerLib;
 using ServerLib.SeoScore;
+using Core.Service.ServerCommon;
 
 namespace Server
 {

@@ -7,6 +7,8 @@ using Core.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
 namespace Core.Api.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AzureOpenAiController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;

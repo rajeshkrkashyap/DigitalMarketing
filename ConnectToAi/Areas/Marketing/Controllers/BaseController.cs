@@ -33,6 +33,10 @@ namespace ConnectToAi.Areas.Marketing.Controllers
         {
 
         }
+        public BaseController(ConfigService configService, ProjectService projectService, BlogService blogService) : base(configService, projectService, blogService)
+        {
+
+        }
         public BaseController(ConfigService configService, ProjectService projectService, ArticleTypeService articleTypeService) : base(configService, projectService, articleTypeService)
         {
 

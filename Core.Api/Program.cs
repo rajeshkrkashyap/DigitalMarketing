@@ -71,6 +71,7 @@ builder.Services.AddTransient<IMailService, SendGridMailService>();
 builder.Services.AddSingleton<OpenAIConfiguration>();
 builder.Services.AddSingleton<OpenAITextGenerationFactory>();
 
+
 XmlConfigurator.Configure(new System.IO.FileInfo("log4net.config"));
 var app = builder.Build();
 
