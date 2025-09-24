@@ -13,7 +13,7 @@ namespace AzureOpenAiLib
     public class OpenAITextGenerationService : ITextGenerationService
     {
         //string endpoint = "https://connecttoai-openai.openai.azure.com";
-        //string key = "5e9c2375881a425dbcb2d0c796da6f68";
+        //string key = "";
         private readonly OpenAIClient _client;
 
         public OpenAITextGenerationService(OpenAIClient client)
