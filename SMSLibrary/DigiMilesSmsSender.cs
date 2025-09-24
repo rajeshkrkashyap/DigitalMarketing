@@ -55,8 +55,8 @@ namespace SMSLibrary
                 Message = ConvertToUnicode(Message);
             }
 
-            string Entityid = "1101555800000075635";
-            string Tempid = "1107170607414744896";
+            string Entityid = "ADD-ENTITYID";
+            string Tempid = "ADD-TEMPID";
 
             // Require DLR or not
             // 0: means DLR is not Required
@@ -65,7 +65,7 @@ namespace SMSLibrary
 
             // Sender Id to be used for submitting the message
             // i.e. string SenderName = "test";
-            string Source = "ROYLVS";
+            string Source = "SOURCE NAME";
 
             // Destinations to which message is to be sent
             // For submitting more than one destination at once,
