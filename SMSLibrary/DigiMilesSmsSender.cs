@@ -72,12 +72,9 @@ namespace SMSLibrary
             // destinations should be comma separated like '91999000123,91999000124'
             string Destination = mobileNumber;
 
-            //string URL = $"https://{Server}:{Port}?type={type}&dlr={DLR}&destination={Destination}&source={Source}&message={Message}&entityid=1101555800000075635&tempid=1107170607414744896";
-
+          
             string URL = $"http://{Server}/bulksms/bulksms?username={UserName}&password={Password}&type={type}&dlr={DLR}&destination={Destination}&source={Source}&message={Message}&entityid={Entityid}&tempid={Tempid}";
-            //https://rslri.connectbind.com:8443/bulksms/bulksms?username=DG35-royall&password=digimile&type=0&dlr=1&destination=9916011355&source=ROYLVS&message=Dear User, Your one time password 567845 and its valid for 15 minutes only. Do not share to anyone. Thank you,  ConnectTo.Ai (Powered by Royall Vastramm)&entityid=1101555800000075635&tempid=1107170607414744896
-            //http://route.digimiles.in/bulksms/bulksms?username=DG35-royall&password=digimile&type=0&dlr=1&destination=9916011355&source=ROYLVS&message=Dear User, Your one time password 567845 and its valid for 15 minutes only. Do not share to anyone. Thank you,  ConnectTo.Ai (Powered by Royall Vastramm)&entityid=1101555800000075635&tempid=1107170607414744896
-
+          
 
             try
             {
